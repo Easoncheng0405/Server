@@ -23,4 +23,8 @@ public interface UserService {
     User login(User user);
 
     User register(User user);
+
+    User login(String email,String password);
+
+    User findByEmail(String email);
 }

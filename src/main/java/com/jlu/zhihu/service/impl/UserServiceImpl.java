@@ -25,20 +25,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
+        this.userRepository = repository;
     }
 
     @Override
     public User login(User user) {
-        return repository.findByPhoneAndPassword(user.phone, user.password);
+        return userRepository.findByEmailAndPassword(user.email, user.password);
     }
 
     @Override
     public User register(User user) {
-        return repository.save(user);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User login(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

@@ -19,6 +19,8 @@ package com.jlu.zhihu.controller.api;
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.model.User;
 import com.jlu.zhihu.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -35,9 +39,14 @@ public class UserController {
 
     @PostMapping("/login")
     public Response<User> login(@RequestBody User user) {
+        logger.debug(user.toString());
         Response<User> response = new Response<>();
         response.msg = "login success.";
         response.data = userService.login(user);
+        if (response.data == null) {
+            response.status = 404;
+            response.msg = "user not exist or password wrong.";
+        }
         return response;
     }
 
@@ -45,6 +54,12 @@ public class UserController {
     public Response<User> register(@RequestBody User user) {
         Response<User> response = new Response<>();
         user.st = System.currentTimeMillis();
+        if (userService.findByEmail(user.email) != null) {
+            response.status = 400;
+            response.msg = "email address already user.";
+            response.data = null;
+            return response;
+        }
         response.msg = "register success.";
         response.data = userService.register(user);
         return response;

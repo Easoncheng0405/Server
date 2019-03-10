@@ -27,14 +27,25 @@ public class User {
     public int id;
 
     @Column(length = 12)
-    public String name;
+    public String name = "知乎刘看山";
 
-    @Column(unique = true, length = 18)
-    public String phone;
+    @Column(unique = true, length = 25)
+    public String email;
 
     @Column(length = 18)
     public String password;
 
     /* register time in millis */
     public long st;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", st=" + st +
+                '}';
+    }
 }

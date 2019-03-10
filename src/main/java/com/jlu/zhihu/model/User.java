@@ -19,6 +19,7 @@ package com.jlu.zhihu.model;
 import javax.persistence.*;
 
 @Entity
+@SuppressWarnings("unused")
 public class User {
 
     @Id

@@ -16,29 +16,42 @@
 
 package com.jlu.zhihu.service.impl;
 
+import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
-import com.jlu.zhihu.service.UserService;
+import com.jlu.zhihu.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserServiceImpl implements UserService {
+import java.util.List;
 
-    private final UserRepository repository;
+@Service
+public class QuestionServiceImpl implements QuestionService {
+
+    private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
+    public QuestionServiceImpl(QuestionRepository repository,
+                               UserRepository userRepository) {
+        this.questionRepository = repository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public User login(User user) {
-        return repository.findByPhoneAndPassword(user.phone, user.password);
+    public Question createQuestion(Question question) {
+        return questionRepository.save(question);
     }
 
     @Override
-    public User register(User user) {
-        return repository.save(user);
+    public List<Question> findAllByAuthor(int id) {
+        User user = userRepository.findById(id);
+        return questionRepository.findByAuthor(user);
+    }
+
+    @Override
+    public Question findById(long id) {
+        return questionRepository.findById(id);
     }
 }

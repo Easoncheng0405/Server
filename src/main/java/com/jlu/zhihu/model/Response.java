@@ -16,13 +16,16 @@
 
 package com.jlu.zhihu.model;
 
+import java.util.Date;
+
+@SuppressWarnings("unused")
 public class Response<Model> {
 
-    public int status;
+    public int status = 200;
 
-    public String cst;
+    public String cst = new Date().toString();
 
     public String msg;
 
-    public Model model;
+    public Model data;
 }

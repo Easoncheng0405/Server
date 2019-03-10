@@ -22,8 +22,6 @@ import com.jlu.zhihu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -38,21 +36,17 @@ public class UserController {
     @PostMapping("/login")
     public Response<User> login(@RequestBody User user) {
         Response<User> response = new Response<>();
-        response.cst = new Date().toString();
-        response.status = 200;
         response.msg = "login success.";
-        response.model = userService.login(user);
+        response.data = userService.login(user);
         return response;
     }
 
     @PostMapping("/register")
     public Response<User> register(@RequestBody User user) {
         Response<User> response = new Response<>();
-        response.cst = new Date().toString();
         user.st = System.currentTimeMillis();
-        response.status = 200;
         response.msg = "register success.";
-        response.model = userService.register(user);
+        response.data = userService.register(user);
         return response;
     }
 }

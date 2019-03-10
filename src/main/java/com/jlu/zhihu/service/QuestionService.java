@@ -14,23 +14,17 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.service;
 
-import javax.persistence.*;
+import com.jlu.zhihu.model.Question;
 
-@Entity
-@SuppressWarnings("unused")
-public class Answer {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+public interface QuestionService {
 
-    @OneToOne
-    public Question question;
+    Question createQuestion(Question question);
 
-    @OneToOne
-    public User author;
+    Question findById(long id);
 
-    public String content;
+    List<Question> findAllByAuthor(int id);
 }

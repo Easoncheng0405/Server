@@ -14,17 +14,18 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu;
+package com.jlu.zhihu.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@SpringBootApplication
-@RestController
-public class Application {
+@Controller
+@RequestMapping("/")
+public class IndexController {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+    @GetMapping
+    public String index() {
+        return "index";
     }
 }

@@ -1,0 +1,87 @@
+<!--
+  ~    Copyright [2019] [chengjie.jlu@qq.com]
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登陆知乎</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="#"><b>知乎</b></a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">发现更大的世界</p>
+        <form>
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" placeholder="邮箱地址">
+                <span class="form-control-feedback"><i class="fa fa-envelope"></i></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="输入密码">
+                <span class="form-control-feedback"><i class="fa fa-arrow-right"></i></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
+            <a class="btn btn-success btn-block btn-flat" data-toggle="modal" data-target="#register">注册</a>
+        </form>
+        <br>
+        <p><strong>Copyright &copy; 2019 <a href="https://github.com/Easoncheng0405/Server">JLU ZhiHu</a>.
+        </strong> All rights reserved.
+        </p>
+    </div>
+
+    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">注册知乎账户</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="register-box-body">
+                        <form>
+                            <div class="form-group has-feedback">
+                                <input type="email" class="form-control" placeholder="邮箱地址">
+                                <span class="form-control-feedback"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="password" class="form-control" placeholder="输入密码">
+                                <span class="form-control-feedback"><i class="fa fa-arrow-right"></i></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="password" class="form-control" placeholder="确认密码">
+                                <span class="form-control-feedback"><i class="fa fa-arrow-right"></i></span>
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">注册</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

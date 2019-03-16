@@ -20,6 +20,7 @@ import com.jlu.zhihu.model.Answer;
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,23 +39,23 @@ public class AnswerController {
     @GetMapping("/{id}")
     public Response<Answer> findById(@PathVariable long id) {
         Response<Answer> response = new Response<>();
-        response.data = answerService.findById(id);
+        response.body = answerService.findById(id);
         return getAnswerResponse(response);
     }
 
     @GetMapping("/author/{uid}")
     public Response<List<Answer>> findAllByAuthor(@PathVariable int uid) {
         Response<List<Answer>> response = new Response<>();
-        response.data = answerService.findAllByAuthor(uid);
-        response.msg = "find " + response.data.size() + " answers.";
+        response.body = answerService.findAllByAuthor(uid);
+        response.msg = "find " + response.body.size() + " answers.";
         return response;
     }
 
     @GetMapping("/question/{qid}")
     public Response<List<Answer>> findAllByQuestion(@PathVariable long qid) {
         Response<List<Answer>> response = new Response<>();
-        response.data = answerService.findAllByQuestion(qid);
-        response.msg = "find " + response.data.size() + " answers.";
+        response.body = answerService.findAllByQuestion(qid);
+        response.msg = "find " + response.body.size() + " answers.";
         return response;
     }
 
@@ -62,14 +63,13 @@ public class AnswerController {
     public Response<Answer> findByAuthorAndQuestion(@RequestParam int uid,
                                                     @RequestParam long qid) {
         Response<Answer> response = new Response<>();
-        response.data = answerService.findByAuthorAndQuestion(uid, qid);
+        response.body = answerService.findByAuthorAndQuestion(uid, qid);
         return getAnswerResponse(response);
     }
 
     private Response<Answer> getAnswerResponse(Response<Answer> response) {
-        response.msg = "request success.";
-        if (response.data == null) {
-            response.status = 404;
+        if (response.body == null) {
+            response.status = HttpStatus.NOT_FOUND.value();
             response.msg = "answer not found.";
         }
         return response;

@@ -39,24 +39,24 @@ public class QuestionController {
     public Response<Question> create(@RequestBody Question question) {
         Response<Question> response = new Response<>();
         response.msg = "create question success.";
-        response.data = questionService.createQuestion(question);
+        response.body = questionService.createQuestion(question);
         return response;
     }
 
     @GetMapping("/author/{uid}")
     public Response<List<Question>> findAllByAuthor(@PathVariable int uid) {
         Response<List<Question>> response = new Response<>();
-        response.data = questionService.findAllByAuthor(uid);
-        response.msg = "find " + response.data.size() + " questions.";
+        response.body = questionService.findAllByAuthor(uid);
+        response.msg = "find " + response.body.size() + " questions.";
         return response;
     }
 
     @GetMapping("/{qid}")
     public Response<Question> findById(@PathVariable long qid) {
         Response<Question> response = new Response<>();
-        response.data = questionService.findById(qid);
+        response.body = questionService.findById(qid);
         response.msg = "request success.";
-        if (response.data == null) {
+        if (response.body == null) {
             response.msg = "question not found.";
             response.status = 404;
         }

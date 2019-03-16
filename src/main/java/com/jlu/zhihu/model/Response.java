@@ -16,16 +16,22 @@
 
 package com.jlu.zhihu.model;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.Date;
 
 @SuppressWarnings("unused")
 public class Response<Model> {
 
-    public int status = 200;
+    public int status = HttpStatus.OK.value();
 
     public String cst = new Date().toString();
 
-    public String msg;
+    public String msg = "request success.";
 
-    public Model data;
+    public Model body;
+
+    public void body(Model body) {
+        this.body = body;
+    }
 }

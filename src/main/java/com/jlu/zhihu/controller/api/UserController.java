@@ -42,8 +42,8 @@ public class UserController {
         logger.debug(user.toString());
         Response<User> response = new Response<>();
         response.msg = "login success.";
-        response.data = userService.login(user);
-        if (response.data == null) {
+        response.body = userService.login(user);
+        if (response.body == null) {
             response.status = 404;
             response.msg = "user not exist or password wrong.";
         }
@@ -57,11 +57,11 @@ public class UserController {
         if (userService.findByEmail(user.email) != null) {
             response.status = 400;
             response.msg = "email address already user.";
-            response.data = null;
+            response.body = null;
             return response;
         }
         response.msg = "register success.";
-        response.data = userService.register(user);
+        response.body = userService.register(user);
         return response;
     }
 }

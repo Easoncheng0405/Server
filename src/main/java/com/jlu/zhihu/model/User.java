@@ -37,15 +37,4 @@ public class User {
 
     /* register time in millis */
     public long st;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", st=" + st +
-                '}';
-    }
 }

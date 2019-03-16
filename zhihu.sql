@@ -34,7 +34,7 @@ CREATE TABLE `answer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `answer`
+-- Dumping body for table `answer`
 --
 
 LOCK TABLES `answer` WRITE;
@@ -60,7 +60,7 @@ CREATE TABLE `question` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `question`
+-- Dumping body for table `question`
 --
 
 LOCK TABLES `question` WRITE;
@@ -87,7 +87,7 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping body for table `user`
 --
 
 LOCK TABLES `user` WRITE;

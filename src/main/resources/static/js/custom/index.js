@@ -24,7 +24,7 @@ $(document).ready(function () {
             data: parseJson($('#login-form')),
             success: function (jsonResult) {
                 if (jsonResult.status === 200) {
-                    overhang("success", "登陆成功");
+                    window.location.href = "/home";
                 } else {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }
@@ -49,9 +49,9 @@ $(document).ready(function () {
             success: function (jsonResult) {
                 console.log(jsonResult);
                 if (jsonResult.status === 200) {
-                    overhang("success","注册成功！");
+                    overhang("success", "注册成功！");
                 } else {
-                    overhang("error","注册失败，邮箱地址已被使用");
+                    overhang("error", "注册失败，邮箱地址已被使用");
                 }
             }
         });

@@ -23,11 +23,10 @@ $(document).ready(function () {
             dataType: "json",
             data: parseJson($('#login-form')),
             success: function (jsonResult) {
-                console.log(jsonResult);
                 if (jsonResult.status === 200) {
-                    alert("登陆成功！")
+                    overhang("success", "登陆成功");
                 } else {
-                    $('#login-result').show();
+                    overhang("error", "登陆失败，用户名或密码错误");
                 }
             }
         });
@@ -35,7 +34,6 @@ $(document).ready(function () {
     });
 
     $('#register-form').submit(function () {
-        var div = $('#register-result');
         $.ajax({
             type: "POST",
             url: "/api/user/register",
@@ -44,18 +42,16 @@ $(document).ready(function () {
             data: parseJson($('#register-form')),
             beforeSend: function () {
                 if ($("#password").val() !== $('#password-repeat').val()) {
-                    $('#register-text').text("两次输入的密码不一致");
-                    div.show();
+                    overhang("error", "两次输入的密码不一致");
                     return false;
                 }
             },
             success: function (jsonResult) {
                 console.log(jsonResult);
                 if (jsonResult.status === 200) {
-                    alert("注册成功")
+                    overhang("success","注册成功！");
                 } else {
-                    $('#register-text').text("注册失败，邮箱地址已被使用。");
-                    div.show();
+                    overhang("error","注册失败，邮箱地址已被使用");
                 }
             }
         });
@@ -70,4 +66,20 @@ $(document).ready(function () {
         });
         return JSON.stringify(formObject);
     }
+
+    function overhang(type, msg) {
+        $("body").overhang({
+            type: type,
+            message: msg,
+            duration: 5
+        });
+    }
+
+    $('#register').on('show.bs.modal', function (e) {
+        $(this).css('display', 'block');
+        const modalHeight = $(window).height() / 2 - $('#register .modal-dialog').height() / 2;
+        $(this).find('.modal-dialog').css({
+            'margin-top': modalHeight
+        });
+    });
 });

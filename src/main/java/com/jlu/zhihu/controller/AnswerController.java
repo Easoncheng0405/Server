@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.controller.api;
+package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Answer;
 import com.jlu.zhihu.model.Response;

@@ -14,26 +14,18 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.controller;
+const editor = new SimpleMDE({
+    element: document.getElementById("editor"),
+    spellChecker: false,
+    status: false,
+});
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
-@Controller
-public class IndexController {
-
-    @GetMapping("/")
-    public String index() {
-        return "index";
+editor.codemirror.on("refresh", function () {
+    if (editor.isFullscreenActive()) {
+        $('#header').hide();
+        $('#sidebar').hide();
+    } else {
+        $('#header').show();
+        $('#sidebar').show();
     }
-
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
-
-    @GetMapping("/edit")
-    public String edit(){
-        return "edit";
-    }
-}
+});

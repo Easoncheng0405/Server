@@ -36,5 +36,16 @@ public class User {
     public String password;
 
     /* register time in millis */
-    public long st;
+    public long st = System.currentTimeMillis();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", st=" + st +
+                '}';
+    }
 }

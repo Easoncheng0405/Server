@@ -29,130 +29,47 @@
     <link rel="stylesheet" href="css/all-skins.min.css">
     <link rel="stylesheet" href="css/simplemde.min.css">
     <style>
-        .CodeMirror img{
+        .CodeMirror img {
             max-width: 100%;
             height: auto;
-        }
-
-        .CodeMirror {
-            min-height: 642px;
         }
     </style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <header class="main-header" id="header">
-        <a href="home.html" class="logo">
-            <span class="logo-mini"><b>知</b></span>
-            <span class="logo-lg"><b>知乎</b></span>
-        </a>
-        <nav class="navbar navbar-static-top">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <form action="#" method="get" class="navbar-form pull-right">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="搜索知乎内容">
-                    <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
-                                    class="fa fa-search"></i></button>
-                        </span>
-                </div>
-            </form>
-        </nav>
-    </header>
-    <aside class="main-sidebar" id="sidebar">
-        <section class="sidebar">
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="./image/avatar.jpeg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>知乎刘看山</p>
-                    <small>发现更大的世界</small>
-                </div>
-            </div>
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">导航</li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-home"></i> <span>首页</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-eye"></i> 关注</a></li>
-                        <li><a href="#"><i class="fa fa-fire"></i> 推荐</a></li>
-                        <li><a href="#"><i class="fa fa-list"></i> 热榜</a></li>
-                        <li><a href="#"><i class="fa fa-edit"></i> 文章</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-star"></i>
-                        <span>想法</span><span class="pull-right-container">
-                                <span class="label label-primary pull-right">4</span></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="edit.html">
-                        <i class="fa fa-paper-plane"></i> <span>创建</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-envelope"></i> <span>消息</span>
-                        <span class="pull-right-container">
-                                <small class="label pull-right bg-red">5</small>
-                            </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-file"></i> <span>草稿</span>
-                        <span class="pull-right-container"><small class="label pull-right bg-blue">1</small></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-bookmark"></i> <span>收藏</span>
-                        <span class="pull-right-container"><small class="label pull-right bg-blue">10</small></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-gear"></i> <span>设置</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-user"></i> <span>主页</span>
-                    </a>
-                </li>
-                <li class="header">关于</li>
-                <li><a href="#"><i class="fa fa-book"></i> <span>帮助支持</span></a></li>
-                <li><a href="#"><i class="fa fa-copyright"></i> <span>版权所有</span></a></li>
-                <li><a href="#"><i class="fa fa-github"></i> <span>关于知乎</span></a></li>
-            </ul>
-        </section>
-    </aside>
+    <header id="header"></header>
+    <aside id="sidebar"></aside>
 
     <div class="content-wrapper">
+        <div class="editor-toolbar">
+            <a title="加粗" tabindex="-1" class="fa fa-bold"></a>
+            <a title="斜体" tabindex="-1" class="fa fa-italic"></a>
+            <a title="标题" tabindex="-1" class="fa fa-header"></a>
+            <i class="separator">|</i>
+            <a title="引用" tabindex="-1" class="fa fa-quote-left"></a>
+            <a title="无序列表" tabindex="-1" class="fa fa-list-ul"></a>
+            <a title="有序列表" tabindex="-1" class="fa fa-list-ol"></a>
+            <i class="separator">|</i>
+            <a title="插入链接" tabindex="-1" class="fa fa-link"></a>
+            <a title="插入图片" tabindex="-1" class="fa fa-picture-o"></a>
+            <i class="separator">|</i>
+            <a title="预览" tabindex="-1" class="fa fa-eye no-disable"></a>
+            <a title="实时预览" tabindex="-1" class="fa fa-columns no-disable no-mobile"></a>
+            <a title="全屏" tabindex="-1" class="fa fa-arrows-alt no-disable no-mobile"></a>
+            <i class="separator">|</i>
+            <a title="Markdown帮助" tabindex="-1" class="fa fa-question-circle"
+               href="https://simplemde.com/markdown-guide" target="_blank"></a>
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-success">发布</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+        <input class="form-control input-lg" placeholder="输入标题" style="border: none">
         <textarea class="content" id="editor"></textarea>
     </div>
 
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 0.0.1
-        </div>
-        <strong>Copyright &copy; 2019 <a href="https://github.com/Easoncheng0405/Server">JLU-ZhiHu</a>.</strong>
-        All
-        rights
-        reserved.
-    </footer>
+    <footer id="footer"></footer>
 </div>
 
 <script src="js/jquery.min.js"></script>

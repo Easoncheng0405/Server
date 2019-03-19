@@ -14,10 +14,17 @@
  *    limitations under the License.
  */
 
+$('#header').load('header.html');
+$('#sidebar').load('sidebar.html');
+$('#footer').load('footer.html');
+
 $(document).ready(function () {
-    if (!document.URL.endWith("index.html") && $.cookie("token") == null) {
-        window.location.href = "index.html";
-    }
+    // if (!document.URL.endWith("index.html")) {
+    //     ajaxGet("/api/user?token=" + $.cookie("token"), function (jsonResult) {
+    //         if (!jsonResult.body)
+    //             window.location.href = "index.html";
+    //     })
+    // }
 });
 
 String.prototype.endWith = function (s) {
@@ -26,16 +33,30 @@ String.prototype.endWith = function (s) {
     return this.substr(this.length - s.length) === s;
 };
 
-function ajaxPostJson(url, data, successCallBack) {
+function ajaxPostJson(url, data, callback) {
     $.ajax({
+        headers: {
+            "token": $.cookie("token")
+        },
         type: "POST",
         url: url,
         contentType: "application/json",
         dataType: "json",
         data: data,
-        success: successCallBack,
+        success: callback,
     });
-    return false;
+}
+
+function ajaxGet(url, callback) {
+    $.ajax({
+        headers: {
+            "token": $.cookie("token")
+        },
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: callback,
+    });
 }
 
 function parseJson(form) {

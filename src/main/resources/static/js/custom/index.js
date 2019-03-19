@@ -16,7 +16,7 @@
 
 $(document).ready(function () {
     $('#login-form').submit(function () {
-        return ajaxPostJson(
+        ajaxPostJson(
             "/api/user/login",
             parseJson($('#login-form')),
             function (jsonResult) {
@@ -27,6 +27,7 @@ $(document).ready(function () {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }
             });
+        return false;
     });
 
     $('#register-form').submit(function () {
@@ -34,7 +35,7 @@ $(document).ready(function () {
             overhang("error", "两次输入的密码不一致");
             return false;
         }
-        return ajaxPostJson(
+        ajaxPostJson(
             "/api/user/register",
             parseJson($('#register-form')),
             function (jsonResult) {
@@ -45,6 +46,7 @@ $(document).ready(function () {
                     overhang("error", "注册失败，邮箱地址已被使用");
                 }
             });
+        return false;
     });
 
     $('#register').on('show.bs.modal', function (e) {

@@ -14,3 +14,7 @@
  *    limitations under the License.
  */
 
+$(document).ready(function () {
+    $('#home-menu').addClass('menu-open active');
+    $('#tab-recommend').addClass('active');
+});

@@ -72,4 +72,11 @@ public class UserController {
         response.body = tokenManager.generateToken(userService.register(user));
         return response;
     }
+
+    @GetMapping
+    public Response<Boolean> isTokenActive(@RequestParam String token) {
+        Response<Boolean> response = new Response<>();
+        response.body = tokenManager.isTokenActive(token);
+        return response;
+    }
 }

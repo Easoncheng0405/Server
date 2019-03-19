@@ -30,105 +30,10 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <header class="main-header">
-        <a href="home.html" class="logo">
-            <span class="logo-mini"><b>知</b></span>
-            <span class="logo-lg"><b>知乎</b></span>
-        </a>
-        <nav class="navbar navbar-static-top">
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <form action="#" method="get" class="navbar-form pull-right">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="搜索知乎内容">
-                    <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
-                                    class="fa fa-search"></i></button>
-                        </span>
-                </div>
-            </form>
-        </nav>
-    </header>
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="./image/avatar.jpeg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>知乎刘看山</p>
-                    <small>发现更大的世界</small>
-                </div>
-            </div>
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">导航</li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-home"></i> <span>首页</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-eye"></i> 关注</a></li>
-                        <li><a href="#"><i class="fa fa-fire"></i> 推荐</a></li>
-                        <li><a href="#"><i class="fa fa-list"></i> 热榜</a></li>
-                        <li><a href="#"><i class="fa fa-edit"></i> 文章</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-star"></i>
-                        <span>想法</span><span class="pull-right-container">
-                                <span class="label label-primary pull-right">4</span></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="edit.html">
-                        <i class="fa fa-paper-plane"></i> <span>创建</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-envelope"></i> <span>消息</span>
-                        <span class="pull-right-container">
-                                <small class="label pull-right bg-red">5</small>
-                            </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-file"></i> <span>草稿</span>
-                        <span class="pull-right-container"><small class="label pull-right bg-blue">1</small></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-bookmark"></i> <span>收藏</span>
-                        <span class="pull-right-container"><small class="label pull-right bg-blue">10</small></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-gear"></i> <span>设置</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-user"></i> <span>主页</span>
-                    </a>
-                </li>
-                <li class="header">关于</li>
-                <li><a href="#"><i class="fa fa-book"></i> <span>帮助支持</span></a></li>
-                <li><a href="#"><i class="fa fa-copyright"></i> <span>版权所有</span></a></li>
-                <li><a href="#"><i class="fa fa-github"></i> <span>关于知乎</span></a></li>
-            </ul>
-        </section>
-    </aside>
+<header id="header"></header>
 
+<aside id="sidebar"></aside>
+<div class="wrapper">
     <div class="content-wrapper">
         <section class="content">
             <div class="box box-solid">
@@ -159,33 +64,27 @@
                             <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up fa-lg margin-r-5"></i>赞同</a>
                             </li>
                             <li class="pull-right">
-                                <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg margin-r-5"></i>5评论</a></li>
+                                <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg margin-r-5"></i>5评论</a>
+                            </li>
                         </ul>
-
-                        <input class="form-control" type="text" placeholder="添加新的评论">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="添加新的评论">
+                            <a href="#" class="input-group-addon"><i class="fa fa-comment-o fa-lg"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 0.0.1
-        </div>
-        <strong>Copyright &copy; 2019 <a href="https://github.com/Easoncheng0405/Server">JLU-ZhiHu</a>.</strong>
-        All
-        rights
-        reserved.
-    </footer>
+    <footer id="footer"></footer>
 </div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.cookie.js"></script>
-<script src="js/custom/home.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/adminlte.min.js"></script>
 <script src="js/custom/base.js"></script>
+<script src="js/adminlte.min.js"></script>
+<script src="js/custom/home.js"></script>
 </body>
 
 </html>

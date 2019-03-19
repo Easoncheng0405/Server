@@ -18,6 +18,12 @@ const editor = new SimpleMDE({
     element: document.getElementById("editor"),
     spellChecker: false,
     status: false,
+    toolbar: false,
+});
+
+$(document).ready(function () {
+    resize();
+    $('#tab-create').addClass('active');
 });
 
 editor.codemirror.on("refresh", function () {
@@ -28,4 +34,10 @@ editor.codemirror.on("refresh", function () {
         $('#header').show();
         $('#sidebar').show();
     }
+    resize();
 });
+
+function resize() {
+    $('.CodeMirror-wrap').css("min-height", $('.content-wrapper').height() -
+        2 * $('.editor-toolbar').height() - $('#footer').height());
+}

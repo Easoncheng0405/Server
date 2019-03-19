@@ -59,6 +59,7 @@ public class UserController {
 
     @PostMapping("/register")
     public Response<String> register(@RequestBody User user) {
+        logger.debug("user register: " + user.toString());
         Response<String> response = new Response<>();
         if (userService.findByEmail(user.email) != null) {
             response.status = HttpStatus.BAD_REQUEST.value();

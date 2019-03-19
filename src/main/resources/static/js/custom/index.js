@@ -16,63 +16,36 @@
 
 $(document).ready(function () {
     $('#login-form').submit(function () {
-        $.ajax({
-            type: "POST",
-            url: "/api/user/login",
-            contentType: "application/json",
-            dataType: "json",
-            data: parseJson($('#login-form')),
-            success: function (jsonResult) {
+        return ajaxPostJson(
+            "/api/user/login",
+            parseJson($('#login-form')),
+            function (jsonResult) {
                 if (jsonResult.status === 200) {
+                    $.cookie("token", jsonResult.body, {path: '/'});
                     window.location.href = "home.html";
                 } else {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }
-            }
-        });
-        return false;
+            });
     });
 
     $('#register-form').submit(function () {
-        $.ajax({
-            type: "POST",
-            url: "/api/user/register",
-            contentType: "application/json",
-            dataType: "json",
-            data: parseJson($('#register-form')),
-            beforeSend: function () {
-                if ($("#password").val() !== $('#password-repeat').val()) {
-                    overhang("error", "两次输入的密码不一致");
-                    return false;
-                }
-            },
-            success: function (jsonResult) {
+        if ($("#password").val() !== $('#password-repeat').val()) {
+            overhang("error", "两次输入的密码不一致");
+            return false;
+        }
+        return ajaxPostJson(
+            "/api/user/register",
+            parseJson($('#register-form')),
+            function (jsonResult) {
                 if (jsonResult.status === 200) {
+                    $.cookie("token", jsonResult.body, {path: '/'});
                     window.location.href = "home.html";
                 } else {
                     overhang("error", "注册失败，邮箱地址已被使用");
                 }
-            }
-        });
-        return false;
+            });
     });
-
-    function parseJson(form) {
-        var formObject = {};
-        var formArray = form.serializeArray();
-        $.each(formArray, function (i, item) {
-            formObject[item.name] = item.value;
-        });
-        return JSON.stringify(formObject);
-    }
-
-    function overhang(type, msg) {
-        $("body").overhang({
-            type: type,
-            message: msg,
-            duration: 5
-        });
-    }
 
     $('#register').on('show.bs.modal', function (e) {
         $(this).css('display', 'block');

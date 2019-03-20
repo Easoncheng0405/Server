@@ -20,7 +20,7 @@ const editor = new SimpleMDE({
     status: false,
 });
 
-$(document).ready(function () {
+function loadData() {
     resize();
     $('#tab-create').addClass('active');
     $('.editor-toolbar').append(
@@ -29,7 +29,7 @@ $(document).ready(function () {
         "   <button type=\"button\" class=\"btn btn-primary\" onclick='save()'>保存</button>\n" +
         "</div>");
     $('#title').val("未命名 " + new Date().toLocaleString())
-});
+}
 
 editor.codemirror.on("refresh", function () {
     if (editor.isFullscreenActive()) {
@@ -48,7 +48,30 @@ function resize() {
 }
 
 function submit() {
-    alert(editor.markdown(editor.value()));
+    let title = $('#title').val();
+    let content = editor.value();
+    if (title.length < 10 || title.length > 50) {
+        overhang("error", "标题的长度在10到50个字符之间");
+        return;
+    }
+    if (content.length < 10 || content.length > 10000) {
+        overhang("error", "内容的长度在10到10000个字符之间");
+        return;
+    }
+    let mdContent = editor.markdown(content);
+    if (content.length > 200) content = content.substr(0, 200);
+    const body = {
+        "title": title,
+        "summary": content,
+        "author": currentUser,
+        "content": mdContent
+    };
+    ajaxPostJson(
+        "/api/question/create",
+        JSON.stringify(body),
+        function success(jsonObject) {
+            overhang("success", "成功创建问题！");
+        });
 }
 
 function save() {

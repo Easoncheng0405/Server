@@ -62,4 +62,12 @@ public class TokenManager {
                 tokenPool.remove(token);
         }
     }
+
+    public String getEmail(String token) {
+        try {
+            return new String(Base64.getDecoder().decode(token)).split("-")[0];
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
 }

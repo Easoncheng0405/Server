@@ -14,15 +14,14 @@
  *    limitations under the License.
  */
 
-$('#header').load('header.html');
-$('#sidebar').load('sidebar.html');
-$('#footer').load('footer.html');
 
 $(document).ready(function () {
     if (!document.URL.endWith("index.html")) {
-        ajaxGet("/api/user?token=" + $.cookie("token"), function (jsonResult) {
-            if (!jsonResult.body)
+        ajaxGet("/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
+            if (jsonResult.body == null)
                 window.location.href = "index.html";
+            else
+                initUserData(jsonResult.body);
         })
     }
 });
@@ -73,5 +72,17 @@ function overhang(type, msg) {
         type: type,
         message: msg,
         duration: 5
+    });
+}
+
+let currentUser;
+
+function initUserData(user) {
+    currentUser = user;
+    $('#header').load('header.html');
+    $('#sidebar').load('sidebar.html');
+    $('#footer').load('footer.html',function () {
+        $('#sidebar-avatar').attr("src", user.image);
+        loadData();
     });
 }

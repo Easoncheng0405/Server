@@ -18,7 +18,10 @@ package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.Response;
+import com.jlu.zhihu.model.requestbody.QuestionBody;
 import com.jlu.zhihu.service.QuestionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +31,8 @@ import java.util.List;
 @RequestMapping("/api/question")
 public class QuestionController {
 
+    private final Logger logger = LoggerFactory.getLogger(QuestionController.class);
+
     private final QuestionService questionService;
 
     @Autowired
@@ -36,10 +41,11 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public Response<Question> create(@RequestBody Question question) {
+    public Response<Question> create(@RequestBody QuestionBody questionBody) {
         Response<Question> response = new Response<>();
         response.msg = "create question success.";
-        response.body = questionService.createQuestion(question);
+        response.body = questionService.createQuestion(questionBody);
+        logger.debug("create question: " + response.body);
         return response;
     }
 

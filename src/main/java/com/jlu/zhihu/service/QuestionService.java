@@ -17,12 +17,13 @@
 package com.jlu.zhihu.service;
 
 import com.jlu.zhihu.model.Question;
+import com.jlu.zhihu.model.requestbody.QuestionBody;
 
 import java.util.List;
 
 public interface QuestionService {
 
-    Question createQuestion(Question question);
+    Question createQuestion(QuestionBody question);
 
     Question findById(long id);
 

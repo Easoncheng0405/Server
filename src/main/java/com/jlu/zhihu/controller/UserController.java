@@ -73,10 +73,15 @@ public class UserController {
         return response;
     }
 
-    @GetMapping
-    public Response<Boolean> isTokenActive(@RequestParam String token) {
-        Response<Boolean> response = new Response<>();
-        response.body = tokenManager.isTokenActive(token);
+    @GetMapping("/tokenActive")
+    public Response<User> isTokenActive(@RequestParam String token) {
+        Response<User> response = new Response<>();
+        if (tokenManager.isTokenActive(token)) {
+            response.body = userService.findByEmail(tokenManager.getEmail(token));
+        } else {
+            response.status = HttpStatus.NOT_FOUND.value();
+            response.msg = "token not exist";
+        }
         return response;
     }
 }

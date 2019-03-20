@@ -14,8 +14,15 @@
  *    limitations under the License.
  */
 
-let page = 1;
+package com.jlu.zhihu.repository;
 
-function loadData() {
-    $('#tab-home').addClass('active');
+import com.jlu.zhihu.model.QuestionContent;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public interface QuestionContentRepository extends JpaRepository<QuestionContent, Long> {
+
+    QuestionContent findById(long id);
 }

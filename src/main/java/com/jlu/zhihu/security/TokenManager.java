@@ -21,7 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 
 @Component
 public class TokenManager {
@@ -30,7 +34,7 @@ public class TokenManager {
 
     private static final long INTERVAL = 15 * 60 * 60 * 1000;
 
-    private final Set<String> tokenPool = new HashSet<>();
+    private final Map<String, Long> tokenPool = new HashMap<>();
 
     public String generateToken(User user) {
         if (user == null) return null;
@@ -39,26 +43,23 @@ public class TokenManager {
         String res = user.email + '-' + UUID.randomUUID().toString().replaceAll("-", "")
                 + '-' + System.currentTimeMillis();
         String token = Base64.getEncoder().encodeToString(res.getBytes());
-        tokenPool.add(token);
+        tokenPool.put(token, System.currentTimeMillis());
         return token;
     }
 
     public boolean isTokenActive(String token) {
         cleanToken();
-        return tokenPool.contains(token);
+        if (tokenPool.containsKey(token)) {
+            tokenPool.put(token, System.currentTimeMillis());
+            return true;
+        }
+        return false;
     }
 
     private void cleanToken() {
-        Iterator<String> iterator = tokenPool.iterator();
-        while (iterator.hasNext()) {
-            String token = iterator.next();
-            String res = new String(Base64.getDecoder().decode(token.getBytes()));
-            String[] arr = res.split("-");
-            long millis = Long.parseLong(arr[2]);
-            if (System.currentTimeMillis() - millis > INTERVAL) {
-                logger.debug("token over time, remove it, email " + arr[0]);
-                iterator.remove();
-            }
+        for (String token : tokenPool.keySet()) {
+            if (System.currentTimeMillis() - tokenPool.get(token) > INTERVAL)
+                tokenPool.remove(token);
         }
     }
 }

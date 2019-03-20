@@ -28,6 +28,7 @@ $(document).ready(function () {
         "   <button type=\"button\" class=\"btn btn-success\" onclick='submit()'>发布</button>\n" +
         "   <button type=\"button\" class=\"btn btn-primary\" onclick='save()'>保存</button>\n" +
         "</div>");
+    $('#title').val("未命名 " + new Date().toLocaleString())
 });
 
 editor.codemirror.on("refresh", function () {
@@ -47,9 +48,13 @@ function resize() {
 }
 
 function submit() {
-    alert("发布")
+    alert(editor.markdown(editor.value()));
 }
 
 function save() {
     alert("保存")
 }
+
+window.onbeforeunload = function () {
+    return confirm("确定离开此页面吗？未保存的改动将会丢失。");
+};

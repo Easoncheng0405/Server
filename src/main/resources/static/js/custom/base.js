@@ -19,12 +19,12 @@ $('#sidebar').load('sidebar.html');
 $('#footer').load('footer.html');
 
 $(document).ready(function () {
-    // if (!document.URL.endWith("index.html")) {
-    //     ajaxGet("/api/user?token=" + $.cookie("token"), function (jsonResult) {
-    //         if (!jsonResult.body)
-    //             window.location.href = "index.html";
-    //     })
-    // }
+    if (!document.URL.endWith("index.html")) {
+        ajaxGet("/api/user?token=" + $.cookie("token"), function (jsonResult) {
+            if (!jsonResult.body)
+                window.location.href = "index.html";
+        })
+    }
 });
 
 String.prototype.endWith = function (s) {

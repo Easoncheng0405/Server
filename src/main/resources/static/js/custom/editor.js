@@ -18,12 +18,16 @@ const editor = new SimpleMDE({
     element: document.getElementById("editor"),
     spellChecker: false,
     status: false,
-    toolbar: false,
 });
 
 $(document).ready(function () {
     resize();
     $('#tab-create').addClass('active');
+    $('.editor-toolbar').append(
+        "<div class=\"btn-group pull-right\" style='margin-right: 10px'>\n" +
+        "   <button type=\"button\" class=\"btn btn-success\" onclick='submit()'>发布</button>\n" +
+        "   <button type=\"button\" class=\"btn btn-primary\" onclick='save()'>保存</button>\n" +
+        "</div>");
 });
 
 editor.codemirror.on("refresh", function () {
@@ -39,5 +43,13 @@ editor.codemirror.on("refresh", function () {
 
 function resize() {
     $('.CodeMirror-wrap').css("min-height", $('.content-wrapper').height() -
-        2 * $('.editor-toolbar').height() - $('#footer').height());
+        $('.editor-toolbar').height() - $('#footer').height() - $('#title').height());
+}
+
+function submit() {
+    alert("发布")
+}
+
+function save() {
+    alert("保存")
 }

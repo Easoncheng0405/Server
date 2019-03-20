@@ -14,6 +14,8 @@
  *    limitations under the License.
  */
 
+let page = 1;
+
 $(document).ready(function () {
     $('#tab-home').addClass('active');
 });

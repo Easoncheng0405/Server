@@ -20,11 +20,11 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
-@SuppressWarnings("unused")
 public class Response<Model> {
 
     public int status = HttpStatus.OK.value();
 
+    @SuppressWarnings("unused")
     public String cst = new Date().toString();
 
     public String msg = "request success.";

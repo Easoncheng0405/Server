@@ -29,9 +29,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     List<Answer> findByAuthor(User author);
 
-    List<Answer> findByQuestion(Question question);
+    List<Answer> findByQid(long qid);
 
     Answer findById(long id);
 
-    Answer findByAuthorAndQuestion(User author,Question question);
+    Answer findByAuthorAndQid(User author,long qid);
 }

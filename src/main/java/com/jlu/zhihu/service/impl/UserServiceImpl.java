@@ -22,6 +22,9 @@ import com.jlu.zhihu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,21 +37,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
+        user.password = md5(user.password);
         return userRepository.findByEmailAndPassword(user.email, user.password);
     }
 
     @Override
     public User register(User user) {
+        user.password = md5(user.password);
         return userRepository.save(user);
-    }
-
-    @Override
-    public User login(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    private String md5(String str) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(str.getBytes());
+            return new BigInteger(1, md.digest()).toString(16);
+        } catch (Exception ignore) {
+        }
+        return str;
     }
 }

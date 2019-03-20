@@ -26,11 +26,27 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    @OneToOne
-    public Question question;
+    // question id
+    public long qid;
+
+    // question title
+    public String title;
 
     @OneToOne
     public User author;
 
-    public String content;
+    // answer summary
+    public String summary;
+
+    // answer create time in millis
+    public long st = System.currentTimeMillis();
+
+    // agree count
+    public int agree;
+
+    // comment count
+    public int comment;
+
+    // collect count
+    public int collect;
 }

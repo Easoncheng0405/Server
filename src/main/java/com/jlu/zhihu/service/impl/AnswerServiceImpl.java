@@ -54,13 +54,13 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findByAuthorAndQuestion(int uid, long qid) {
         User author = userRepository.findById(uid);
         Question question = questionRepository.findById(qid);
-        return answerRepository.findByAuthorAndQuestion(author, question);
+        return answerRepository.findByAuthorAndQid(author, question.id);
     }
 
     @Override
     public List<Answer> findAllByQuestion(long qid) {
         Question question = questionRepository.findById(qid);
-        return answerRepository.findByQuestion(question);
+        return answerRepository.findByQid(question.id);
     }
 
     @Override

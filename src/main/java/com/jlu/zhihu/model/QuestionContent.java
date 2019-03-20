@@ -16,29 +16,15 @@
 
 package com.jlu.zhihu.model;
 
-
 import javax.persistence.*;
 
 @Entity
-@SuppressWarnings("unused")
-public class Question {
+public class QuestionContent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    // question title
-    public String title;
-
-    // question summary
-    public String summary;
-
-    @OneToOne
-    public User author;
-
-    // answer count
-    public int answer;
-
-    //focus count
-    public int focus;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    public String content;
 }

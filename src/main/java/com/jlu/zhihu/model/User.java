@@ -19,7 +19,6 @@ package com.jlu.zhihu.model;
 import javax.persistence.*;
 
 @Entity
-@SuppressWarnings("unused")
 public class User {
 
     @Id
@@ -29,10 +28,10 @@ public class User {
     @Column(length = 12)
     public String name = "知乎刘看山";
 
-    @Column(unique = true, length = 25)
+    @Column(unique = true, length = 25, nullable = false)
     public String email;
 
-    @Column(length = 18)
+    @Column(length = 32, nullable = false)
     public String password;
 
     /* register time in millis */

@@ -16,29 +16,21 @@
 
 package com.jlu.zhihu.model;
 
-
 import javax.persistence.*;
 
 @Entity
 @SuppressWarnings("unused")
-public class Question {
+public class QuestionMeteData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    // question title
-    public String title;
+    public int uid;
 
-    // question summary
-    public String summary;
+    public long qid;
 
-    @OneToOne
-    public User author;
+    public long aid;
 
-    // answer count
-    public int answer;
-
-    //focus count
-    public int focus;
+    public boolean focus;
 }

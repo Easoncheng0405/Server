@@ -18,7 +18,6 @@ package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.Response;
-import com.jlu.zhihu.model.requestbody.QuestionBody;
 import com.jlu.zhihu.service.QuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +40,10 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public Response<Question> create(@RequestBody QuestionBody questionBody) {
+    public Response<Question> create(@RequestBody Question question) {
         Response<Question> response = new Response<>();
         response.msg = "create question success.";
-        response.body = questionService.createQuestion(questionBody);
+        response.body = questionService.createQuestion(question);
         logger.debug("create question: " + response.body);
         return response;
     }

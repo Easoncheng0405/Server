@@ -31,7 +31,7 @@ public class Question {
     public String title;
 
     // question summary
-    public String summary;
+    public String content;
 
     @OneToOne
     public User author;

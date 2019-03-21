@@ -55,23 +55,11 @@ function submit() {
         return;
     }
     if (content.length < 10 || content.length > 10000) {
-        overhang("error", "内容的长度在10到10000个字符之间");
+        overhang("error", "内容的长度在100到10000个字符之间");
         return;
     }
     let mdContent = editor.markdown(content);
-    if (content.length > 200) content = content.substr(0, 200);
-    const body = {
-        "title": title,
-        "summary": content,
-        "author": currentUser,
-        "content": mdContent
-    };
-    ajaxPostJson(
-        "/api/question/create",
-        JSON.stringify(body),
-        function success(jsonObject) {
-            overhang("success", "成功创建问题！");
-        });
+    alert(mdContent);
 }
 
 function save() {

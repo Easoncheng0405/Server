@@ -14,6 +14,9 @@
  *    limitations under the License.
  */
 
+$('#header').load('header.html');
+$('#sidebar').load('sidebar.html');
+$('#footer').load('footer.html');
 
 $(document).ready(function () {
     if (!document.URL.endWith("index.html")) {
@@ -78,11 +81,6 @@ function overhang(type, msg) {
 let currentUser;
 
 function initUserData(user) {
-    currentUser = user;
-    $('#header').load('header.html');
-    $('#sidebar').load('sidebar.html');
-    $('#footer').load('footer.html',function () {
-        $('#sidebar-avatar').attr("src", user.image);
-        loadData();
-    });
+    $('#sidebar-avatar').attr("src", user.image);
+    loadData();
 }

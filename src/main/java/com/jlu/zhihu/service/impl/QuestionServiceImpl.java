@@ -18,39 +18,30 @@ package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
-import com.jlu.zhihu.model.requestbody.QuestionBody;
-import com.jlu.zhihu.repository.QuestionContentRepository;
 import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.QuestionService;
-import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final QuestionContentRepository questionContentRepository;
     private final UserRepository userRepository;
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository repository,
-                               QuestionContentRepository questionContentRepository,
                                UserRepository userRepository) {
         this.questionRepository = repository;
-        this.questionContentRepository = questionContentRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    public Question createQuestion(QuestionBody questionBody) {
-        Question question = questionRepository.save(questionBody.getQuestion());
-        questionContentRepository.save(questionBody.getQuestionContent(question.id));
-        return question;
+    public Question createQuestion(Question question) {
+        return questionRepository.save(question);
     }
 
     @Override

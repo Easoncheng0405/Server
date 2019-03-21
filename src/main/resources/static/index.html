@@ -43,7 +43,7 @@
         </div>
         <div class="login-box-body">
             <p class="login-box-msg">发现更大的世界</p>
-            <form id="login-form" method="post">
+            <form id="login-form" method="post" onsubmit="return false">
                 <div class="form-group has-feedback">
                     <input required="required" name="email" type="email" class="form-control" placeholder="邮箱地址">
                     <span class="form-control-feedback"><i class="fa fa-envelope"></i></span>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="register-box-body">
-                            <form id="register-form" method="post">
+                            <form id="register-form" method="post" onsubmit="return false">
                                 <div class="form-group has-feedback">
                                     <input required="required" minlength="8" maxlength="25" name="email" type="email"
                                         class="form-control" placeholder="邮箱地址">

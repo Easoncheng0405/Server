@@ -27,6 +27,22 @@ $(document).ready(function () {
                 initUserData(jsonResult.body);
         })
     }
+    $('#create-question-form').submit(function () {
+        let data = JSON.parse(parseJson($('#create-question-form')));
+        data.author = currentUser;
+        $('#create-question').modal('hide');
+        ajaxPostJson(
+            "/api/question/create",
+            JSON.stringify(data),
+            function (jsonResult) {
+                console.log(jsonResult);
+                if (jsonResult.status === 200) {
+                    overhang("success", "成功发布问题！")
+                } else {
+                    overhang("error", "创建问题失败，请重试。");
+                }
+            });
+    });
 });
 
 String.prototype.endWith = function (s) {
@@ -81,6 +97,7 @@ function overhang(type, msg) {
 let currentUser;
 
 function initUserData(user) {
+    currentUser = user;
     $('#sidebar-avatar').attr("src", user.image);
     loadData();
 }

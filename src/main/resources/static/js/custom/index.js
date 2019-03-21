@@ -27,13 +27,12 @@ $(document).ready(function () {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }
             });
-        return false;
     });
 
     $('#register-form').submit(function () {
         if ($("#password").val() !== $('#password-repeat').val()) {
             overhang("error", "两次输入的密码不一致");
-            return false;
+            return;
         }
         ajaxPostJson(
             "/api/user/register",
@@ -46,12 +45,11 @@ $(document).ready(function () {
                     overhang("error", "注册失败，邮箱地址已被使用");
                 }
             });
-        return false;
     });
 
-    $('#register').on('show.bs.modal', function (e) {
+    $('.modal').on('show.bs.modal', function (e) {
         $(this).css('display', 'block');
-        const modalHeight = $(window).height() / 2 - $('#register .modal-dialog').height() / 2;
+        const modalHeight = $(window).height() / 2 - $('.modal-dialog').height() / 2;
         $(this).find('.modal-dialog').css({
             'margin-top': modalHeight
         });

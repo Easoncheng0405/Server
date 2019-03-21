@@ -41,4 +41,15 @@ public class Question {
 
     //focus count
     public int focus;
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", author=" + author +
+                ", answer=" + answer +
+                ", focus=" + focus +
+                '}';
+    }
 }

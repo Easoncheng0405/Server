@@ -40,10 +40,6 @@ public class UserController {
     public UserController(UserService userService, TokenManager tokenManager) {
         this.userService = userService;
         this.tokenManager = tokenManager;
-        User user = new User();
-        user.email="1@1";
-        user.password = "1";
-        userService.register(user);
     }
 
     @PostMapping("/login")

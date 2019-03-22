@@ -22,6 +22,7 @@ import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +49,16 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> findAllByAuthor(int id) {
         User user = userRepository.findById(id);
         return questionRepository.findByAuthor(user);
+    }
+
+    @Override
+    public List<Question> findAll(Pageable pageable) {
+        return questionRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public long countAll() {
+        return questionRepository.count();
     }
 
     @Override

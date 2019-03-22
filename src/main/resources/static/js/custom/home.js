@@ -14,19 +14,41 @@
  *    limitations under the License.
  */
 
-let page = 1;
-
+let currentPage = 0;
+let currentTab;
+let currentTabText;
 const contentWrapper = $('#content-wrapper');
+const pager = $('#page');
+
 
 function loadData() {
     $('#home-menu').addClass('menu-open active');
-    $('#tab-recommend').addClass('active');
-    loadRecommend();
+
+    switch ($.getUrlParam("tab")) {
+        case "question":
+            currentTab = $('#tab-question');
+            currentTabText = " 问题";
+            break;
+        case "idea":
+            break;
+        case "article":
+            break;
+        default:
+            currentTab = $('#tab-recommend');
+            currentTabText = " 推荐";
+            break;
+    }
+    switchCurrentTab();
 }
 
 function switchTab(tab) {
-    contentWrapper.empty();
-    switch (tab.innerText) {
+    currentTabText = tab.innerText;
+    switchCurrentTab();
+}
+
+function switchCurrentTab() {
+    currentTab.removeClass("active");
+    switch (currentTabText) {
         case " 推荐":
             loadRecommend();
             break;
@@ -40,9 +62,12 @@ function switchTab(tab) {
             alert("文章");
             break;
     }
+    currentTab.addClass('active');
 }
 
 function loadRecommend() {
+    currentTab = $('#tab-recommend');
+    contentWrapper.empty();
     const question = {
         "title": "test"
     };
@@ -51,21 +76,65 @@ function loadRecommend() {
         "/api/render/recommend",
         JSON.stringify(question),
         function (response) {
-            console.log(response);
             contentWrapper.append(response.body);
         });
+    setPage("recommend");
 }
 
 function loadNormalQuestion() {
-    const question = {
-        "title": "test"
-    };
+    currentTab = $('#tab-question');
+    contentWrapper.empty();
+    ajaxGetJson(
+        "/api/question/all?page=" + currentPage,
+        function (data) {
+            for (let i = 0; i < data.body.length; i++) {
+                ajaxPostJson(
+                    "/api/render/question",
+                    JSON.stringify(data.body[i]),
+                    function (response) {
+                        contentWrapper.append(response.body);
+                    });
+            }
+        }
+    );
+    setPage("question");
+}
 
-    ajaxPostJson(
-        "/api/render/question",
-        JSON.stringify(question),
-        function (response) {
-            console.log(response);
-            contentWrapper.append(response.body);
-        });
+function setPage(url) {
+    pager.empty();
+    pager.append("<li id='previous' onclick='previousPage()' class=\"paginate_button previous\"><a>上一页</a></li>\n");
+    ajaxGetJson(
+        "/api/" + url + "/count",
+        function (data) {
+            let pages = data.body / 5;
+            for (let i = 0; i < pages; i = i + 1) {
+                let li = "<li class=\"paginate_button ";
+                if (currentPage === i)
+                    li = li + "active";
+                li = li + "\"><a onclick='loadPage(" + i + ")'>" + (i + 1) + "</a></li>\n";
+                pager.append(li);
+            }
+            pager.append("<li id='next' onclick='nextPage()' class=\"paginate_button next\"><a href=\"#\">下一页</a></li>\n");
+            if (currentPage === 0) $('#previous').addClass("disabled");
+            if (currentPage >= pages - 1) $('#next').addClass("disabled");
+        }
+    )
+}
+
+function loadPage(i) {
+    if (currentPage === i) return;
+    currentPage = i;
+    switchCurrentTab();
+}
+
+function previousPage() {
+    if ($('#previous').hasClass("disabled")) return;
+    currentPage--;
+    switchCurrentTab();
+}
+
+function nextPage() {
+    if ($('#next').hasClass("disabled")) return;
+    currentPage++;
+    switchCurrentTab();
 }

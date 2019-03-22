@@ -22,6 +22,9 @@ import com.jlu.zhihu.service.QuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,6 +68,24 @@ public class QuestionController {
             response.msg = "question not found.";
             response.status = 404;
         }
+        return response;
+    }
+
+    @GetMapping("/all")
+    public Response<List<Question>> all(@RequestParam int page) {
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page, 5, sort);
+        Response<List<Question>> response = new Response<>();
+        response.body = questionService.findAll(pageable);
+        response.msg = "find " + response.body.size() + " questions.";
+        return response;
+    }
+
+    @GetMapping("/count")
+    public Response<Long> countAll(){
+        Response<Long> response = new Response<>();
+        response.body = questionService.countAll();
+        response.msg = "find " + response.body + " questions.";
         return response;
     }
 }

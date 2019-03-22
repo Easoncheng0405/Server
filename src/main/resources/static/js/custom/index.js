@@ -22,7 +22,7 @@ $(document).ready(function () {
             function (jsonResult) {
                 if (jsonResult.status === 200) {
                     $.cookie("token", jsonResult.body, {path: '/'});
-                    window.location.href = "recommend.html";
+                    window.location.href = "home.html";
                 } else {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }
@@ -40,7 +40,7 @@ $(document).ready(function () {
             function (jsonResult) {
                 if (jsonResult.status === 200) {
                     $.cookie("token", jsonResult.body, {path: '/'});
-                    window.location.href = "recommend.html";
+                    window.location.href = "home.html";
                 } else {
                     overhang("error", "注册失败，邮箱地址已被使用");
                 }

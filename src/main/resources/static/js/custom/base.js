@@ -20,7 +20,7 @@ $('#footer').load('footer.html');
 
 $(document).ready(function () {
     if (!document.URL.endWith("index.html")) {
-        ajaxGet("/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
+        ajaxGetJson("/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
             if (jsonResult.body == null)
                 window.location.href = "index.html";
             else
@@ -65,7 +65,7 @@ function ajaxPostJson(url, data, callback) {
     });
 }
 
-function ajaxGet(url, callback) {
+function ajaxGetJson(url, callback) {
     $.ajax({
         headers: {
             "token": $.cookie("token")

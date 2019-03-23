@@ -14,59 +14,36 @@
  *    limitations under the License.
  */
 
-let currentPage = 0;
+let currentPage;
+let currentEditor;
 let currentTab;
-let currentTabText;
 const contentWrapper = $('#content-wrapper');
 const pager = $('#page');
 
 
 function loadData() {
     $('#home-menu').addClass('menu-open active');
-
-    switch ($.getUrlParam("tab")) {
+    currentPage = parseInt($.getUrlParam("page", 0));
+    currentTab = $.getUrlParam("tab", "recommend");
+    switch (currentTab) {
         case "question":
-            currentTab = $('#tab-question');
-            currentTabText = " 问题";
-            break;
-        case "idea":
-            break;
-        case "article":
-            break;
-        default:
-            currentTab = $('#tab-recommend');
-            currentTabText = " 推荐";
-            break;
-    }
-    switchCurrentTab();
-}
-
-function switchTab(tab) {
-    currentTabText = tab.innerText;
-    switchCurrentTab();
-}
-
-function switchCurrentTab() {
-    currentTab.removeClass("active");
-    switch (currentTabText) {
-        case " 推荐":
-            loadRecommend();
-            break;
-        case " 问题":
+            $('#tab-question').addClass('active');
             loadNormalQuestion();
             break;
-        case " 想法":
+        case "idea":
             alert("想法");
             break;
-        case " 文章":
+        case "article":
             alert("文章");
             break;
+        default:
+            $('#tab-recommend').addClass('active');
+            loadRecommend();
+            break;
     }
-    currentTab.addClass('active');
 }
 
 function loadRecommend() {
-    currentTab = $('#tab-recommend');
     contentWrapper.empty();
     const question = {
         "title": "test"
@@ -82,7 +59,6 @@ function loadRecommend() {
 }
 
 function loadNormalQuestion() {
-    currentTab = $('#tab-question');
     contentWrapper.empty();
     ajaxGetJson(
         "/api/question/all?page=" + currentPage,
@@ -122,19 +98,57 @@ function setPage(url) {
 }
 
 function loadPage(i) {
-    if (currentPage === i) return;
-    currentPage = i;
-    switchCurrentTab();
+    if (currentPage === i || i < 0) return;
+    window.location.href = "home.html?tab=" + currentTab + "&page=" + i;
 }
 
 function previousPage() {
     if ($('#previous').hasClass("disabled")) return;
-    currentPage--;
-    switchCurrentTab();
+    loadPage(currentPage - 1);
 }
 
 function nextPage() {
     if ($('#next').hasClass("disabled")) return;
-    currentPage++;
-    switchCurrentTab();
+    loadPage(currentPage + 1);
+}
+
+
+let currentCreateAnswerBtn;
+
+function createAnswer(e) {
+    if (e === currentCreateAnswerBtn && currentEditor != null) return;
+    removeEditor();
+    $(e).parents('.box-body').append("<textarea id='editor'></textarea>");
+    currentCreateAnswerBtn = e;
+    currentEditor = new SimpleMDE({
+        element: document.getElementById("editor"),
+        spellChecker: false,
+        status: false,
+        toolbar: ["bold", "italic", "heading", "|", "quote",
+            "unordered-list", "ordered-list", "link", "image",
+            "table", "|", "preview",
+            {
+                name: "submit",
+                action: function customFunction(editor) {
+                    alert("发布")
+                },
+                className: "fa fa-check",
+                title: "发布",
+            },
+            {
+                name: "cancel",
+                action: removeEditor,
+                className: "fa fa-times",
+                title: "取消",
+            }],
+
+    });
+}
+
+function removeEditor() {
+    if (currentEditor != null) {
+        currentEditor.toTextArea();
+        currentEditor = null;
+    }
+    $('#editor').remove();
 }

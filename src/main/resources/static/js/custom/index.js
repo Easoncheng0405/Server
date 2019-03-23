@@ -22,7 +22,7 @@ $(document).ready(function () {
             function (jsonResult) {
                 if (jsonResult.status === 200) {
                     $.cookie("token", jsonResult.body, {path: '/'});
-                    window.location.href = "home.html";
+                    window.location.href = "home.html?tab=recommend&page=0";
                 } else {
                     overhang("error", "登陆失败，用户名或密码错误");
                 }

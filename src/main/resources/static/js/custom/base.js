@@ -103,9 +103,26 @@ function initUserData(user) {
 }
 
 (function ($) {
-    $.getUrlParam = function (name) {
+    $.getUrlParam = function (name,def) {
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         let r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]); return def;
     }
 })(jQuery);
+
+function switchTab(tab) {
+    switch (tab.innerText) {
+        case " 推荐":
+            window.location.href = "home.html?tab=recommend&page=0";
+            break;
+        case " 问题":
+            window.location.href = "home.html?tab=question&page=0";
+            break;
+        case " 想法":
+            window.location.href = "home.html?tab=idea&page=0";
+            break;
+        case " 文章":
+            window.location.href = "home.html?tab=article&page=0";
+            break;
+    }
+}

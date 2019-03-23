@@ -18,6 +18,9 @@ const editor = new SimpleMDE({
     element: document.getElementById("editor"),
     spellChecker: false,
     status: false,
+    toolbar: ["bold", "italic", "heading", "|", "quote",
+        "unordered-list", "ordered-list", "link", "image",
+        "table", "preview", "|", "side-by-side", "fullscreen"],
 });
 
 function loadData() {
@@ -69,20 +72,3 @@ function save() {
 window.onbeforeunload = function () {
     return confirm("确定离开此页面吗？未保存的改动将会丢失。");
 };
-
-function switchTab(tab) {
-    switch (tab.innerText) {
-        case " 推荐":
-            window.location.href = "home.html?tab=recommend";
-            break;
-        case " 问题":
-            window.location.href = "home.html?tab=question";
-            break;
-        case " 想法":
-            window.location.href = "home.html?tab=idea";
-            break;
-        case " 文章":
-            window.location.href = "home.html?tab=article";
-            break;
-    }
-}

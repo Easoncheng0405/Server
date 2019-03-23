@@ -50,7 +50,7 @@ function loadRecommend() {
     };
 
     ajaxPostJson(
-        "/api/render/recommend",
+        "http://localhost/api/render/recommend",
         JSON.stringify(question),
         function (response) {
             contentWrapper.append(response.body);
@@ -61,7 +61,7 @@ function loadRecommend() {
 function loadNormalQuestion() {
     contentWrapper.empty();
     ajaxGetJson(
-        "/api/question/all?page=" + currentPage,
+        "http://localhost/api/question/all?page=" + currentPage,
         function (data) {
             for (let i = 0; i < data.body.length; i++) {
                 ajaxPostJson(

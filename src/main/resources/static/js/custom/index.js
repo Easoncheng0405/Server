@@ -17,7 +17,7 @@
 $(document).ready(function () {
     $('#login-form').submit(function () {
         ajaxPostJson(
-            "/api/user/login",
+            "http://localhost/api/user/login",
             parseJson($('#login-form')),
             function (jsonResult) {
                 if (jsonResult.status === 200) {
@@ -35,7 +35,7 @@ $(document).ready(function () {
             return;
         }
         ajaxPostJson(
-            "/api/user/register",
+            "http://localhost/api/user/register",
             parseJson($('#register-form')),
             function (jsonResult) {
                 if (jsonResult.status === 200) {

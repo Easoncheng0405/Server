@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-$('#header').load('header.html');
-$('#sidebar').load('sidebar.html');
-$('#footer').load('footer.html');
+$('#header').load('http://localhost/header.html');
+$('#sidebar').load('http://localhost/sidebar.html');
+$('#footer').load('http://localhost/footer.html');
 
 $(document).ready(function () {
     if (!document.URL.endWith("index.html")) {
-        ajaxGetJson("/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
+        ajaxGetJson("http://localhost/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
             if (jsonResult.body == null)
                 window.location.href = "index.html";
             else
@@ -32,7 +32,7 @@ $(document).ready(function () {
         data.author = currentUser;
         $('#create-question').modal('hide');
         ajaxPostJson(
-            "/api/question/create",
+            "http://localhost/api/question/create",
             JSON.stringify(data),
             function (jsonResult) {
                 console.log(jsonResult);
@@ -113,16 +113,16 @@ function initUserData(user) {
 function switchTab(tab) {
     switch (tab.innerText) {
         case " 推荐":
-            window.location.href = "home.html?tab=recommend&page=0";
+            window.location.href = "http://localhost/home.html?tab=recommend&page=0";
             break;
         case " 问题":
-            window.location.href = "home.html?tab=question&page=0";
+            window.location.href = "http://localhost/home.html?tab=question&page=0";
             break;
         case " 想法":
-            window.location.href = "home.html?tab=idea&page=0";
+            window.location.href = "http://localhost/home.html?tab=idea&page=0";
             break;
         case " 文章":
-            window.location.href = "home.html?tab=article&page=0";
+            window.location.href = "http://localhost/home.html?tab=article&page=0";
             break;
     }
 }

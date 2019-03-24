@@ -34,7 +34,10 @@ public class User {
     @Column(length = 32, nullable = false)
     public String password;
 
-    public String image = "http://47.94.134.55:8080/image/avatar.jpeg";
+    public String image = "http://localhost/image/avatar.jpeg";
+
+    @Column(length = 25)
+    public String sign = "发现更大的世界.";
 
     /* register time in millis */
     public long st = System.currentTimeMillis();

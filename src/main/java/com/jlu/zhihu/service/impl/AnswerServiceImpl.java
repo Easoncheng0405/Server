@@ -17,55 +17,89 @@
 package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Answer;
-import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
 import com.jlu.zhihu.repository.AnswerRepository;
-import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.AnswerService;
+import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
     private final UserRepository userRepository;
-    private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
     @Autowired
     public AnswerServiceImpl(UserRepository userRepository,
-                             QuestionRepository questionRepository,
                              AnswerRepository answerRepository) {
         this.userRepository = userRepository;
-        this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
     }
 
 
     @Override
     public Answer findById(long id) {
-        return answerRepository.findById(id);
+        Answer answer = answerRepository.findById(id);
+        answer.content = unCompressAnswer(answer.content);
+        return answer;
     }
 
     @Override
     public Answer findByAuthorAndQuestion(int uid, long qid) {
         User author = userRepository.findById(uid);
-        Question question = questionRepository.findById(qid);
-        return answerRepository.findByAuthorAndQid(author, question.id);
+        Answer answer = answerRepository.findByAuthorAndQid(author, qid);
+        answer.content = unCompressAnswer(answer.content);
+        return answer;
     }
 
     @Override
     public List<Answer> findAllByQuestion(long qid) {
-        Question question = questionRepository.findById(qid);
-        return answerRepository.findByQid(question.id);
+        List<Answer> list = answerRepository.findByQid(qid);
+        for (Answer answer : list) {
+            answer.content = unCompressAnswer(answer.content);
+        }
+        return list;
     }
 
     @Override
     public List<Answer> findAllByAuthor(int uid) {
         User author = userRepository.findById(uid);
-        return answerRepository.findByAuthor(author);
+        List<Answer> list = answerRepository.findByAuthor(author);
+        for (Answer answer : list) {
+            answer.content = unCompressAnswer(answer.content);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Answer> findAll() {
+        List<Answer> list = answerRepository.findAll();
+        for (Answer answer : list) {
+            answer.content = unCompressAnswer(answer.content);
+        }
+        return list;
+    }
+
+    @Override
+    public Answer createAnswer(Answer answer) {
+        String temp = answer.content;
+        answer.content = compressAnswer(answer.content);
+        answer = answerRepository.save(answer);
+        answer.content = temp;
+        return answer;
+    }
+
+
+    private String compressAnswer(String content) {
+        return Base64.getEncoder().encodeToString(Encoder.compress(content));
+    }
+
+    private String unCompressAnswer(String content) {
+        return new String(Encoder.uncompress(Base64.getDecoder().decode(content)));
     }
 }

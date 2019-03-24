@@ -1,0 +1,24 @@
+<div class="box box-solid">
+    <div class="box-body">
+        <div class="post">
+            <div class="user-block">
+                <img class="img-circle" th:src="${answer.author.image}"
+                     alt="user image">
+                <span class="username"><a href="#" th:text="${answer.author.name}" class="link-black"></a></span>
+                <span th:text="${answer.author.sign}" class="description"></span>
+            </div>
+            <div id="answer-body" style="color: #4a4a4a; font-size: 18px"></div>
+            <ul class="list-inline" style="margin-top: 10px">
+                <li><a href="#" class="link-black" th:text="${answer.agree}+' 赞同'"><i class="fa fa-thumbs-o-up fa-lg margin-r-5"></i></a></li>
+                <li><a href="#" class="link-black" th:text="${answer.collect}+' 收藏'"><i class="fa fa-star-o fa-lg margin-r-5"></i></a></li>
+                <li class="pull-right">
+                    <a href="#" class="link-black" th:text="${answer.comment}+' 评论'"><i class="fa fa-comments-o fa-lg margin-r-5"></i></a>
+                </li>
+            </ul>
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="添加新的评论">
+                <a href="#" class="input-group-addon"><i class="fa fa-comment-o fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

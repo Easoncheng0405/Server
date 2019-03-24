@@ -29,14 +29,13 @@ public class Answer {
     // question id
     public long qid;
 
-    // question title
-    public String title;
 
     @OneToOne
     public User author;
 
-    // answer summary
-    public String summary;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    public String content;
 
     // answer create time in millis
     public long st = System.currentTimeMillis();

@@ -43,6 +43,14 @@ public class AnswerController {
         return getAnswerResponse(response);
     }
 
+    @GetMapping("/all")
+    public Response<List<Answer>> all(){
+        Response<List<Answer>> response = new Response<>();
+        response.body = answerService.findAll();
+        response.msg = "find " + response.body.size() + " answers.";
+        return response;
+    }
+
     @GetMapping("/author/{uid}")
     public Response<List<Answer>> findAllByAuthor(@PathVariable int uid) {
         Response<List<Answer>> response = new Response<>();
@@ -56,6 +64,13 @@ public class AnswerController {
         Response<List<Answer>> response = new Response<>();
         response.body = answerService.findAllByQuestion(qid);
         response.msg = "find " + response.body.size() + " answers.";
+        return response;
+    }
+
+    @PostMapping("/create")
+    public Response<Answer> createAnswer(@RequestBody Answer answer){
+        Response<Answer> response = new Response<>();
+        response.body = answerService.createAnswer(answer);
         return response;
     }
 

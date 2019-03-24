@@ -37,7 +37,7 @@ $(document).ready(function () {
             function (jsonResult) {
                 console.log(jsonResult);
                 if (jsonResult.status === 200) {
-                    overhang("success", "成功发布问题！")
+                    window.location.href = "http://localhost/content.html?type=question&page=0&id=" + jsonResult.body.id;
                 } else {
                     overhang("error", "创建问题失败，请重试。");
                 }
@@ -103,10 +103,11 @@ function initUserData(user) {
 }
 
 (function ($) {
-    $.getUrlParam = function (name,def) {
+    $.getUrlParam = function (name, def) {
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         let r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return def;
+        if (r != null) return unescape(r[2]);
+        return def;
     }
 })(jQuery);
 
@@ -125,4 +126,61 @@ function switchTab(tab) {
             window.location.href = "http://localhost/home.html?tab=article&page=0";
             break;
     }
+}
+
+let currentCreateAnswerBtn;
+let currentEditor;
+
+function createAnswer(e) {
+    if (e === currentCreateAnswerBtn && currentEditor != null) return;
+    removeEditor();
+    $(e).parents('.box-body').append("<textarea id='editor'></textarea>");
+    currentCreateAnswerBtn = e;
+    currentEditor = new SimpleMDE({
+        element: document.getElementById("editor"),
+        spellChecker: false,
+        status: false,
+        toolbar: ["bold", "italic", "heading", "|", "quote",
+            "unordered-list", "ordered-list", "link", "image",
+            "table", "|", "preview",
+            {
+                name: "submit",
+                action: function (editor) {
+                    submitAnswer(editor.value(), $(e).parents('.box-solid').attr('id'));
+                },
+                className: "fa fa-check",
+                title: "发布",
+            },
+            {
+                name: "cancel",
+                action: removeEditor,
+                className: "fa fa-times",
+                title: "取消",
+            }],
+
+    });
+}
+
+function removeEditor() {
+    if (currentEditor != null) {
+        currentEditor.toTextArea();
+        currentEditor = null;
+    }
+    $('#editor').remove();
+}
+
+function submitAnswer(content, qid) {
+    const request = {
+        "qid": parseInt(qid),
+        "author": currentUser,
+        "content": content
+    };
+
+    ajaxPostJson(
+        "http://localhost/api/answer/create",
+        JSON.stringify(request),
+        function (response) {
+            window.location.href = "http://localhost/content.html?type=answer&id=" + response.body.id;
+        }
+    )
 }

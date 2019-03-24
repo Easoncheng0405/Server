@@ -16,8 +16,14 @@
 
 package com.jlu.zhihu.controller;
 
+import com.jlu.zhihu.model.Answer;
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.Response;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.options.MutableDataSet;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +35,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/render")
@@ -54,6 +61,27 @@ public class RenderController {
         result.msg = "render success";
         result.body = process("question", "question", question);
         return result;
+    }
+
+    @PostMapping("/answer")
+    public Response<String> answer(@RequestBody Answer answer) {
+        Response<String> result = new Response<>();
+        result.msg = "render success";
+        result.body = process("answer", "answer", answer);
+        return result;
+    }
+
+    @PostMapping("/md")
+    public Response<String> markdown(@RequestBody String md) {
+        MutableDataSet options = new MutableDataSet();
+        options.set(Parser.EXTENSIONS, Collections.singletonList(TablesExtension.create()));
+        Parser parser = Parser.builder(options).build();
+        HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        Node document = parser.parse(md);
+        Response<String> response = new Response<>();
+        response.msg = "render success";
+        response.body = renderer.render(document).replaceAll("<table>", "<table class=\"table table-bordered\">");
+        return response;
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -15,7 +15,6 @@
  */
 
 let currentPage;
-let currentEditor;
 let currentTab;
 const contentWrapper = $('#content-wrapper');
 const pager = $('#page');
@@ -99,7 +98,7 @@ function setPage(url) {
 
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
-    window.location.href = "home.html?tab=" + currentTab + "&page=" + i;
+    window.location.href = "http://localhost/home.html?tab=" + currentTab + "&page=" + i;
 }
 
 function previousPage() {
@@ -110,45 +109,4 @@ function previousPage() {
 function nextPage() {
     if ($('#next').hasClass("disabled")) return;
     loadPage(currentPage + 1);
-}
-
-
-let currentCreateAnswerBtn;
-
-function createAnswer(e) {
-    if (e === currentCreateAnswerBtn && currentEditor != null) return;
-    removeEditor();
-    $(e).parents('.box-body').append("<textarea id='editor'></textarea>");
-    currentCreateAnswerBtn = e;
-    currentEditor = new SimpleMDE({
-        element: document.getElementById("editor"),
-        spellChecker: false,
-        status: false,
-        toolbar: ["bold", "italic", "heading", "|", "quote",
-            "unordered-list", "ordered-list", "link", "image",
-            "table", "|", "preview",
-            {
-                name: "submit",
-                action: function customFunction(editor) {
-                    alert("发布")
-                },
-                className: "fa fa-check",
-                title: "发布",
-            },
-            {
-                name: "cancel",
-                action: removeEditor,
-                className: "fa fa-times",
-                title: "取消",
-            }],
-
-    });
-}
-
-function removeEditor() {
-    if (currentEditor != null) {
-        currentEditor.toTextArea();
-        currentEditor = null;
-    }
-    $('#editor').remove();
 }

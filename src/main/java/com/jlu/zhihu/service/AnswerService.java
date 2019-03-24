@@ -29,4 +29,8 @@ public interface AnswerService {
     List<Answer> findAllByQuestion(long qid);
 
     List<Answer> findAllByAuthor(int uid);
+
+    List<Answer> findAll();
+
+    Answer createAnswer(Answer answer);
 }

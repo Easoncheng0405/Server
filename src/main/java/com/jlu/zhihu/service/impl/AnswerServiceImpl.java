@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -46,7 +45,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer findById(long id) {
         Answer answer = answerRepository.findById(id);
-        answer.content = unCompressAnswer(answer.content);
+        answer.content = Encoder.unCompressContent(answer.content);
         return answer;
     }
 
@@ -54,7 +53,7 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findByAuthorAndQuestion(int uid, long qid) {
         User author = userRepository.findById(uid);
         Answer answer = answerRepository.findByAuthorAndQid(author, qid);
-        answer.content = unCompressAnswer(answer.content);
+        answer.content = Encoder.unCompressContent(answer.content);
         return answer;
     }
 
@@ -62,7 +61,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAllByQuestion(long qid, Pageable pageable) {
         List<Answer> list = answerRepository.findByQid(qid, pageable);
         for (Answer answer : list) {
-            answer.content = unCompressAnswer(answer.content);
+            answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
     }
@@ -72,7 +71,7 @@ public class AnswerServiceImpl implements AnswerService {
         User author = userRepository.findById(uid);
         List<Answer> list = answerRepository.findByAuthor(author);
         for (Answer answer : list) {
-            answer.content = unCompressAnswer(answer.content);
+            answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
     }
@@ -81,7 +80,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAll() {
         List<Answer> list = answerRepository.findAll();
         for (Answer answer : list) {
-            answer.content = unCompressAnswer(answer.content);
+            answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
     }
@@ -89,7 +88,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer createAnswer(Answer answer) {
         String temp = answer.content;
-        answer.content = compressAnswer(answer.content);
+        answer.content = Encoder.compressContent(answer.content);
         answer = answerRepository.save(answer);
         answer.content = temp;
         return answer;
@@ -98,14 +97,5 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public int countByQuestion(long qid) {
         return answerRepository.countByQid(qid);
-    }
-
-
-    private String compressAnswer(String content) {
-        return Base64.getEncoder().encodeToString(Encoder.compress(content));
-    }
-
-    private String unCompressAnswer(String content) {
-        return new String(Encoder.uncompress(Base64.getDecoder().decode(content)));
     }
 }

@@ -13,6 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+let submitOrSave = false;
 
 const editor = new SimpleMDE({
     element: document.getElementById("editor"),
@@ -52,7 +53,7 @@ function resize() {
 
 function submit() {
     let title = $('#title').val();
-    let content = editor.value();
+    const content = editor.value();
     if (title.length < 10 || title.length > 50) {
         overhang("error", "标题的长度在10到50个字符之间");
         return;
@@ -61,14 +62,29 @@ function submit() {
         overhang("error", "内容的长度在100到10000个字符之间");
         return;
     }
-    let mdContent = editor.markdown(content);
-    alert(mdContent);
+
+    const request = {
+        "title": title,
+        "author": currentUser,
+        "content": content
+    };
+
+    ajaxPostJson(
+        "/api/article/create",
+        JSON.stringify(request),
+        function (response) {
+            submitOrSave = true;
+            window.location.href = "http://localhost/content.html?type=article&id=" + response.body.id;
+        }
+    )
 }
 
 function save() {
+    submitOrSave = true;
     alert("保存")
 }
 
 window.onbeforeunload = function () {
-    return confirm("确定离开此页面吗？未保存的改动将会丢失。");
+    if (!submitOrSave)
+        return confirm("确定离开此页面吗？未保存的改动将会丢失。");
 };

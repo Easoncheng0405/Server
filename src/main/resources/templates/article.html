@@ -1,0 +1,31 @@
+<div class="box box-solid" th:id="${article.id}">
+    <div class="box-header with-border">
+        <a href="#" th:href="@{'http://localhost/content.html?type=article&id='+${article.id}}"
+           th:text="${article.title}" class="link-black" style="font-size: 25px;color: black"></a>
+    </div>
+    <div class="box-body">
+        <div class="post">
+            <div class="user-block">
+                <img class="img-circle" th:src="${article.author.image}"
+                     alt="user image">
+                <span class="username"><a href="#" class="link-black" th:text="${article.author.name}"></a></span>
+                <span th:text="${article.author.sign}" class="description"></span>
+
+            </div>
+            <hr>
+            <div th:utext="${article.content}" id="article-body" style="color: #4a4a4a; font-size: 18px"></div>
+            <hr>
+            <ul class="list-inline" style="margin-top: 10px">
+                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up fa-lg" th:text="'  '+${article.agree}+' 赞同'"></i></a></li>
+                <li><a href="#" class="link-black"><i class="fa fa-star-o fa-lg" th:text="'  '+${article.collect}+' 收藏'"></i></a></li>
+                <li class="pull-right">
+                    <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg" th:text="'  '+${article.comment}+' 评论'"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="添加的评论">
+            <a href="#" class="input-group-addon"><i class="fa fa-comment-o fa-lg"></i></a>
+        </div>
+    </div>
+</div>

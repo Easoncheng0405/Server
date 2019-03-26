@@ -19,37 +19,29 @@ package com.jlu.zhihu.model;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
-    @Column(length = 12)
-    public String name = "知乎刘看山";
+    @OneToOne
+    public User author;
 
-    @Column(unique = true, length = 32, nullable = false)
-    public String email;
+    public long st;
 
-    @Column(length = 32, nullable = false)
-    public String password;
+    public String title;
 
-    public String image = "http://localhost/image/avatar.jpeg";
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    public String content;
 
-    @Column(length = 25)
-    public String sign = "发现更大的世界.";
+    // agree count
+    public int agree;
 
-    /* register time in millis */
-    public long st = System.currentTimeMillis();
+    // comment count
+    public int comment;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", st=" + st +
-                '}';
-    }
+    // collect count
+    public int collect;
 }

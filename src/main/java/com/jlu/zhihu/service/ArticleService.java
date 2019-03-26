@@ -14,23 +14,17 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.service;
 
-import javax.persistence.*;
+import com.jlu.zhihu.model.Article;
 
-@Entity
-@SuppressWarnings("unused")
-public class Comment {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+public interface ArticleService {
 
-    public long answerId;
+    Article findById(int id);
 
-    public int articleId;
+    List<Article> findAllByAuthor(int aid);
 
-    public String content;
-
-    public int agree;
+    Article createArticle(Article article);
 }

@@ -29,6 +29,9 @@ function loadData() {
         case "answer":
             loadAnswer();
             break;
+        case "article":
+            loadArticle(id);
+            break;
     }
 }
 
@@ -102,4 +105,21 @@ function setPage(qid) {
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
     window.location.href = "http://localhost/content.html?type=" + type + "&page=" + i;
+}
+
+function loadArticle(aid) {
+    ajaxGetJson(
+        "http://localhost/api/article/" + aid,
+        function (response) {
+            ajaxPostJson(
+                "/api/render/article",
+                JSON.stringify(response.body),
+                function (response) {
+                    contentWrapper.append(response.body);
+                    $('#article-body img').each(function () {
+                        $(this).parent().css({'text-align': 'center'});
+                    })
+                });
+        }
+    );
 }

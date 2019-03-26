@@ -14,23 +14,17 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.repository;
 
-import javax.persistence.*;
+import com.jlu.zhihu.model.Article;
+import com.jlu.zhihu.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Entity
-@SuppressWarnings("unused")
-public class Comment {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
-    public long answerId;
+    Article findById(int id);
 
-    public int articleId;
-
-    public String content;
-
-    public int agree;
+    List<Article> findAllByAuthor(User author);
 }

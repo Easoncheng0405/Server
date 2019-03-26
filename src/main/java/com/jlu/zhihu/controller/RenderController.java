@@ -17,9 +17,18 @@
 package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Answer;
+import com.jlu.zhihu.model.Article;
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.Response;
+import com.vladsch.flexmark.Extension;
+import com.vladsch.flexmark.ext.anchorlink.AnchorLink;
+import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
+import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
+import com.vladsch.flexmark.ext.emoji.EmojiExtension;
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
+import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
+import com.vladsch.flexmark.ext.toc.TocExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
@@ -42,6 +51,7 @@ import java.util.Collections;
 public class RenderController {
 
     private final ThymeleafViewResolver resolver;
+    private static final Iterable<Extension> EXTENSIONS = Collections.singletonList(TablesExtension.create());
 
     public RenderController(ThymeleafViewResolver resolver) {
         this.resolver = resolver;
@@ -72,9 +82,18 @@ public class RenderController {
         return result;
     }
 
+    @PostMapping("/article")
+    public Response<String> article(@RequestBody Article article) {
+        article.content = markdown(article.content);
+        Response<String> result = new Response<>();
+        result.msg = "render success";
+        result.body = process("article", "article", article);
+        return result;
+    }
+
     private String markdown(String md) {
         MutableDataSet options = new MutableDataSet();
-        options.set(Parser.EXTENSIONS, Collections.singletonList(TablesExtension.create()));
+        options.set(Parser.EXTENSIONS, EXTENSIONS);
         Parser parser = Parser.builder(options).build();
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
         Node document = parser.parse(md);

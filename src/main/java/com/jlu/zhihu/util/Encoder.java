@@ -20,10 +20,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class Encoder {
+
+    private Encoder(){
+        throw new AssertionError("no com.jlu.zhihu.util.Encoder for you!");
+    }
 
     public static String md5(String str) {
         try {
@@ -35,7 +40,7 @@ public class Encoder {
         return str;
     }
 
-    public static byte[] compress(String str) {
+    private static byte[] compress(String str) {
         if (str == null || str.length() == 0) {
             return null;
         }
@@ -50,21 +55,29 @@ public class Encoder {
         return out.toByteArray();
     }
 
-    public static byte[] uncompress(byte[] bytes) {
+    private static byte[] uncompress(byte[] bytes) {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         try {
-            GZIPInputStream ungzip = new GZIPInputStream(in);
+            GZIPInputStream unGzip = new GZIPInputStream(in);
             byte[] buffer = new byte[256];
             int n;
-            while ((n = ungzip.read(buffer)) >= 0) {
+            while ((n = unGzip.read(buffer)) >= 0) {
                 out.write(buffer, 0, n);
             }
         } catch (Exception ignore) {
         }
         return out.toByteArray();
+    }
+
+    public static String compressContent(String content) {
+        return Base64.getEncoder().encodeToString(compress(content));
+    }
+
+    public static String unCompressContent(String content) {
+        return new String(uncompress(Base64.getDecoder().decode(content)));
     }
 }

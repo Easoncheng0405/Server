@@ -20,6 +20,9 @@ import com.jlu.zhihu.model.Answer;
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +47,7 @@ public class AnswerController {
     }
 
     @GetMapping("/all")
-    public Response<List<Answer>> all(){
+    public Response<List<Answer>> all() {
         Response<List<Answer>> response = new Response<>();
         response.body = answerService.findAll();
         response.msg = "find " + response.body.size() + " answers.";
@@ -60,15 +63,17 @@ public class AnswerController {
     }
 
     @GetMapping("/question/{qid}")
-    public Response<List<Answer>> findAllByQuestion(@PathVariable long qid) {
+    public Response<List<Answer>> findAllByQuestion(@PathVariable long qid, int page) {
         Response<List<Answer>> response = new Response<>();
-        response.body = answerService.findAllByQuestion(qid);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page, 5, sort);
+        response.body = answerService.findAllByQuestion(qid, pageable);
         response.msg = "find " + response.body.size() + " answers.";
         return response;
     }
 
     @PostMapping("/create")
-    public Response<Answer> createAnswer(@RequestBody Answer answer){
+    public Response<Answer> createAnswer(@RequestBody Answer answer) {
         Response<Answer> response = new Response<>();
         response.body = answerService.createAnswer(answer);
         return response;

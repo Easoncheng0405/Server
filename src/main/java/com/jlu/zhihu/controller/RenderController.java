@@ -65,23 +65,20 @@ public class RenderController {
 
     @PostMapping("/answer")
     public Response<String> answer(@RequestBody Answer answer) {
+        answer.content = markdown(answer.content);
         Response<String> result = new Response<>();
         result.msg = "render success";
         result.body = process("answer", "answer", answer);
         return result;
     }
 
-    @PostMapping("/md")
-    public Response<String> markdown(@RequestBody String md) {
+    private String markdown(String md) {
         MutableDataSet options = new MutableDataSet();
         options.set(Parser.EXTENSIONS, Collections.singletonList(TablesExtension.create()));
         Parser parser = Parser.builder(options).build();
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
         Node document = parser.parse(md);
-        Response<String> response = new Response<>();
-        response.msg = "render success";
-        response.body = renderer.render(document).replaceAll("<table>", "<table class=\"table table-bordered\">");
-        return response;
+        return renderer.render(document).replaceAll("<table>", "<table class=\"table table-bordered\">");
     }
 
     @SuppressWarnings("ConstantConditions")

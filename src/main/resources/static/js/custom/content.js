@@ -23,7 +23,7 @@ function loadData() {
     switch (type) {
         case "question":
             loadQuestion(id);
-            loadMore();
+            loadMore(id);
             break;
         case "answer":
             loadAnswer();
@@ -31,8 +31,9 @@ function loadData() {
     }
 }
 
-function loadQuestion(_id) {
+function loadQuestion(qid) {
     ajaxGetJson(
+        "/api/question/" + qid,
         function (response) {
             ajaxPostJson(
                 "/api/render/question",
@@ -50,31 +51,28 @@ function loadAnswer() {
         "http://localhost/api/answer/" + id,
         function (response) {
             loadQuestion(response.body.qid);
-            const content = response.body.content;
             ajaxPostJson(
                 "/api/render/answer",
                 JSON.stringify(response.body),
                 function (response) {
                     contentWrapper.append(response.body);
-                    loadAnswerBody(content)
                 });
         }
     );
 }
 
-function loadAnswerBody(answerBody) {
-    const body = $('#answer-body');
-    body.empty();
-    ajaxPostJson(
-        "/api/render/md",
-        "" + answerBody,
+function loadMore(qid) {
+    ajaxGetJson(
+        "http://localhost/api/answer/question/" + qid + "?page=" + page,
         function (response) {
-            console.log(JSON.stringify(response));
-            body.append(response.body);
+            for (let i = 0; i < response.body.length; i++) {
+                ajaxPostJson(
+                    "/api/render/answer",
+                    JSON.stringify(response.body[i]),
+                    function (response) {
+                        contentWrapper.append(response.body);
+                    });
+            }
         }
-    );
-}
-
-function loadMore() {
-
+    )
 }

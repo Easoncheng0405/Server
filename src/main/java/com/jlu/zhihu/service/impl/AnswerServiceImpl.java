@@ -23,6 +23,7 @@ import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.AnswerService;
 import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -58,8 +59,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> findAllByQuestion(long qid) {
-        List<Answer> list = answerRepository.findByQid(qid);
+    public List<Answer> findAllByQuestion(long qid, Pageable pageable) {
+        List<Answer> list = answerRepository.findByQid(qid, pageable);
         for (Answer answer : list) {
             answer.content = unCompressAnswer(answer.content);
         }

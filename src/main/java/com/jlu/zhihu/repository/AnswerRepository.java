@@ -17,8 +17,8 @@
 package com.jlu.zhihu.repository;
 
 import com.jlu.zhihu.model.Answer;
-import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +29,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     List<Answer> findByAuthor(User author);
 
-    List<Answer> findByQid(long qid);
+    List<Answer> findByQid(long qid, Pageable pageable);
 
     Answer findById(long id);
 
-    Answer findByAuthorAndQid(User author,long qid);
+    Answer findByAuthorAndQid(User author, long qid);
 }

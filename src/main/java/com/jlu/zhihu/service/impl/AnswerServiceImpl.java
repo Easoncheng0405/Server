@@ -95,6 +95,11 @@ public class AnswerServiceImpl implements AnswerService {
         return answer;
     }
 
+    @Override
+    public int countByQuestion(long qid) {
+        return answerRepository.countByQid(qid);
+    }
+
 
     private String compressAnswer(String content) {
         return Base64.getEncoder().encodeToString(Encoder.compress(content));

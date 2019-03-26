@@ -34,4 +34,6 @@ public interface AnswerService {
     List<Answer> findAll();
 
     Answer createAnswer(Answer answer);
+
+    int countByQuestion(long qid);
 }

@@ -62,6 +62,14 @@ public class AnswerController {
         return response;
     }
 
+    @GetMapping("/count/{qid}")
+    public Response<Integer> countByQuestion(@PathVariable long qid){
+        Response<Integer> response = new Response<>();
+        response.body = answerService.countByQuestion(qid);
+        response.msg = "find" + response.body + "answers.";
+        return response;
+    }
+
     @GetMapping("/question/{qid}")
     public Response<List<Answer>> findAllByQuestion(@PathVariable long qid, int page) {
         Response<List<Answer>> response = new Response<>();

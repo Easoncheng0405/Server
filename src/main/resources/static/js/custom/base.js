@@ -111,6 +111,8 @@ function initUserData(user) {
     }
 })(jQuery);
 
+let currentPage = parseInt($.getUrlParam("page", "0"));
+
 function switchTab(tab) {
     switch (tab.innerText) {
         case " 推荐":
@@ -185,19 +187,12 @@ function submitAnswer(content, qid) {
     )
 }
 
+function previousPage() {
+    if ($('#previous').hasClass("disabled")) return;
+    loadPage(currentPage - 1);
+}
 
-/**
- * @return {string}
- */
-function GetUrlRelativePath() {
-    let url = document.location.toString();
-    let arrUrl = url.split("//");
-
-    let start = arrUrl[1].indexOf("/");
-    let relUrl = arrUrl[1].substring(start);
-
-    if (relUrl.indexOf("?") !== -1) {
-        relUrl = relUrl.split("?")[0];
-    }
-    return relUrl;
+function nextPage() {
+    if ($('#next').hasClass("disabled")) return;
+    loadPage(currentPage + 1);
 }

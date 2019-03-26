@@ -14,7 +14,6 @@
  *    limitations under the License.
  */
 
-let currentPage;
 let currentTab;
 const contentWrapper = $('#content-wrapper');
 const pager = $('#page');
@@ -77,7 +76,7 @@ function loadNormalQuestion() {
 
 function setPage(url) {
     pager.empty();
-    pager.append("<li id='previous' onclick='previousPage()' class=\"paginate_button previous\"><a>上一页</a></li>\n");
+    pager.append("<li id='previous' onclick='previousPage()' class='paginate_button previous'><a>上一页</a></li>\n");
     ajaxGetJson(
         "/api/" + url + "/count",
         function (data) {
@@ -89,7 +88,7 @@ function setPage(url) {
                 li = li + "\"><a onclick='loadPage(" + i + ")'>" + (i + 1) + "</a></li>\n";
                 pager.append(li);
             }
-            pager.append("<li id='next' onclick='nextPage()' class=\"paginate_button next\"><a href=\"#\">下一页</a></li>\n");
+            pager.append("<li id='next' onclick='nextPage()' class='paginate_button next'><a>下一页</a></li>\n");
             if (currentPage === 0) $('#previous').addClass("disabled");
             if (currentPage >= pages - 1) $('#next').addClass("disabled");
         }
@@ -99,14 +98,4 @@ function setPage(url) {
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
     window.location.href = "http://localhost/home.html?tab=" + currentTab + "&page=" + i;
-}
-
-function previousPage() {
-    if ($('#previous').hasClass("disabled")) return;
-    loadPage(currentPage - 1);
-}
-
-function nextPage() {
-    if ($('#next').hasClass("disabled")) return;
-    loadPage(currentPage + 1);
 }

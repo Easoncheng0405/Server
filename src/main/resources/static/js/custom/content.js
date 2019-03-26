@@ -15,9 +15,10 @@
  */
 
 const type = $.getUrlParam("type", "question");
-const page = parseInt($.getUrlParam("page", "0"));
 const contentWrapper = $('#content-wrapper');
 const id = $.getUrlParam("id", "1");
+
+const pager = $('#page');
 
 function loadData() {
     switch (type) {
@@ -63,8 +64,9 @@ function loadAnswer() {
 
 function loadMore(qid) {
     ajaxGetJson(
-        "http://localhost/api/answer/question/" + qid + "?page=" + page,
+        "http://localhost/api/answer/question/" + qid + "?page=" + currentPage,
         function (response) {
+            setPage(qid);
             for (let i = 0; i < response.body.length; i++) {
                 ajaxPostJson(
                     "/api/render/answer",
@@ -74,5 +76,30 @@ function loadMore(qid) {
                     });
             }
         }
-    )
+    );
+}
+
+function setPage(qid) {
+    pager.empty();
+    pager.append("<li id='previous' onclick='previousPage()' class='paginate_button previous'><a>上一页</a></li>\n");
+    ajaxGetJson(
+        "/api/answer/count/" + qid,
+        function (data) {
+            let pages = data.body / 5;
+            for (let i = 0; i < pages; i = i + 1) {
+                let li = "<li class=\"paginate_button ";
+                if (currentPage === i)
+                    li = li + "active";
+                li = li + "\"><a onclick='loadPage(" + i + ")'>" + (i + 1) + "</a></li>\n";
+                pager.append(li);
+            }
+            pager.append("<li id='next' onclick='nextPage()' class='paginate_button next'><a>下一页</a></li>\n");
+            if (currentPage === 0) $('#previous').addClass("disabled");
+            if (currentPage >= pages - 1) $('#next').addClass("disabled");
+        });
+}
+
+function loadPage(i) {
+    if (currentPage === i || i < 0) return;
+    window.location.href = "http://localhost/content.html?type=" + type + "&page=" + i;
 }

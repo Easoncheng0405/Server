@@ -29,7 +29,8 @@ function loadData() {
             loadNormalQuestion();
             break;
         case "idea":
-            alert("想法");
+            $('#tab-idea').addClass('active');
+            loadIdea();
             break;
         case "article":
             alert("文章");
@@ -75,6 +76,11 @@ function loadNormalQuestion() {
         }
     );
     setPage("/api/question/count");
+}
+
+function loadIdea() {
+    contentWrapper.empty();
+    contentWrapper.load("http://localhost/idea.html");
 }
 
 function loadPage(i) {

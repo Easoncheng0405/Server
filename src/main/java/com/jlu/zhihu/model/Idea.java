@@ -19,20 +19,20 @@ package com.jlu.zhihu.model;
 import javax.persistence.*;
 
 @Entity
-@SuppressWarnings("unused")
-public class Comment {
+public class Idea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
-
-    public long answerId;
-
-    public int articleId;
-
-    public int ideaId;
+    public int id;
 
     public String content;
 
+    @OneToOne
+    public User author;
+
+    public long st;
+
     public int agree;
+
+    public int comments;
 }

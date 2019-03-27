@@ -77,8 +77,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> findAll() {
-        List<Answer> list = answerRepository.findAll();
+    public List<Answer> findAll(Pageable pageable) {
+        List<Answer> list = answerRepository.findAll(pageable).getContent();
         for (Answer answer : list) {
             answer.content = Encoder.unCompressContent(answer.content);
         }
@@ -97,5 +97,15 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public int countByQuestion(long qid) {
         return answerRepository.countByQid(qid);
+    }
+
+    @Override
+    public long countAll() {
+        return answerRepository.count();
+    }
+
+    @Override
+    public Answer findFirstByQuestion(long qid) {
+        return answerRepository.findFirstByQid(qid);
     }
 }

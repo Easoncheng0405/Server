@@ -99,6 +99,8 @@ let currentUser;
 function initUserData(user) {
     currentUser = user;
     $('#sidebar-avatar').attr("src", user.image);
+    $('#sidebar-name').text(user.name);
+    $('#sidebar-sign').text(user.sign);
     loadData();
 }
 
@@ -183,6 +185,27 @@ function submitAnswer(content, qid) {
         JSON.stringify(request),
         function (response) {
             window.location.href = "http://localhost/content.html?type=answer&id=" + response.body.id;
+        }
+    )
+}
+
+function setPage(url) {
+    pager.empty();
+    pager.append("<li id='previous' onclick='previousPage()' class='paginate_button previous'><a>上一页</a></li>\n");
+    ajaxGetJson(
+        url,
+        function (data) {
+            let pages = data.body / 5;
+            for (let i = 0; i < pages; i = i + 1) {
+                let li = "<li class=\"paginate_button ";
+                if (currentPage === i)
+                    li = li + "active";
+                li = li + "\"><a onclick='loadPage(" + i + ")'>" + (i + 1) + "</a></li>\n";
+                pager.append(li);
+            }
+            pager.append("<li id='next' onclick='nextPage()' class='paginate_button next'><a>下一页</a></li>\n");
+            if (currentPage === 0) $('#previous').addClass("disabled");
+            if (currentPage >= pages - 1) $('#next').addClass("disabled");
         }
     )
 }

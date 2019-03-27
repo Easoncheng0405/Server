@@ -30,6 +30,8 @@ public class Answer {
     public long qid;
 
 
+    public String title;
+
     @OneToOne
     public User author;
 

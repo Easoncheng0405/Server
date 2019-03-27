@@ -36,4 +36,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Answer findByAuthorAndQid(User author, long qid);
 
     int countByQid(long qid);
+
+    Answer findFirstByQid(long qid);
 }

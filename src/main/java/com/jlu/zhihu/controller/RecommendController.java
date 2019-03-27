@@ -16,19 +16,45 @@
 
 package com.jlu.zhihu.controller;
 
+import com.jlu.zhihu.model.Recommend;
 import com.jlu.zhihu.model.Response;
+import com.jlu.zhihu.service.RecommendService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/recommend")
 public class RecommendController {
 
+
+    private final RecommendService recommendService;
+
+    @Autowired
+    public RecommendController(RecommendService recommendService) {
+        this.recommendService = recommendService;
+    }
+
     @GetMapping("/count")
-    public Response<Integer> countAll() {
-        Response<Integer> response = new Response<>();
-        response.body = 1;
+    public Response<Long> countAll() {
+        Response<Long> response = new Response<>();
+        response.body = recommendService.countAll();
+        return response;
+    }
+
+    @GetMapping("/all")
+    public Response<List<Recommend>> all(@RequestParam int page) {
+        Pageable pageable = PageRequest.of(page, 5, new Sort(Sort.Direction.ASC, "id"));
+        Response<List<Recommend>> response = new Response<>();
+        response.body = recommendService.findAll(pageable);
+        response.msg = "find " + response.body.size() + " answers.";
         return response;
     }
 

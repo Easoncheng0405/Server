@@ -16,28 +16,14 @@
 
 package com.jlu.zhihu.service;
 
-import com.jlu.zhihu.model.Answer;
+import com.jlu.zhihu.model.Recommend;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface AnswerService {
-
-    Answer findById(long id);
-
-    Answer findByAuthorAndQuestion(int uid, long qid);
-
-    List<Answer> findAllByQuestion(long qid, Pageable pageable);
-
-    List<Answer> findAllByAuthor(int uid);
-
-    List<Answer> findAll(Pageable pageable);
-
-    Answer createAnswer(Answer answer);
-
-    int countByQuestion(long qid);
+public interface RecommendService {
 
     long countAll();
 
-    Answer findFirstByQuestion(long qid);
+    List<Recommend> findAll(Pageable pageable);
 }

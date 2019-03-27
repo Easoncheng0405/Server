@@ -1,32 +1,34 @@
 <div class="box box-solid">
     <div class="box-header with-border">
-        <a href="#" th:text="${recommend.title}" onclick="overhang('success','click')" class="link-black" style="font-size: 18px;color: black">
-            如何看待中国民航局停止所有波音737Max商业飞行？</a>
+        <a href="#" th:text="${recommend.title}"
+           th:href="@{'http://localhost/content.html?type=question&page=0&id='+${recommend.qid}}"
+           class="link-black" style="font-size: 18px;color: black"></a>
     </div>
     <div class="box-body">
         <div class="post">
             <div class="user-block">
-                <img class="img-circle" src="/image/avatar.jpeg"
+                <img class="img-circle" th:src="${recommend.author.image}"
                      alt="user image">
                 <div class="btn-group pull-right" style="margin-right: 10px">
                     <button class="btn btn-default">关注问题</button>
                     <button class="btn btn-default">撰写答案</button>
                 </div>
-                <span class="username"><a href="#" class="link-black">知乎刘看山</a></span>
-                <span class="description">发现更大的世界 - 5小时前</span>
+                <span class="username"><a href="#" class="link-black" th:text="${recommend.author.name}"></a></span>
+                <span class="description" th:text="${recommend.author.sign}"></span>
 
             </div>
-            <div id="content" style="color: #4a4a4a; font-size: 18px">
-                我们清楚，我们的工作性命攸关，因此我们团队每天都带着强烈的使命感拥抱这一责任。在波音，我们的目标是让家庭成员、
-                朋友以及相亲相爱之人通过我们的商用飞机能够聚在一起，当然前提是安全。埃塞俄比亚航空302号航班以及狮航610航班遭遇的悲痛损失，
-                影响着我们每个人，也让各国及相关的人们共同面对悲伤。我们心情很沉重，我们再次对航班乘客及机组成员的亲人表达深切的同情...
+            <div id="content" th:utext="${recommend.summary}" style="color: #4a4a4a; font-size: 18px">
             </div>
             <ul class="list-inline" style="margin-top: 10px">
-                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up fa-lg margin-r-5"></i>139赞同</a></li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o fa-lg margin-r-5"></i>12收藏</a></li>
+                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up fa-lg"
+                                                      th:text="'  '+${recommend.agree}+' 赞同'"></i></a></li>
+                <li><a href="#" class="link-black"><i class="fa fa-star-o fa-lg"
+                                                      th:text="'  '+${recommend.collect}+' 收藏'"></i></a></li>
                 <li class="pull-right">
-                    <a href="#" class="link-black margin-r-5">查看原答案</a>
-                    <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg margin-r-5"></i>5评论</a>
+                    <a th:href="@{'http://localhost/content.html?type=answer&id='+${recommend.aid}}"
+                       class="link-black margin-r-5">查看原答案</a>
+                    <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg margin-r-5"
+                                                      th:text="'  '+${recommend.comment}+' 评论'"></i></a>
                 </li>
             </ul>
             <div class="input-group">

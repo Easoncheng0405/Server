@@ -16,10 +16,10 @@
             <div th:utext="${article.content}" id="article-body" style="color: #4a4a4a; font-size: 18px"></div>
             <hr>
             <ul class="list-inline" style="margin-top: 10px">
-                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up fa-lg" th:text="'  '+${article.agree}+' 赞同'"></i></a></li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o fa-lg" th:text="'  '+${article.collect}+' 收藏'"></i></a></li>
+                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up" th:text="'  '+${article.agree}+' 赞同'"></i></a></li>
+                <li><a href="#" class="link-black"><i class="fa fa-star-o" th:text="'  '+${article.collect}+' 收藏'"></i></a></li>
                 <li class="pull-right">
-                    <a href="#" class="link-black"><i class="fa fa-comments-o fa-lg" th:text="'  '+${article.comment}+' 评论'"></i></a>
+                    <a href="#" class="link-black"><i class="fa fa-comments-o" th:text="'  '+${article.comment}+' 评论'"></i></a>
                 </li>
             </ul>
         </div>

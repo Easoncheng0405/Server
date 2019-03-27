@@ -57,9 +57,4 @@ public class RecommendController {
         response.msg = "find " + response.body.size() + " answers.";
         return response;
     }
-
-    @GetMapping("/error")
-    public void test500(){
-        throw new RuntimeException();
-    }
 }

@@ -17,6 +17,7 @@
 package com.jlu.zhihu.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @SuppressWarnings("unused")
@@ -26,13 +27,16 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    public long answerId;
-
-    public int articleId;
-
-    public int ideaId;
-
     public String content;
 
+    @OneToOne
+    public User author;
+
     public int agree;
+
+    public long st = System.currentTimeMillis();
+
+    public String getCommentTime(){
+        return new java.text.SimpleDateFormat("MM月dd日 HH:mm").format(new Date(st));
+    }
 }

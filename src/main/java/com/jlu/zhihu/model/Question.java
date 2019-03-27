@@ -36,6 +36,8 @@ public class Question {
     @OneToOne
     public User author;
 
+    public long st = System.currentTimeMillis();
+
     // answer count
     public int answer;
 

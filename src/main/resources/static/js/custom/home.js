@@ -80,10 +80,64 @@ function loadNormalQuestion() {
 
 function loadIdea() {
     contentWrapper.empty();
-    contentWrapper.load("http://localhost/idea.html");
+    ajaxGetJson(
+        "http://localhost/api/idea/all?page=" + currentPage,
+        function (data) {
+            ajaxPostJson(
+                "/api/render/idea",
+                JSON.stringify(data.body),
+                function (response) {
+                    contentWrapper.append(response.body);
+                    $('#idea-form').submit(function () {
+                        const content = $("#idea-content").val();
+                        if (content.length === 0) {
+                            overhang("error", "不能发布空的动态。");
+                            return;
+                        }
+                        const idea = {
+                            "content": content,
+                            "author": currentUser,
+                        };
+                        ajaxPostJson(
+                            "http://localhost/api/idea/create",
+                            JSON.stringify(idea),
+                            function (jsonResult) {
+                                if (jsonResult.status === 200) {
+                                    window.location.href = "http://localhost/home.html?tab=idea&page=0";
+                                } else {
+                                    overhang("error", "发布想法失败。");
+                                }
+                            });
+                    });
+                });
+        }
+    );
+    setPage("/api/question/count");
 }
 
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
     window.location.href = "http://localhost/home.html?tab=" + currentTab + "&page=" + i;
+}
+
+function comment(form) {
+    const content = $(form).find('.input-sm').val();
+    if (content.length === 0) {
+        overhang("error", "不能发布空的评论。");
+        return;
+    }
+    const comment = {
+        "content": content,
+        "author": currentUser
+    };
+    ajaxPostJson(
+        "/api/idea/comment/" + form.id,
+        JSON.stringify(comment),
+        function (response) {
+            if (response.status === 200)
+                window.location.href = "http://localhost/home.html?tab=idea&page=" + currentPage;
+            else
+                overhang("error", "发表评论失败，请稍后再试。");
+        }
+    );
 }

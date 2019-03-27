@@ -17,6 +17,8 @@
 package com.jlu.zhihu.model;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Idea {
@@ -30,9 +32,24 @@ public class Idea {
     @OneToOne
     public User author;
 
-    public long st;
+    public long st = System.currentTimeMillis();
 
     public int agree;
 
-    public int comments;
+    public int comment;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    public List<Comment> comments;
+
+    public String getDateYMD() {
+        return new java.text.SimpleDateFormat("MM月dd日").format(new Date(st));
+    }
+
+    public String getDateHM() {
+        return new java.text.SimpleDateFormat("HH:mm:ss").format(new Date(st));
+    }
+
+    public String getMeteData() {
+        return String.format("%d 赞同 %d 评论", agree, comment);
+    }
 }

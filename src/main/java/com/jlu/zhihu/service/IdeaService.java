@@ -14,38 +14,21 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.service;
 
-import javax.persistence.*;
+import com.jlu.zhihu.model.Comment;
+import com.jlu.zhihu.model.Idea;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-@Entity
-public class Article {
+public interface IdeaService {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    long countAll();
 
-    @OneToOne
-    public User author;
+    List<Idea> findAll(Pageable pageable);
 
-    public long st = System.currentTimeMillis();
+    Idea createIdea(Idea idea);
 
-    public String title;
-
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    public String content;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    public List<Comment> comments;
-
-    // agree count
-    public int agree;
-
-    // comment count
-    public int comment;
-
-    // collect count
-    public int collect;
+    Idea createComment(int id, Comment comment);
 }

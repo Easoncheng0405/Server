@@ -35,6 +35,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/render")
@@ -79,6 +80,14 @@ public class RenderController {
         Response<String> result = new Response<>();
         result.msg = "render success";
         result.body = process("article", "article", article);
+        return result;
+    }
+
+    @PostMapping("idea")
+    public Response<String> idea(@RequestBody List<Idea> list) {
+        Response<String> result = new Response<>();
+        result.msg = "render success";
+        result.body = process("idea", "list", list);
         return result;
     }
 

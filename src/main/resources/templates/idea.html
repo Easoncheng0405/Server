@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <form id="idea-form" class="input-group" onsubmit="return false">
+            <input id="idea-content" class="form-control input-lg" placeholder="发表你的想法...">
+            <a href="#" class="input-group-addon"><i class="fa fa-star fa-lg"></i></a>
+        </form>
+        <ul style="margin-top: 15px" class="timeline" th:each="idea : ${list}">
+            <li class="time-label"><span class="bg-red" th:text="${idea.getDateYMD()}"></span></li>
+            <li>
+                <div class="timeline-item">
+                    <div class="box box-widget">
+                        <div class="box-header with-border">
+                            <div class="user-block">
+                                <img class="img-circle" th:src="${idea.author.image}" alt="User Image">
+                                <span class="username"><a href="#" th:text="${idea.author.name}"></a></span>
+                                <span class="description" th:text="${idea.author.sign}"></span>
+                            </div>
+                            <div class="box-tools margin-r-5" style="padding-top: 10px;">
+                                <a href="#" class="link-black" title="赞同此回答"><i class="fa fa-thumbs-up fa-lg"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <p th:text="${idea.content}"></p>
+                            <span class="text-muted" th:text="${idea.getDateHM()}"></span>
+                            <span class="pull-right text-muted" th:text="${idea.getMeteData()}"></span>
+                        </div>
+                        <div th:if="${idea.comments.size()} gt '0'" class="box-footer box-comments">
+                            <div class="box-comment"
+                                 th:each="comment : ${idea.comments}">
+                                <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image">
+                                <div class="comment-text" th:inline="text">
+                                    [[${comment.content}]]
+                                    <span class="username" th:src="${comment.author.name}"></span>
+                                    <span class="text-muted pull-right" th:text="${comment.getCommentTime()}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <form th:id="${idea.id}" action="#" method="post" onsubmit="comment(this);return false">
+                                <input type="text" class="form-control input-sm" placeholder="输入您的评论...">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

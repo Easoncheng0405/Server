@@ -38,7 +38,7 @@ public class TokenManager {
 
     public String generateToken(User user) {
         if (user == null) return null;
-        logger.debug("generate a token for user: " + user.email);
+        logger.debug("generate a token for user: " + user.name);
         cleanToken();
         String res = user.email + '-' + UUID.randomUUID().toString().replaceAll("-", "")
                 + '-' + System.currentTimeMillis();

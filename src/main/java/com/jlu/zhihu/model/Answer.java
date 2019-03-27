@@ -17,6 +17,7 @@
 package com.jlu.zhihu.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @SuppressWarnings("unused")
@@ -38,6 +39,9 @@ public class Answer {
     @Lob
     @Basic(fetch = FetchType.EAGER)
     public String content;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    public List<Comment> comments;
 
     // answer create time in millis
     public long st = System.currentTimeMillis();

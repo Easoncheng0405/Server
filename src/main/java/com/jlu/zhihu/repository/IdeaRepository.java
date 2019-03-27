@@ -14,38 +14,13 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.repository;
 
-import javax.persistence.*;
-import java.util.List;
+import com.jlu.zhihu.model.Idea;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Entity
-public class Article {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+public interface IdeaRepository extends JpaRepository<Idea,Integer> {
 
-    @OneToOne
-    public User author;
-
-    public long st = System.currentTimeMillis();
-
-    public String title;
-
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    public String content;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    public List<Comment> comments;
-
-    // agree count
-    public int agree;
-
-    // comment count
-    public int comment;
-
-    // collect count
-    public int collect;
+    Idea findIdeaById(int id);
 }

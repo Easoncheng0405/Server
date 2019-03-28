@@ -17,9 +17,12 @@
 package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Comment;
+import com.jlu.zhihu.model.ContentType;
 import com.jlu.zhihu.model.Idea;
+import com.jlu.zhihu.model.OperationType;
 import com.jlu.zhihu.repository.CommentRepository;
 import com.jlu.zhihu.repository.IdeaRepository;
+import com.jlu.zhihu.repository.MetaDataRepository;
 import com.jlu.zhihu.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -33,11 +36,15 @@ public class IdeaServiceImpl implements IdeaService {
 
     private final IdeaRepository ideaRepository;
     private final CommentRepository commentRepository;
+    private final MetaDataRepository metaDataRepository;
 
     @Autowired
-    public IdeaServiceImpl(IdeaRepository ideaRepository, CommentRepository commentRepository) {
+    public IdeaServiceImpl(IdeaRepository ideaRepository,
+                           CommentRepository commentRepository,
+                           MetaDataRepository metaDataRepository) {
         this.ideaRepository = ideaRepository;
         this.commentRepository = commentRepository;
+        this.metaDataRepository = metaDataRepository;
     }
 
     @Override
@@ -47,7 +54,11 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public List<Idea> findAll(Pageable pageable) {
-        return ideaRepository.findAll(pageable).getContent();
+        List<Idea> list = ideaRepository.findAll(pageable).getContent();
+        for (Idea idea : list) {
+            setMetaData(idea);
+        }
+        return list;
     }
 
     @Override
@@ -62,6 +73,15 @@ public class IdeaServiceImpl implements IdeaService {
         comment = commentRepository.save(comment);
         Idea idea = ideaRepository.findIdeaById(id);
         idea.comments.add(comment);
-        return ideaRepository.save(idea);
+        idea = ideaRepository.save(idea);
+        setMetaData(idea);
+        return idea;
+    }
+
+    private void setMetaData(Idea idea) {
+        idea.comment = idea.comments == null ? 0 : idea.comments.size();
+        idea.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.IDEA, OperationType.AGREE, idea.id
+        );
     }
 }

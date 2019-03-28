@@ -16,11 +16,10 @@
 
 package com.jlu.zhihu.service.impl;
 
-import com.jlu.zhihu.model.Article;
-import com.jlu.zhihu.model.Comment;
-import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.model.*;
 import com.jlu.zhihu.repository.ArticleRepository;
 import com.jlu.zhihu.repository.CommentRepository;
+import com.jlu.zhihu.repository.MetaDataRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.ArticleService;
 import com.jlu.zhihu.util.Encoder;
@@ -36,20 +35,24 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final MetaDataRepository metaDataRepository;
 
     @Autowired
     public ArticleServiceImpl(ArticleRepository articleRepository,
                               UserRepository userRepository,
-                              CommentRepository commentRepository) {
+                              CommentRepository commentRepository,
+                              MetaDataRepository metaDataRepository) {
         this.articleRepository = articleRepository;
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.metaDataRepository = metaDataRepository;
     }
 
 
     @Override
     public Article findById(int id) {
         Article article = articleRepository.findById(id);
+        setMetaData(article);
         article.content = Encoder.unCompressContent(article.content);
         return article;
     }
@@ -59,6 +62,7 @@ public class ArticleServiceImpl implements ArticleService {
         User author = userRepository.findById(aid);
         List<Article> list = articleRepository.findAllByAuthor(author);
         for (Article article : list) {
+            setMetaData(article);
             article.content = Encoder.unCompressContent(article.content);
         }
         return list;
@@ -66,13 +70,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article createArticle(Article article) {
+        setMetaData(article);
         article.content = Encoder.compressContent(article.content);
         return articleRepository.save(article);
     }
 
     @Override
     public Article recommend(Pageable pageable) {
-        Article article = articleRepository.findAll(pageable).getContent().get(0);
+        List<Article> list = articleRepository.findAll(pageable).getContent();
+        if (list.size() == 0) return null;
+        Article article = list.get(0);
+        setMetaData(article);
         article.content = Encoder.unCompressContent(article.content);
         return article;
     }
@@ -88,5 +96,15 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleRepository.findById(id);
         article.comments.add(comment);
         return articleRepository.save(article);
+    }
+
+    private void setMetaData(Article article) {
+        article.comment = article.comments == null ? 0 : article.comments.size();
+        article.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.ARTICLE, OperationType.AGREE, article.id
+        );
+        article.collect = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.ARTICLE, OperationType.COLLECT, article.id
+        );
     }
 }

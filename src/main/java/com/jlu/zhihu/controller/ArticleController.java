@@ -64,7 +64,7 @@ public class ArticleController {
     @GetMapping("/recommend")
     public Response<Article> findAll(@RequestParam int page) {
         Response<Article> response = new Response<>();
-        Pageable pageable = PageRequest.of(page, 1, new Sort(Sort.Direction.ASC, "agree"));
+        Pageable pageable = PageRequest.of(page, 1, new Sort(Sort.Direction.ASC, "id"));
         response.body = articleService.recommend(pageable);
         return response;
     }

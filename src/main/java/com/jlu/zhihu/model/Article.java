@@ -41,11 +41,14 @@ public class Article {
     public List<Comment> comments;
 
     // agree count
+    @Transient
     public int agree;
 
     // comment count
+    @Transient
     public int comment;
 
     // collect count
+    @Transient
     public int collect;
 }

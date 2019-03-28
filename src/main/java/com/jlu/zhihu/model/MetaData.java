@@ -19,18 +19,20 @@ package com.jlu.zhihu.model;
 import javax.persistence.*;
 
 @Entity
-@SuppressWarnings("unused")
-public class QuestionMeteData {
+public class MetaData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    public int uid;
+    @Enumerated(EnumType.ORDINAL)
+    public ContentType contentType;
 
-    public long qid;
+    @Enumerated(EnumType.ORDINAL)
+    public OperationType operationType;
 
-    public long aid;
+    public long iid;
 
-    public boolean focus;
+    @OneToOne
+    public User user;
 }

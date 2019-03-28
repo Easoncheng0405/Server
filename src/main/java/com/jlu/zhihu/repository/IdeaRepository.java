@@ -18,8 +18,9 @@ package com.jlu.zhihu.repository;
 
 import com.jlu.zhihu.model.Idea;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface IdeaRepository extends JpaRepository<Idea,Integer> {
 
     Idea findIdeaById(int id);

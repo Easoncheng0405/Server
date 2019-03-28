@@ -16,11 +16,10 @@
 
 package com.jlu.zhihu.service.impl;
 
-import com.jlu.zhihu.model.Answer;
-import com.jlu.zhihu.model.Comment;
-import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.model.*;
 import com.jlu.zhihu.repository.AnswerRepository;
 import com.jlu.zhihu.repository.CommentRepository;
+import com.jlu.zhihu.repository.MetaDataRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.AnswerService;
 import com.jlu.zhihu.util.Encoder;
@@ -36,20 +35,24 @@ public class AnswerServiceImpl implements AnswerService {
     private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
+    private final MetaDataRepository metaDataRepository;
 
     @Autowired
     public AnswerServiceImpl(UserRepository userRepository,
                              AnswerRepository answerRepository,
-                             CommentRepository commentRepository) {
+                             CommentRepository commentRepository,
+                             MetaDataRepository metaDataRepository) {
         this.userRepository = userRepository;
         this.answerRepository = answerRepository;
         this.commentRepository = commentRepository;
+        this.metaDataRepository = metaDataRepository;
     }
 
 
     @Override
     public Answer findById(long id) {
         Answer answer = answerRepository.findById(id);
+        setMetaData(answer);
         answer.content = Encoder.unCompressContent(answer.content);
         return answer;
     }
@@ -58,6 +61,7 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findByAuthorAndQuestion(int uid, long qid) {
         User author = userRepository.findById(uid);
         Answer answer = answerRepository.findByAuthorAndQid(author, qid);
+        setMetaData(answer);
         answer.content = Encoder.unCompressContent(answer.content);
         return answer;
     }
@@ -66,6 +70,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAllByQuestion(long qid, Pageable pageable) {
         List<Answer> list = answerRepository.findByQid(qid, pageable);
         for (Answer answer : list) {
+            setMetaData(answer);
             answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
@@ -76,6 +81,7 @@ public class AnswerServiceImpl implements AnswerService {
         User author = userRepository.findById(uid);
         List<Answer> list = answerRepository.findByAuthor(author);
         for (Answer answer : list) {
+            setMetaData(answer);
             answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
@@ -85,6 +91,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAll(Pageable pageable) {
         List<Answer> list = answerRepository.findAll(pageable).getContent();
         for (Answer answer : list) {
+            setMetaData(answer);
             answer.content = Encoder.unCompressContent(answer.content);
         }
         return list;
@@ -111,7 +118,10 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer findFirstByQuestion(long qid) {
-        return answerRepository.findFirstByQid(qid);
+        Answer answer = answerRepository.findFirstByQid(qid);
+        setMetaData(answer);
+        answer.content = Encoder.unCompressContent(answer.content);
+        return answer;
     }
 
     @Override
@@ -120,5 +130,15 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = answerRepository.findById(id);
         answer.comments.add(comment);
         return answerRepository.save(answer);
+    }
+
+    private void setMetaData(Answer answer) {
+        answer.comment = answer.comments == null ? 0 : answer.comments.size();
+        answer.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.ANSWER, OperationType.AGREE, answer.id
+        );
+        answer.collect = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.ANSWER, OperationType.COLLECT, answer.id
+        );
     }
 }

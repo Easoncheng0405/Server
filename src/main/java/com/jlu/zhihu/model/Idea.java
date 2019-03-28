@@ -34,8 +34,10 @@ public class Idea {
 
     public long st = System.currentTimeMillis();
 
+    @Transient
     public int agree;
 
+    @Transient
     public int comment;
 
     @OneToMany(fetch = FetchType.EAGER)

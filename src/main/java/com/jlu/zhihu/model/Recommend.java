@@ -16,8 +16,6 @@
 
 package com.jlu.zhihu.model;
 
-import com.jlu.zhihu.util.Encoder;
-
 public class Recommend {
 
     public long aid;
@@ -42,7 +40,7 @@ public class Recommend {
         recommend.aid = answer.id;
         recommend.qid = question.id;
         recommend.title = question.title;
-        recommend.summary = Encoder.unCompressContent(answer.content);
+        recommend.summary = answer.content;
         if (recommend.summary.length() > 200)
             recommend.summary = recommend.summary.substring(0, 200);
         recommend.author = answer.author;

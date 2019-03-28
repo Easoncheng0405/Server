@@ -30,7 +30,6 @@ public class Answer {
     // question id
     public long qid;
 
-
     public String title;
 
     @OneToOne
@@ -47,11 +46,14 @@ public class Answer {
     public long st = System.currentTimeMillis();
 
     // agree count
+    @Transient
     public int agree;
 
     // comment count
+    @Transient
     public int comment;
 
     // collect count
+    @Transient
     public int collect;
 }

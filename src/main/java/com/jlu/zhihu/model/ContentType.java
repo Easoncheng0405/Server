@@ -16,21 +16,27 @@
 
 package com.jlu.zhihu.model;
 
-import javax.persistence.*;
+public enum ContentType {
 
-@Entity
-@SuppressWarnings("unused")
-public class AnswerMeteData {
+    ARTICLE("article"),
+    ANSWER("answer"),
+    IDEA("idea");
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private String string;
 
-    public long aid;
+    ContentType(String s) {
+        this.string = s;
+    }
 
-    public int uid;
-
-    public boolean agree;
-
-    public boolean collect;
+    public static ContentType fromString(String s) {
+        switch (s) {
+            case "article":
+                return ARTICLE;
+            case "answer":
+                return ANSWER;
+            case "idea":
+                return IDEA;
+        }
+        return null;
+    }
 }

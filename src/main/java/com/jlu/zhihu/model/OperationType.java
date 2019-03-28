@@ -14,19 +14,29 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.repository;
+package com.jlu.zhihu.model;
 
-import com.jlu.zhihu.model.Article;
-import com.jlu.zhihu.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
+public enum OperationType {
+    AGREE("agree"),
+    COLLECT("collect"),
+    COMMENT("comment");
 
-@Repository
-public interface ArticleRepository extends JpaRepository<Article, Integer> {
+    private String string;
 
-    Article findById(int id);
+    OperationType(String s) {
+        this.string = s;
+    }
 
-    List<Article> findAllByAuthor(User author);
+    public static OperationType fromString(String s) {
+        switch (s) {
+            case "article":
+                return AGREE;
+            case "answer":
+                return COLLECT;
+            case "idea":
+                return COMMENT;
+        }
+        return null;
+    }
 }

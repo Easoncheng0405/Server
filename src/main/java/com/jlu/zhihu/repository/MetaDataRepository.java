@@ -16,17 +16,26 @@
 
 package com.jlu.zhihu.repository;
 
-import com.jlu.zhihu.model.Article;
+import com.jlu.zhihu.model.ContentType;
+import com.jlu.zhihu.model.MetaData;
+import com.jlu.zhihu.model.OperationType;
 import com.jlu.zhihu.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface ArticleRepository extends JpaRepository<Article, Integer> {
+public interface MetaDataRepository extends JpaRepository<MetaData, Long> {
 
-    Article findById(int id);
+    int countAllByContentTypeAndOperationTypeAndIid(
+            ContentType contentType,
+            OperationType operationType,
+            long iid
+    );
 
-    List<Article> findAllByAuthor(User author);
+    MetaData findByContentTypeAndOperationTypeAndUserAndIid(
+            ContentType contentType,
+            OperationType operationType,
+            User user,
+            long iid
+    );
 }

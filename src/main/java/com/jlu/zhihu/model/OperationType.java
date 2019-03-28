@@ -30,11 +30,11 @@ public enum OperationType {
 
     public static OperationType fromString(String s) {
         switch (s) {
-            case "article":
+            case "agree":
                 return AGREE;
-            case "answer":
+            case "collect":
                 return COLLECT;
-            case "idea":
+            case "comment":
                 return COMMENT;
         }
         return null;

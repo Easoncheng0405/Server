@@ -150,7 +150,7 @@ function createAnswer(e) {
             {
                 name: "submit",
                 action: function (editor) {
-                    submitAnswer(editor.value(), $(e).parents('.box-solid').attr('id'));
+                    submitAnswer(editor.value(), $(e).parents('.box-solid').attr('data-question-id'));
                 },
                 className: "fa fa-check",
                 title: "发布",
@@ -220,7 +220,7 @@ function nextPage() {
     loadPage(currentPage + 1);
 }
 
-function comment(url,form) {
+function comment(url, name, form) {
     const content = $(form).find('.input-sm').val();
     if (content.length === 0) {
         overhang("error", "不能发布空的评论。");
@@ -231,7 +231,7 @@ function comment(url,form) {
         "author": currentUser
     };
     ajaxPostJson(
-        url + form.id,
+        url + $(form).attr(name),
         JSON.stringify(comment),
         function (response) {
             if (response.status === 200)
@@ -240,4 +240,43 @@ function comment(url,form) {
                 overhang("error", "发表评论失败，请稍后再试。");
         }
     );
+}
+
+function postMetaData(url, name, count, e) {
+    ajaxPostJson(
+        url + $(e).attr(name),
+        JSON.stringify(currentUser),
+        function (response) {
+            if (response.status === 200) {
+                overhang("success", "已取消赞同");
+                $(e).addClass('link-black');
+                modifyCount(name, count, e, -1);
+            } else {
+                overhang("success", "已赞同");
+                $(e).removeClass('link-black');
+                modifyCount(name, count, e, 1);
+            }
+        }
+    )
+}
+
+function modifyCount(name, count, e, i) {
+    if ($(e).attr(name) === "idea") return;
+    let agree = parseInt($(e).attr(count)) + i;
+    $(e).attr(count, agree);
+    $(e).html("<i class='fa fa-thumbs-o-up'></i> " + agree + " 赞同 ")
+}
+
+function loadMetaData(url, id) {
+    ajaxPostJson(
+        url + id,
+        JSON.stringify(currentUser),
+        function (response) {
+            if (response.body === true) {
+                $('#' + id).removeClass('link-black');
+            } else {
+                $('#' + id).addClass('link-black');
+            }
+        }
+    )
 }

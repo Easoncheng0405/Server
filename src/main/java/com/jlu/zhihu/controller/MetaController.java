@@ -69,4 +69,19 @@ public class MetaController {
         response.body = metaData;
         return response;
     }
+
+    @PostMapping("/exist/{cType}/{oType}/{iid}")
+    public Response<Boolean> exist(@RequestBody User user,
+                                   @PathVariable String cType,
+                                   @PathVariable String oType,
+                                   @PathVariable long iid) {
+        Response<Boolean> response = new Response<>();
+        ContentType contentType = ContentType.fromString(cType);
+        OperationType operationType = OperationType.fromString(oType);
+        response.body = metaDataRepository.
+                findByContentTypeAndOperationTypeAndUserAndIid(
+                        contentType, operationType, user, iid
+                ) != null;
+        return response;
+    }
 }

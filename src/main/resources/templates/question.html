@@ -1,4 +1,4 @@
-<div class="box box-solid" th:id="${question.id}">
+<div class="box box-solid" th:attr="data-question-id=${question.id}">
     <div class="box-header with-border">
         <a href="#" th:href="@{'http://localhost/content.html?type=question&page=0&id='+${question.id}}"
            th:text="${question.title}" class="link-black" style="font-size: 18px;color: black"></a>

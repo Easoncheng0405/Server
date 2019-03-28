@@ -22,7 +22,6 @@ import javax.persistence.*;
 public class MetaData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
     @Enumerated(EnumType.ORDINAL)

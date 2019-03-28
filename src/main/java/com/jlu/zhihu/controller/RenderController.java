@@ -23,6 +23,7 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.util.options.MutableDataSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +43,10 @@ import java.util.List;
 public class RenderController {
 
     private final ThymeleafViewResolver resolver;
+
     private static final Iterable<Extension> EXTENSIONS = Collections.singletonList(TablesExtension.create());
 
+    @Autowired
     public RenderController(ThymeleafViewResolver resolver) {
         this.resolver = resolver;
     }
@@ -53,7 +56,7 @@ public class RenderController {
         Response<String> result = new Response<>();
         result.msg = "render success";
         recommend.summary = markdown(recommend.summary);
-        result.body = process("recommend", "recommend", recommend);
+        result.body = processArgs("recommend", "recommend", recommend);
         return result;
     }
 
@@ -61,7 +64,7 @@ public class RenderController {
     public Response<String> normalQuestion(@RequestBody Question question) {
         Response<String> result = new Response<>();
         result.msg = "render success";
-        result.body = process("question", "question", question);
+        result.body = processArgs("question", "question", question);
         return result;
     }
 
@@ -70,7 +73,7 @@ public class RenderController {
         answer.content = markdown(answer.content);
         Response<String> result = new Response<>();
         result.msg = "render success";
-        result.body = process("answer", "answer", answer);
+        result.body = processArgs("answer", "answer", answer);
         return result;
     }
 
@@ -79,7 +82,7 @@ public class RenderController {
         article.content = markdown(article.content);
         Response<String> result = new Response<>();
         result.msg = "render success";
-        result.body = process("article", "article", article);
+        result.body = processArgs("article", "article", article);
         return result;
     }
 
@@ -87,7 +90,7 @@ public class RenderController {
     public Response<String> idea(@RequestBody List<Idea> list) {
         Response<String> result = new Response<>();
         result.msg = "render success";
-        result.body = process("idea", "list", list);
+        result.body = processArgs("idea", "list", list);
         return result;
     }
 
@@ -101,7 +104,7 @@ public class RenderController {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private String process(String templateName, String argName, Object argValue) {
+    private String processArgs(String templateName, String argName, Object argValue) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();

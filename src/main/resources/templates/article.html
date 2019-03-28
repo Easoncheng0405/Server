@@ -1,4 +1,4 @@
-<div class="box box-solid" th:id="${article.id}">
+<div class="box box-solid">
     <div class="box-header with-border">
         <a href="#" th:href="@{'http://localhost/content.html?type=article&id='+${article.id}}"
            th:text="${article.title}" class="link-black" style="font-size: 25px;color: black"></a>
@@ -16,10 +16,19 @@
             <div th:utext="${article.content}" id="article-body" style="color: #4a4a4a; font-size: 18px"></div>
             <hr>
             <ul class="list-inline" style="margin-top: 10px">
-                <li><a href="#" class="link-black"><i class="fa fa-thumbs-o-up" th:text="'  '+${article.agree}+' 赞同'"></i></a></li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o" th:text="'  '+${article.collect}+' 收藏'"></i></a></li>
+                <li><a href="javascript:void(0)" th:attr="data-article-id=${article.id},data-article-agree=${article.agree}"
+                       class="link-black" th:id="${article.id}"
+                       onclick="postMetaData('/api/metadata/article/agree/','data-article-id','data-article-agree',this)">
+                    <i class="fa fa-thumbs-o-up" th:text="'  '+${article.agree}+' 赞同'"></i></a>
+                    <script th:inline="javascript">
+                        loadMetaData('/api/metadata/exist/article/agree/', [[${article.id}]]);
+                    </script>
+                </li>
+                <li><a href="#" class="link-black"><i class="fa fa-star-o" th:text="'  '+${article.collect}+' 收藏'"></i></a>
+                </li>
                 <li class="pull-right">
-                    <a href="#" class="link-black"><i class="fa fa-comments-o" th:text="'  '+${article.comment}+' 评论'"></i></a>
+                    <a href="#" class="link-black"><i class="fa fa-comments-o"
+                                                      th:text="'  '+${article.comment}+' 评论'"></i></a>
                 </li>
             </ul>
         </div>
@@ -30,14 +39,16 @@
             <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image">
             <div class="comment-text">
                 <span style="color:#444;font-weight:600" th:text="${comment.author.name}"></span>
-                <span class="text-muted pull-right" style="margin-right: 10px" th:text="${comment.getCommentTime()}"></span>
+                <span class="text-muted pull-right" style="margin-right: 10px"
+                      th:text="${comment.getCommentTime()}"></span>
                 <p th:text="${comment.content}"></p>
             </div>
         </div>
     </div>
 
     <div class="box-footer">
-        <form th:id="${article.id}" action="#" method="post" onsubmit="comment('/api/article/comment/',this);return false">
+        <form th:attr="data-article-id=${article.id}" action="#" method="post"
+              onsubmit="comment('/api/article/comment/','data-article-id',this);return false">
             <input type="text" class="form-control input-sm" placeholder="输入您的评论...">
         </form>
     </div>

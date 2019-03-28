@@ -119,6 +119,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer findFirstByQuestion(long qid) {
         Answer answer = answerRepository.findFirstByQid(qid);
+        if (answer == null) return null;
         setMetaData(answer);
         answer.content = Encoder.unCompressContent(answer.content);
         return answer;

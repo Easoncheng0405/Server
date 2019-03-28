@@ -121,29 +121,6 @@ function loadPage(i) {
     window.location.href = "http://localhost/home.html?tab=" + currentTab + "&page=" + i;
 }
 
-function comment(form) {
-    const content = $(form).find('.input-sm').val();
-    if (content.length === 0) {
-        overhang("error", "不能发布空的评论。");
-        return;
-    }
-    const comment = {
-        "content": content,
-        "author": currentUser
-    };
-    ajaxPostJson(
-        "/api/idea/comment/" + form.id,
-        JSON.stringify(comment),
-        function (response) {
-            if (response.status === 200)
-                window.location.href = "http://localhost/home.html?tab=idea&page=" + currentPage;
-            else
-                overhang("error", "发表评论失败，请稍后再试。");
-        }
-    );
-}
-
-
 function loadArticles() {
     ajaxGetJson(
         "http://localhost/api/article/recommend?page=" + currentPage,

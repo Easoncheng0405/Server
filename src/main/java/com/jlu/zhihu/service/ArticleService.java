@@ -17,6 +17,7 @@
 package com.jlu.zhihu.service;
 
 import com.jlu.zhihu.model.Article;
+import com.jlu.zhihu.model.Comment;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public interface ArticleService {
     Article recommend(Pageable pageable);
 
     long countAll();
+
+    Article createComment(Comment comment,int id);
 }

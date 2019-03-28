@@ -17,8 +17,10 @@
 package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Answer;
+import com.jlu.zhihu.model.Comment;
 import com.jlu.zhihu.model.User;
 import com.jlu.zhihu.repository.AnswerRepository;
+import com.jlu.zhihu.repository.CommentRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.AnswerService;
 import com.jlu.zhihu.util.Encoder;
@@ -33,12 +35,15 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
     public AnswerServiceImpl(UserRepository userRepository,
-                             AnswerRepository answerRepository) {
+                             AnswerRepository answerRepository,
+                             CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.answerRepository = answerRepository;
+        this.commentRepository = commentRepository;
     }
 
 
@@ -107,5 +112,13 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer findFirstByQuestion(long qid) {
         return answerRepository.findFirstByQid(qid);
+    }
+
+    @Override
+    public Answer createComment(long id, Comment comment) {
+        comment = commentRepository.save(comment);
+        Answer answer = answerRepository.findById(id);
+        answer.comments.add(comment);
+        return answerRepository.save(answer);
     }
 }

@@ -219,3 +219,25 @@ function nextPage() {
     if ($('#next').hasClass("disabled")) return;
     loadPage(currentPage + 1);
 }
+
+function comment(url,form) {
+    const content = $(form).find('.input-sm').val();
+    if (content.length === 0) {
+        overhang("error", "不能发布空的评论。");
+        return;
+    }
+    const comment = {
+        "content": content,
+        "author": currentUser
+    };
+    ajaxPostJson(
+        url + form.id,
+        JSON.stringify(comment),
+        function (response) {
+            if (response.status === 200)
+                window.location.reload();
+            else
+                overhang("error", "发表评论失败，请稍后再试。");
+        }
+    );
+}

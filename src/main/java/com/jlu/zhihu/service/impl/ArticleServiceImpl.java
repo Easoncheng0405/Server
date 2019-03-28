@@ -17,8 +17,10 @@
 package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Article;
+import com.jlu.zhihu.model.Comment;
 import com.jlu.zhihu.model.User;
 import com.jlu.zhihu.repository.ArticleRepository;
+import com.jlu.zhihu.repository.CommentRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.ArticleService;
 import com.jlu.zhihu.util.Encoder;
@@ -33,12 +35,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
     public ArticleServiceImpl(ArticleRepository articleRepository,
-                              UserRepository userRepository) {
+                              UserRepository userRepository,
+                              CommentRepository commentRepository) {
         this.articleRepository = articleRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
 
 
@@ -75,5 +80,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public long countAll() {
         return articleRepository.count();
+    }
+
+    @Override
+    public Article createComment(Comment comment, int id) {
+        comment = commentRepository.save(comment);
+        Article article = articleRepository.findById(id);
+        article.comments.add(comment);
+        return articleRepository.save(article);
     }
 }

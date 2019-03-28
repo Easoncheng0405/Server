@@ -17,6 +17,7 @@
 package com.jlu.zhihu.service;
 
 import com.jlu.zhihu.model.Answer;
+import com.jlu.zhihu.model.Comment;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public interface AnswerService {
     long countAll();
 
     Answer findFirstByQuestion(long qid);
+
+    Answer createComment(long id, Comment comment);
 }

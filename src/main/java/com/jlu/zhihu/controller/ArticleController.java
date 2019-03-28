@@ -17,6 +17,7 @@
 package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Article;
+import com.jlu.zhihu.model.Comment;
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,13 @@ public class ArticleController {
         Response<Long> response = new Response<>();
         response.body = articleService.countAll();
         response.msg = "find " + response.body + " articles";
+        return response;
+    }
+
+    @PostMapping("/comment/{id}")
+    public Response<Article> comment(@RequestBody Comment comment, @PathVariable int id) {
+        Response<Article> response = new Response<>();
+        response.body = articleService.createComment(comment, id);
         return response;
     }
 }

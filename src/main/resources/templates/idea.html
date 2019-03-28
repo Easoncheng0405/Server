@@ -28,15 +28,15 @@
                             <div class="box-comment"
                                  th:each="comment : ${idea.comments}">
                                 <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image">
-                                <div class="comment-text" th:inline="text">
-                                    [[${comment.content}]]
-                                    <span class="username" th:src="${comment.author.name}"></span>
-                                    <span class="text-muted pull-right" th:text="${comment.getCommentTime()}"></span>
+                                <div class="comment-text">
+                                    <span style="color:#444;font-weight:600" th:text="${comment.author.name}"></span>
+                                    <span class="text-muted pull-right" style="margin-right: 10px" th:text="${comment.getCommentTime()}"></span>
+                                    <p th:text="${comment.content}"></p>
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer">
-                            <form th:id="${idea.id}" action="#" method="post" onsubmit="comment(this);return false">
+                            <form th:id="${idea.id}" action="#" method="post" onsubmit="comment('/api/idea/comment/',this);return false">
                                 <input type="text" class="form-control input-sm" placeholder="输入您的评论...">
                             </form>
                         </div>

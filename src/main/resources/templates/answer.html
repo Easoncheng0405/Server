@@ -15,10 +15,22 @@
                     <a href="#" class="link-black"><i class="fa fa-comments-o" th:text="'  '+${answer.comment}+' 评论'"></i></a>
                 </li>
             </ul>
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="添加新的评论">
-                <a href="#" class="input-group-addon"><i class="fa fa-comment-o fa-lg"></i></a>
+        </div>
+    </div>
+    <div th:if="${answer.comments.size()} gt '0'" class="box-footer box-comments">
+        <div class="box-comment" th:each="comment : ${answer.comments}">
+            <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image">
+            <div class="comment-text">
+                <span style="color:#444;font-weight:600" th:text="${comment.author.name}"></span>
+                <span class="text-muted pull-right" style="margin-right: 10px" th:text="${comment.getCommentTime()}"></span>
+                <p th:text="${comment.content}"></p>
             </div>
         </div>
+    </div>
+
+    <div class="box-footer">
+        <form th:id="${answer.id}" action="#" method="post" onsubmit="comment('/api/answer/comment/',this);return false">
+            <input type="text" class="form-control input-sm" placeholder="输入您的评论...">
+        </form>
     </div>
 </div>

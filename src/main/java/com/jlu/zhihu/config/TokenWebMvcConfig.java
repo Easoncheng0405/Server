@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class TokenWebMvcConfig implements WebMvcConfigurer {
 
@@ -30,10 +33,19 @@ public class TokenWebMvcConfig implements WebMvcConfigurer {
         this.tokenManager = tokenManager;
     }
 
+    private final List<String> PATH_PATTERNS = new ArrayList<String>() {{
+        add("/api/answer/*");
+        add("/api/article/*");
+        add("/api/idea/*");
+        add("/api/question/*");
+        add("/api/recommend/*");
+        add("/api/render/*");
+    }};
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TokenInterceptor(tokenManager))
-                .addPathPatterns("/api/answer/*", "/api/question/*");
+                .addPathPatterns(PATH_PATTERNS);
     }
 
 }

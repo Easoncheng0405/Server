@@ -42,7 +42,7 @@ public class Idea {
     public List<Comment> comments;
 
     public String getDateYMD() {
-        return new java.text.SimpleDateFormat("MM月dd日").format(new Date(st));
+        return new java.text.SimpleDateFormat("yyyy年MM月dd日").format(new Date(st));
     }
 
     public String getDateHM() {

@@ -50,7 +50,8 @@ public class Encoder {
             gzip = new GZIPOutputStream(out);
             gzip.write(str.getBytes());
             gzip.close();
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return out.toByteArray();
     }
@@ -68,7 +69,8 @@ public class Encoder {
             while ((n = unGzip.read(buffer)) >= 0) {
                 out.write(buffer, 0, n);
             }
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return out.toByteArray();
     }

@@ -33,7 +33,8 @@ function loadData() {
             loadIdea();
             break;
         case "article":
-            alert("文章");
+            $('#tab-article').addClass('active');
+            loadArticles();
             break;
         default:
             $('#tab-recommend').addClass('active');
@@ -138,6 +139,26 @@ function comment(form) {
                 window.location.href = "http://localhost/home.html?tab=idea&page=" + currentPage;
             else
                 overhang("error", "发表评论失败，请稍后再试。");
+        }
+    );
+}
+
+
+function loadArticles() {
+    ajaxGetJson(
+        "http://localhost/api/article/recommend?page=" + currentPage,
+        function (response) {
+            setPage("/api/article/count", 1);
+            ajaxPostJson(
+                "/api/render/article",
+                JSON.stringify(response.body),
+                function (response) {
+                    contentWrapper.append(response.body);
+                    $('#article-body img').each(function () {
+                        $(this).parent().css({'text-align': 'center'});
+                    })
+                });
+
         }
     );
 }

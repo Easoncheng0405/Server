@@ -23,6 +23,7 @@ import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.ArticleService;
 import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,7 +61,19 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article createArticle(Article article) {
-        article.content = Encoder.unCompressContent(article.content);
+        article.content = Encoder.compressContent(article.content);
         return articleRepository.save(article);
+    }
+
+    @Override
+    public Article recommend(Pageable pageable) {
+        Article article = articleRepository.findAll(pageable).getContent().get(0);
+        article.content = Encoder.unCompressContent(article.content);
+        return article;
+    }
+
+    @Override
+    public long countAll() {
+        return articleRepository.count();
     }
 }

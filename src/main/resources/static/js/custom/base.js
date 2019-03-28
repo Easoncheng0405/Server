@@ -189,13 +189,13 @@ function submitAnswer(content, qid) {
     )
 }
 
-function setPage(url) {
+function setPage(url, size = 5) {
     pager.empty();
     pager.append("<li id='previous' onclick='previousPage()' class='paginate_button previous'><a>上一页</a></li>\n");
     ajaxGetJson(
         url,
         function (data) {
-            let pages = data.body / 5;
+            let pages = data.body / size;
             for (let i = 0; i < pages; i = i + 1) {
                 let li = "<li class=\"paginate_button ";
                 if (currentPage === i)

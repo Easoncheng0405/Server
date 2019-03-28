@@ -20,6 +20,9 @@ import com.jlu.zhihu.model.Article;
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +57,22 @@ public class ArticleController {
     public Response<Article> findById(@PathVariable int aid) {
         Response<Article> response = new Response<>();
         response.body = articleService.findById(aid);
+        return response;
+    }
+
+    @GetMapping("/recommend")
+    public Response<Article> findAll(@RequestParam int page) {
+        Response<Article> response = new Response<>();
+        Pageable pageable = PageRequest.of(page, 1, new Sort(Sort.Direction.ASC, "agree"));
+        response.body = articleService.recommend(pageable);
+        return response;
+    }
+
+    @GetMapping("/count")
+    public Response<Long> countAll() {
+        Response<Long> response = new Response<>();
+        response.body = articleService.countAll();
+        response.msg = "find " + response.body + " articles";
         return response;
     }
 }

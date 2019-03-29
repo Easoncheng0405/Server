@@ -61,6 +61,7 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findByAuthorAndQuestion(int uid, long qid) {
         User author = userRepository.findById(uid);
         Answer answer = answerRepository.findByAuthorAndQid(author, qid);
+        if (answer == null) return null;
         setMetaData(answer);
         answer.content = Encoder.unCompressContent(answer.content);
         return answer;
@@ -134,6 +135,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     private void setMetaData(Answer answer) {
+        if (answer == null) return;
         answer.comment = answer.comments == null ? 0 : answer.comments.size();
         answer.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
                 ContentType.ANSWER, OperationType.AGREE, answer.id

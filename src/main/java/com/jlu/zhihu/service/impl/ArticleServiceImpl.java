@@ -99,6 +99,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     private void setMetaData(Article article) {
+        if (article == null) return;
         article.comment = article.comments == null ? 0 : article.comments.size();
         article.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
                 ContentType.ARTICLE, OperationType.AGREE, article.id

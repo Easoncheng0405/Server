@@ -79,6 +79,7 @@ public class IdeaServiceImpl implements IdeaService {
     }
 
     private void setMetaData(Idea idea) {
+        if (idea == null) return;
         idea.comment = idea.comments == null ? 0 : idea.comments.size();
         idea.agree = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
                 ContentType.IDEA, OperationType.AGREE, idea.id

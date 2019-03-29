@@ -140,6 +140,8 @@ function createAnswer(e) {
     removeEditor();
     $(e).parents('.box-body').append("<textarea id='editor'></textarea>");
     currentCreateAnswerBtn = e;
+    let qid = $(e).parents('.box-solid').attr('data-question-id');
+    let aid = -1;
     currentEditor = new SimpleMDE({
         element: document.getElementById("editor"),
         spellChecker: false,
@@ -150,7 +152,7 @@ function createAnswer(e) {
             {
                 name: "submit",
                 action: function (editor) {
-                    submitAnswer(editor.value(), $(e).parents('.box-solid').attr('data-question-id'));
+                    submitAnswer(editor.value(), qid, aid);
                 },
                 className: "fa fa-check",
                 title: "发布",
@@ -163,6 +165,15 @@ function createAnswer(e) {
             }],
 
     });
+    ajaxGetJson(
+        "/api/answer?qid=" + qid + "&uid=" + currentUser.id,
+        function (response) {
+            if (response.status === 200) {
+                currentEditor.value(response.body.content + "");
+                aid = response.body.id;
+            }
+        }
+    )
 }
 
 function removeEditor() {
@@ -173,13 +184,15 @@ function removeEditor() {
     $('#editor').remove();
 }
 
-function submitAnswer(content, qid) {
-    const request = {
+function submitAnswer(content, qid, aid) {
+    let request = {
         "qid": parseInt(qid),
         "author": currentUser,
         "content": content
     };
-
+    if (aid !== -1)
+        request.id = aid;
+    alert(JSON.stringify(request));
     ajaxPostJson(
         "http://localhost/api/answer/create",
         JSON.stringify(request),

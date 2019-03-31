@@ -16,9 +16,9 @@
 
 package com.jlu.zhihu.repository;
 
-import com.jlu.zhihu.model.ContentType;
-import com.jlu.zhihu.model.MetaData;
-import com.jlu.zhihu.model.OperationType;
+import com.jlu.zhihu.model.metadata.ContentType;
+import com.jlu.zhihu.model.metadata.MetaData;
+import com.jlu.zhihu.model.metadata.OperationType;
 import com.jlu.zhihu.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

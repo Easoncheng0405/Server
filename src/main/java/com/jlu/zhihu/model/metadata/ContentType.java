@@ -14,28 +14,28 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.model.metadata;
 
+public enum ContentType {
 
-public enum OperationType {
-    AGREE("agree"),
-    COLLECT("collect"),
-    COMMENT("comment");
+    ARTICLE("article"),
+    ANSWER("answer"),
+    IDEA("idea");
 
     private String string;
 
-    OperationType(String s) {
+    ContentType(String s) {
         this.string = s;
     }
 
-    public static OperationType fromString(String s) {
+    public static ContentType fromString(String s) {
         switch (s) {
-            case "agree":
-                return AGREE;
-            case "collect":
-                return COLLECT;
-            case "comment":
-                return COMMENT;
+            case "article":
+                return ARTICLE;
+            case "answer":
+                return ANSWER;
+            case "idea":
+                return IDEA;
         }
         return null;
     }

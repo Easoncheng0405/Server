@@ -14,24 +14,29 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.model.metadata;
 
-import javax.persistence.*;
 
-@Entity
-public class MetaData {
+public enum OperationType {
+    AGREE("agree"),
+    COLLECT("collect"),
+    COMMENT("comment");
 
-    @Id
-    public long id;
+    private String string;
 
-    @Enumerated(EnumType.ORDINAL)
-    public ContentType contentType;
+    OperationType(String s) {
+        this.string = s;
+    }
 
-    @Enumerated(EnumType.ORDINAL)
-    public OperationType operationType;
-
-    public long iid;
-
-    @OneToOne
-    public User user;
+    public static OperationType fromString(String s) {
+        switch (s) {
+            case "agree":
+                return AGREE;
+            case "collect":
+                return COLLECT;
+            case "comment":
+                return COMMENT;
+        }
+        return null;
+    }
 }

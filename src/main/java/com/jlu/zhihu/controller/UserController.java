@@ -57,6 +57,13 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/{id}")
+    public Response<User> user(@PathVariable int id) {
+        Response<User> response = new Response<>();
+        response.body = userService.findUserById(id);
+        return response;
+    }
+
     @PostMapping("/register")
     public Response<String> register(@RequestBody User user) {
         logger.debug("user register: " + user.toString());
@@ -84,4 +91,16 @@ public class UserController {
         }
         return response;
     }
+
+    @PostMapping("/modify/{id}")
+    public Response<User> modify(@RequestBody User user, @PathVariable int id) {
+        User u = userService.findUserById(id);
+        u.name = user.name;
+        u.image = user.image;
+        u.sign = user.sign;
+        Response<User> response = new Response<>();
+        response.body=userService.save(u);
+        return response;
+    }
+
 }

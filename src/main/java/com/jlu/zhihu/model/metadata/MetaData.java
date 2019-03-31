@@ -14,29 +14,26 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model;
+package com.jlu.zhihu.model.metadata;
 
-public enum ContentType {
+import com.jlu.zhihu.model.User;
 
-    ARTICLE("article"),
-    ANSWER("answer"),
-    IDEA("idea");
+import javax.persistence.*;
 
-    private String string;
+@Entity
+public class MetaData {
 
-    ContentType(String s) {
-        this.string = s;
-    }
+    @Id
+    public long id;
 
-    public static ContentType fromString(String s) {
-        switch (s) {
-            case "article":
-                return ARTICLE;
-            case "answer":
-                return ANSWER;
-            case "idea":
-                return IDEA;
-        }
-        return null;
-    }
+    @Enumerated(EnumType.ORDINAL)
+    public ContentType contentType;
+
+    @Enumerated(EnumType.ORDINAL)
+    public OperationType operationType;
+
+    public long iid;
+
+    @OneToOne
+    public User user;
 }

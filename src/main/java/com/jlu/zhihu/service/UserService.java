@@ -25,4 +25,8 @@ public interface UserService {
     User register(User user);
 
     User findByEmail(String email);
+
+    User findUserById(int id);
+
+    User save(User user);
 }

@@ -1,0 +1,258 @@
+<!--
+  ~    Copyright [2019] [chengjie.jlu@qq.com]
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人主页</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/x-icon" href="./image/logo.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/all-skins.min.css">
+    <link rel="stylesheet" href="css/overhang.min.css">
+    <link rel="stylesheet" href="css/simplemde.min.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header id="header"></header>
+    <aside id="sidebar"></aside>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-aqua-active">
+                    <h3 class="widget-user-username" id="user-name">知乎刘看山</h3>
+                    <h5 class="widget-user-desc" id="user-sign">发现更大的世界</h5>
+                </div>
+                <div class="widget-user-image">
+                    <img class="img-circle" id="user-image" alt="User Avatar">
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">3,200</h5>
+                                <span class="description-text">收获赞同</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">13,000</h5>
+                                <span class="description-text">人关注他</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4">
+                            <div class="description-block">
+                                <h5 class="description-header">35</h5>
+                                <span class="description-text">获得收藏</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_answer" data-toggle="tab">回答</a></li>
+                    <li><a href="#tab_question" data-toggle="tab">提问</a></li>
+                    <li><a href="#tab_article" data-toggle="tab">文章</a></li>
+                    <li><a href="#tab_settings" data-toggle="tab">编辑个人资料</a></li>
+                    <li class="pull-right"><a href="#"><i class="fa fa-star"> 已关注</i></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_answer">
+                        <table id="answer" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>问题标题</th>
+                                <th>创作时间</th>
+                                <th>赞同</th>
+                                <th>收藏</th>
+                                <th>评论</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab_question">
+                        <table id="question" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>问题标题</th>
+                                <th>创作时间</th>
+                                <th>回答</th>
+                                <th>关注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab_article">
+                        <table id="article" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>文章标题</th>
+                                <th>创作时间</th>
+                                <th>赞同</th>
+                                <th>收藏</th>
+                                <th>评论</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            <tr>
+                                <td>如何使用MarkDown编写结构清晰，简洁美观的文章？</td>
+                                <td>2019年3月30日 20:10:22</td>
+                                <td>12323</td>
+                                <td>2133</td>
+                                <td>4133</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab_settings">
+                        <form class="form-horizontal" id="user-form" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">昵称</label>
+                                <div class="col-sm-10">
+                                    <input required="required" name="name" type="text" maxlength="12" class="form-control" id="name" placeholder="输入昵称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sign" class="col-sm-2 control-label">个人介绍</label>
+                                <div class="col-sm-10">
+                                    <input required="required" name="sigon" maxlength="25" type="text" class="form-control" id="sign" placeholder="输入介绍">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="avatar" class="col-sm-2 control-label">头像链接</label>
+                                <div class="col-sm-10">
+                                    <input required="required" name="image" type="url" class="form-control" id="avatar" placeholder="输入地址">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-danger btn-block">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer id="footer"></footer>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/adminlte.min.js"></script>
+<script src="js/jqueryui.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/simplemde.min.js"></script>
+<script src="js/overhang.min.js"></script>
+<script src="js/custom/base.js"></script>
+<script src="js/custom/profile.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.min.js"></script>
+</body>
+</html>

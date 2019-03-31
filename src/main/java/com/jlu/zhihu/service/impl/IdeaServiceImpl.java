@@ -17,9 +17,9 @@
 package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Comment;
-import com.jlu.zhihu.model.ContentType;
+import com.jlu.zhihu.model.metadata.ContentType;
 import com.jlu.zhihu.model.Idea;
-import com.jlu.zhihu.model.OperationType;
+import com.jlu.zhihu.model.metadata.OperationType;
 import com.jlu.zhihu.repository.CommentRepository;
 import com.jlu.zhihu.repository.IdeaRepository;
 import com.jlu.zhihu.repository.MetaDataRepository;

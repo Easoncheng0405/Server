@@ -16,16 +16,23 @@
             <div id="content" th:utext="${recommend.summary}" style="color: #4a4a4a; font-size: 18px">
             </div>
             <ul class="list-inline" style="margin-top: 10px">
-                <li><a href="javascript:void(0)" th:attr="data-answer-id=${recommend.aid},data-answer-agree=${recommend.agree}"
+                <li><a href="javascript:void(0)"
+                       th:attr="data-answer-id=${recommend.aid},data-answer-agree=${recommend.agree}"
                        class="link-black" th:id="${recommend.aid}"
-                       onclick="postMetaData('/api/metadata/answer/agree/','data-answer-id','data-answer-agree',this)">
+                       onclick="postMetaData('/api/metadata/answer/agree/','data-answer-id','data-answer-agree',this, 'agree')">
                     <i class="fa fa-thumbs-o-up" th:text="'  '+${recommend.agree}+' 赞同'"></i></a>
                     <script th:inline="javascript">
-                        loadMetaData('/api/metadata/exist/answer/agree/', [[${recommend.aid}]]);
+                        loadMetaData('/api/metadata/exist/answer/agree/', [[${recommend.aid}]], 'agree');
                     </script>
                 </li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o"
-                                                      th:text="'  '+${recommend.collect}+' 收藏'"></i></a></li>
+                <li><a href="javascript:void(0)"
+                       th:attr="data-answer-id=${recommend.aid},data-answer-collect=${recommend.collect}"
+                       class="link-black" th:id="${recommend.aid}"
+                       onclick="postMetaData('/api/metadata/answer/collect/','data-answer-id','data-answer-collect',this, 'collect')">
+                    <i class="fa fa-star-o" th:text="'  '+${recommend.collect}+' 收藏'"></i></a></li>
+                <script th:inline="javascript">
+                    loadMetaData('/api/metadata/exist/answer/collect/', [[${recommend.aid}]], 'collect');
+                </script>
                 <li class="pull-right">
                     <a th:href="@{'http://localhost/content.html?type=answer&id='+${recommend.aid}}"
                        class="link-black margin-r-5">查看原答案</a>

@@ -17,7 +17,7 @@
 
 function loadData() {
     const uid = $.getUrlParam("id", currentUser.id + "");
-    const isCurrentUser = uid === currentUser.id+"";
+    const isCurrentUser = uid === currentUser.id + "";
     ajaxGetJson(
         "/api/user/metadata/" + uid,
         function (response) {
@@ -29,8 +29,7 @@ function loadData() {
                     $("#answer").dataTable({'ordering': false,});
                     $("#question").dataTable({'ordering': false,});
                     $("#article").dataTable({'ordering': false,});
-                    if (isCurrentUser) $('#focus').remove();
-                    else $('#settings').remove();
+                    if (!isCurrentUser) $('#focus').remove();
                     $('#user-form').submit(function () {
                         ajaxPostJson(
                             "http://localhost/api/user/modify/" + uid,

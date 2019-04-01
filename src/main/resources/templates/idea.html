@@ -22,10 +22,10 @@
                                 <a href="javascript:void(0)"
                                    th:attr="data-idea-id=${idea.id},data-idea-agree=${idea.agree}"
                                    class="link-black" th:id="${idea.id}"
-                                   onclick="postMetaData('/api/metadata/idea/agree/','data-idea-id','data-idea-agree',this)">
-                                    <i class="fa fa-thumbs-up fa-lg"></i></a>
+                                   onclick="postMetaData('/api/metadata/idea/agree/','data-idea-id','data-idea-agree',this, 'agree')">
+                                    <i class="fa fa-thumbs-o-up"> 0 赞同</i></a>
                                 <script th:inline="javascript">
-                                    loadMetaData('/api/metadata/exist/idea/agree/', [[${idea.id}]]);
+                                    loadMetaData('/api/metadata/exist/idea/agree/', [[${idea.id}]], 'agree');
                                 </script>
                             </div>
                         </div>

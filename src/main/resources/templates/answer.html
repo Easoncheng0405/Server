@@ -13,14 +13,20 @@
             <ul class="list-inline" style="margin-top: 10px">
                 <li><a href="javascript:void(0)" th:attr="data-answer-id=${answer.id},data-answer-agree=${answer.agree}"
                        class="link-black" th:id="${answer.id}"
-                       onclick="postMetaData('/api/metadata/answer/agree/','data-answer-id','data-answer-agree',this)">
+                       onclick="postMetaData('/api/metadata/answer/agree/','data-answer-id','data-answer-agree',this, 'agree')">
                     <i class="fa fa-thumbs-o-up" th:text="'  '+${answer.agree}+' 赞同'"></i></a>
                     <script th:inline="javascript">
-                        loadMetaData('/api/metadata/exist/answer/agree/', [[${answer.id}]]);
+                        loadMetaData('/api/metadata/exist/answer/agree/', [[${answer.id}]], 'agree');
                     </script>
                 </li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o"
-                                                      th:text="'  '+${answer.collect}+' 收藏'"></i></a></li>
+                <li><a href="javascript:void(0)"
+                       th:attr="data-answer-id=${answer.id},data-answer-collect=${answer.collect}"
+                       class="link-black" th:id="${answer.id}"
+                       onclick="postMetaData('/api/metadata/answer/collect/','data-answer-id','data-answer-collect',this, 'collect')">
+                    <i class="fa fa-star-o" th:text="'  '+${answer.collect}+' 收藏'"></i></a></li>
+                <script th:inline="javascript">
+                    loadMetaData('/api/metadata/exist/answer/collect/', [[${answer.id}]], 'collect');
+                </script>
                 <li class="pull-right">
                     <a href="#" class="link-black"><i class="fa fa-comments-o"
                                                       th:text="'  '+${answer.comment}+' 评论'"></i></a>

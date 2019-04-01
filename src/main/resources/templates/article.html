@@ -21,14 +21,21 @@
                 <li><a href="javascript:void(0)"
                        th:attr="data-article-id=${article.id},data-article-agree=${article.agree}"
                        class="link-black" th:id="${article.id}"
-                       onclick="postMetaData('/api/metadata/article/agree/','data-article-id','data-article-agree',this)">
+                       onclick="postMetaData('/api/metadata/article/agree/','data-article-id','data-article-agree',this, 'agree')">
                     <i class="fa fa-thumbs-o-up" th:text="'  '+${article.agree}+' 赞同'"></i></a>
                     <script th:inline="javascript">
-                        loadMetaData('/api/metadata/exist/article/agree/', [[${article.id}]]);
+                        loadMetaData('/api/metadata/exist/article/agree/', [[${article.id}]], 'agree');
                     </script>
                 </li>
-                <li><a href="#" class="link-black"><i class="fa fa-star-o" th:text="'  '+${article.collect}+' 收藏'"></i></a>
+                <li><a href="javascript:void(0)"
+                       th:attr="data-article-id=${article.id},data-article-collect=${article.agree}"
+                       class="link-black" th:id="${article.id}"
+                       onclick="postMetaData('/api/metadata/article/collect/','data-article-id','data-article-collect',this, 'collect')">
+                    <i class="fa fa-star-o" th:text="'  '+${article.collect}+' 收藏'"></i></a>
                 </li>
+                <script th:inline="javascript">
+                    loadMetaData('/api/metadata/exist/article/collect/', [[${article.id}]], 'collect');
+                </script>
                 <li class="pull-right">
                     <a href="#" class="link-black"><i class="fa fa-comments-o"
                                                       th:text="'  '+${article.comment}+' 评论'"></i></a>

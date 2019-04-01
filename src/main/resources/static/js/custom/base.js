@@ -254,46 +254,50 @@ function comment(url, name, form) {
     );
 }
 
-function postMetaData(url, name, count, e) {
+function postMetaData(url, name, count, e, type) {
+    const str = type === 'agree' ? '赞同' : '收藏';
     ajaxPostJson(
         url + $(e).attr(name),
         JSON.stringify(currentUser),
         function (response) {
             if (response.status === 200) {
-                overhang("success", "已取消赞同");
+                overhang("success", "已取消" + str);
                 $(e).addClass('link-black');
-                modifyCount(name, count, e, -1);
+                modifyCount(name, count, e, -1, type);
             } else {
-                overhang("success", "已赞同");
+                overhang("success", "已" + str);
                 $(e).removeClass('link-black');
-                modifyCount(name, count, e, 1);
+                modifyCount(name, count, e, 1, type);
             }
         }
     )
 }
 
-function modifyCount(name, count, e, i) {
+function modifyCount(name, count, e, i, type) {
     if ($(e).attr(name) === "idea") return;
     let agree = parseInt($(e).attr(count)) + i;
     $(e).attr(count, agree);
-    $(e).html("<i class='fa fa-thumbs-o-up'></i> " + agree + " 赞同 ")
+    const str = type === 'agree' ? ' 赞同 ' : ' 收藏 ';
+    const cls = type === 'agree' ? " fa-thumbs-o-up'" : "fa-star-o'";
+    $(e).html("<i class='fa " + cls + "></i> " + agree + str)
 }
 
-function loadMetaData(url, id) {
+function loadMetaData(url, id, type) {
     ajaxPostJson(
         url + id,
         JSON.stringify(currentUser),
         function (response) {
+            const iid = type === 'agree' ? id : 'c' + id;
             if (response.body === true) {
-                $('#' + id).removeClass('link-black');
+                $('#' + iid).removeClass('link-black');
             } else {
-                $('#' + id).addClass('link-black');
+                $('#' + iid).addClass('link-black');
             }
         }
     )
 }
 
 function logout() {
-    $.cookie("token","");
+    $.cookie("token", "");
     window.location.href = "index.html";
 }

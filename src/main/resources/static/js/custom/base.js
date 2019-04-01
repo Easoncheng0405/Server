@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-$('#header').load('http://localhost/header.html');
-$('#sidebar').load('http://localhost/sidebar.html');
-$('#footer').load('http://localhost/footer.html');
+$('#header').load('http://47.94.134.55/header.html');
+$('#sidebar').load('http://47.94.134.55/sidebar.html');
+$('#footer').load('http://47.94.134.55/footer.html');
 
 $(document).ready(function () {
     if (!document.URL.endWith("index.html")) {
-        ajaxGetJson("http://localhost/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
+        ajaxGetJson("http://47.94.134.55/api/user/tokenActive?token=" + $.cookie("token"), function (jsonResult) {
             if (jsonResult.body == null)
                 window.location.href = "index.html";
             else
@@ -32,12 +32,12 @@ $(document).ready(function () {
         data.author = currentUser;
         $('#create-question').modal('hide');
         ajaxPostJson(
-            "http://localhost/api/question/create",
+            "http://47.94.134.55/api/question/create",
             JSON.stringify(data),
             function (jsonResult) {
                 console.log(jsonResult);
                 if (jsonResult.status === 200) {
-                    window.location.href = "http://localhost/content.html?type=question&page=0&id=" + jsonResult.body.id;
+                    window.location.href = "http://47.94.134.55/content.html?type=question&page=0&id=" + jsonResult.body.id;
                 } else {
                     overhang("error", "创建问题失败，请重试。");
                 }
@@ -118,16 +118,16 @@ let currentPage = parseInt($.getUrlParam("page", "0"));
 function switchTab(tab) {
     switch (tab.innerText) {
         case " 推荐":
-            window.location.href = "http://localhost/home.html?tab=recommend&page=0";
+            window.location.href = "http://47.94.134.55/home.html?tab=recommend&page=0";
             break;
         case " 问题":
-            window.location.href = "http://localhost/home.html?tab=question&page=0";
+            window.location.href = "http://47.94.134.55/home.html?tab=question&page=0";
             break;
         case " 想法":
-            window.location.href = "http://localhost/home.html?tab=idea&page=0";
+            window.location.href = "http://47.94.134.55/home.html?tab=idea&page=0";
             break;
         case " 文章":
-            window.location.href = "http://localhost/home.html?tab=article&page=0";
+            window.location.href = "http://47.94.134.55/home.html?tab=article&page=0";
             break;
     }
 }
@@ -193,10 +193,10 @@ function submitAnswer(content, qid, aid) {
     if (aid !== -1)
         request.id = aid;
     ajaxPostJson(
-        "http://localhost/api/answer/create",
+        "http://47.94.134.55/api/answer/create",
         JSON.stringify(request),
         function (response) {
-            window.location.href = "http://localhost/content.html?type=answer&id=" + response.body.id;
+            window.location.href = "http://47.94.134.55/content.html?type=answer&id=" + response.body.id;
         }
     )
 }

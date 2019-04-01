@@ -53,7 +53,7 @@
                     <tbody>
                     <tr th:each="answer : ${data.answers}">
                         <td>
-                            <a class="link-black" th:text="${answer.title}" th:href="@{'http://localhost/content.html?type=answer&id='+${answer.id}}"></a>
+                            <a class="link-black" th:text="${answer.title}" th:href="@{'http://47.94.134.55/content.html?type=answer&id='+${answer.id}}"></a>
                         </td>
                         <td th:text="${answer.timeFormat}"></td>
                         <td th:text="${answer.agree}"></td>
@@ -76,7 +76,7 @@
                     <tbody>
                     <tr th:each="question : ${data.questions}">
                         <td>
-                            <a class="link-black" th:text="${question.title}" th:href="@{'http://localhost/content.html?type=question&page=0&id='+${question.id}}"></a>
+                            <a class="link-black" th:text="${question.title}" th:href="@{'http://47.94.134.55/content.html?type=question&page=0&id='+${question.id}}"></a>
                         </td>
                         <td th:text="${question.timeFormat}"></td>
                         <td th:text="${question.answer}"></td>
@@ -99,7 +99,7 @@
                     <tbody>
                     <tr th:each="article : ${data.articles}">
                         <td>
-                            <a class="link-black" th:text="${article.title}" th:href="@{'http://localhost/content.html?type=article&id='+${article.id}}"></a>
+                            <a class="link-black" th:text="${article.title}" th:href="@{'http://47.94.134.55/content.html?type=article&id='+${article.id}}"></a>
                         </td>
                         <td th:text="${article.timeFormat}"></td>
                         <td th:text="${article.agree}"></td>

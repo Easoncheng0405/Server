@@ -14,7 +14,7 @@
                                 <img class="img-circle" th:src="${idea.author.image}" alt="User Image">
                                 <span class="username">
                                     <a href="#" th:text="${idea.author.name}"
-                                       th:href="@{'http://localhost/profile.html?id='+${idea.author.id}}"></a>
+                                       th:href="@{'http://47.94.134.55/profile.html?id='+${idea.author.id}}"></a>
                                 </span>
                                 <span class="description" th:text="${idea.author.sign}"></span>
                             </div>
@@ -38,10 +38,10 @@
                             <div class="box-comment"
                                  th:each="comment : ${idea.comments}">
                                 <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image"
-                                     th:href="@{'http://localhost/profile.html?id='+${comment.author.id}}">
+                                     th:href="@{'http://47.94.134.55/profile.html?id='+${comment.author.id}}">
                                 <div class="comment-text">
                                     <span style="color:#444;font-weight:600" >
-                                        <a th:href="@{'http://localhost/profile.html?id='+${comment.author.id}}" th:text="${comment.author.name}"></a>
+                                        <a th:href="@{'http://47.94.134.55/profile.html?id='+${comment.author.id}}" th:text="${comment.author.name}"></a>
                                     </span>
                                     <span class="text-muted pull-right" style="margin-right: 10px"
                                           th:text="${comment.getCommentTime()}"></span>

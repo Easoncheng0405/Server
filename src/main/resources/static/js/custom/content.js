@@ -52,7 +52,7 @@ function loadQuestion(qid) {
 
 function loadAnswer() {
     ajaxGetJson(
-        "http://localhost/api/answer/" + id,
+        "http://47.94.134.55/api/answer/" + id,
         function (response) {
             loadQuestion(response.body.qid);
             ajaxPostJson(
@@ -67,7 +67,7 @@ function loadAnswer() {
 
 function loadMore(qid) {
     ajaxGetJson(
-        "http://localhost/api/answer/question/" + qid + "?page=" + currentPage,
+        "http://47.94.134.55/api/answer/question/" + qid + "?page=" + currentPage,
         function (response) {
             setPage("/api/answer/count/" + qid);
             for (let i = 0; i < response.body.length; i++) {
@@ -84,12 +84,12 @@ function loadMore(qid) {
 
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
-    window.location.href = "http://localhost/content.html?type=" + type + "&page=" + i;
+    window.location.href = "http://47.94.134.55/content.html?type=" + type + "&page=" + i;
 }
 
 function loadArticle(aid) {
     ajaxGetJson(
-        "http://localhost/api/article/" + aid,
+        "http://47.94.134.55/api/article/" + aid,
         function (response) {
             ajaxPostJson(
                 "/api/render/article",

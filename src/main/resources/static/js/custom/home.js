@@ -46,7 +46,7 @@ function loadData() {
 function loadRecommend() {
     contentWrapper.empty();
     ajaxGetJson(
-        "http://localhost/api/recommend/all?page=" + currentPage,
+        "http://47.94.134.55/api/recommend/all?page=" + currentPage,
         function (data) {
             for (let i = 0; i < data.body.length; i++) {
                 ajaxPostJson(
@@ -64,7 +64,7 @@ function loadRecommend() {
 function loadNormalQuestion() {
     contentWrapper.empty();
     ajaxGetJson(
-        "http://localhost/api/question/all?page=" + currentPage,
+        "http://47.94.134.55/api/question/all?page=" + currentPage,
         function (data) {
             for (let i = 0; i < data.body.length; i++) {
                 ajaxPostJson(
@@ -82,7 +82,7 @@ function loadNormalQuestion() {
 function loadIdea() {
     contentWrapper.empty();
     ajaxGetJson(
-        "http://localhost/api/idea/all?page=" + currentPage,
+        "http://47.94.134.55/api/idea/all?page=" + currentPage,
         function (data) {
             ajaxPostJson(
                 "/api/render/idea",
@@ -100,11 +100,11 @@ function loadIdea() {
                             "author": currentUser,
                         };
                         ajaxPostJson(
-                            "http://localhost/api/idea/create",
+                            "http://47.94.134.55/api/idea/create",
                             JSON.stringify(idea),
                             function (jsonResult) {
                                 if (jsonResult.status === 200) {
-                                    window.location.href = "http://localhost/home.html?tab=idea&page=0";
+                                    window.location.href = "http://47.94.134.55/home.html?tab=idea&page=0";
                                 } else {
                                     overhang("error", "发布想法失败。");
                                 }
@@ -118,12 +118,12 @@ function loadIdea() {
 
 function loadPage(i) {
     if (currentPage === i || i < 0) return;
-    window.location.href = "http://localhost/home.html?tab=" + currentTab + "&page=" + i;
+    window.location.href = "http://47.94.134.55/home.html?tab=" + currentTab + "&page=" + i;
 }
 
 function loadArticles() {
     ajaxGetJson(
-        "http://localhost/api/article/recommend?page=" + currentPage,
+        "http://47.94.134.55/api/article/recommend?page=" + currentPage,
         function (response) {
             setPage("/api/article/count", 1);
             ajaxPostJson(

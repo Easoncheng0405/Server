@@ -1,6 +1,6 @@
 <div class="box box-solid">
     <div class="box-header with-border">
-        <a href="#" th:href="@{'http://localhost/content.html?type=article&id='+${article.id}}"
+        <a href="#" th:href="@{'http://47.94.134.55/content.html?type=article&id='+${article.id}}"
            th:text="${article.title}" class="link-black" style="font-size: 25px;color: black"></a>
     </div>
     <div class="box-body">
@@ -9,7 +9,7 @@
                 <img class="img-circle" th:src="${article.author.image}" alt="user image">
                 <span class="username">
                     <a href="#" class="link-black" th:text="${article.author.name}"
-                       th:href="@{'http://localhost/profile.html?id='+${article.author.id}}"></a>
+                       th:href="@{'http://47.94.134.55/profile.html?id='+${article.author.id}}"></a>
                 </span>
                 <span th:text="${article.author.sign}" class="description"></span>
 

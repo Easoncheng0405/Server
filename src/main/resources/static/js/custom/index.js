@@ -17,7 +17,7 @@
 $(document).ready(function () {
     $('#login-form').submit(function () {
         ajaxPostJson(
-            "http://localhost/api/user/login",
+            "http://47.94.134.55/api/user/login",
             parseJson($('#login-form')),
             function (jsonResult) {
                 if (jsonResult.status === 200) {
@@ -35,7 +35,7 @@ $(document).ready(function () {
             return;
         }
         ajaxPostJson(
-            "http://localhost/api/user/register",
+            "http://47.94.134.55/api/user/register",
             parseJson($('#register-form')),
             function (jsonResult) {
                 if (jsonResult.status === 200) {

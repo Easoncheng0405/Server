@@ -34,7 +34,7 @@ public class User {
     @Column(length = 32, nullable = false)
     public String password;
 
-    public String image = "http://localhost/image/avatar.jpeg";
+    public String image = "http://47.94.134.55/image/avatar.jpeg";
 
     @Column(length = 25)
     public String sign = "发现更大的世界.";

@@ -1,6 +1,6 @@
 <div class="box box-solid" th:attr="data-question-id=${question.id}">
     <div class="box-header with-border">
-        <a href="#" th:href="@{'http://localhost/content.html?type=question&page=0&id='+${question.id}}"
+        <a href="#" th:href="@{'http://47.94.134.55/content.html?type=question&page=0&id='+${question.id}}"
            th:text="${question.title}" class="link-black" style="font-size: 18px;color: black"></a>
     </div>
     <div class="box-body">
@@ -12,7 +12,7 @@
                     <button class="btn btn-default" onclick="createAnswer(this)">撰写答案</button>
                 </div>
                 <span class="username"><a href="#" class="link-black" th:text="${question.author.name}"
-                                          th:href="@{'http://localhost/profile.html?id='+${question.author.id}}"></a></span>
+                                          th:href="@{'http://47.94.134.55/profile.html?id='+${question.author.id}}"></a></span>
                 <span th:text="${question.author.sign}" class="description"></span>
 
             </div>

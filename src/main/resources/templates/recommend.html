@@ -1,7 +1,7 @@
 <div class="box box-solid">
     <div class="box-header with-border">
         <a href="#" th:text="${recommend.title}"
-           th:href="@{'http://localhost/content.html?type=answer&page=0&id='+${recommend.aid}}"
+           th:href="@{'http://47.94.134.55/content.html?type=answer&page=0&id='+${recommend.aid}}"
            class="link-black" style="font-size: 18px;color: black"></a>
     </div>
     <div class="box-body">
@@ -9,7 +9,7 @@
             <div class="user-block">
                 <img class="img-circle" th:src="${recommend.author.image}" alt="user image">
                 <span class="username"><a href="#" class="link-black" th:text="${recommend.author.name}"
-                                          th:href="@{'http://localhost/profile.html?id='+${recommend.author.id}}"></a></span>
+                                          th:href="@{'http://47.94.134.55/profile.html?id='+${recommend.author.id}}"></a></span>
                 <span class="description" th:text="${recommend.author.sign}"></span>
 
             </div>
@@ -27,7 +27,7 @@
                 <li><a href="#" class="link-black"><i class="fa fa-star-o"
                                                       th:text="'  '+${recommend.collect}+' 收藏'"></i></a></li>
                 <li class="pull-right">
-                    <a th:href="@{'http://localhost/content.html?type=answer&id='+${recommend.aid}}"
+                    <a th:href="@{'http://47.94.134.55/content.html?type=answer&id='+${recommend.aid}}"
                        class="link-black margin-r-5">查看原答案</a>
                     <a href="#" class="link-black"><i class="fa fa-comments-o margin-r-5"
                                                       th:text="'  '+${recommend.comment}+' 评论'"></i></a>

@@ -74,7 +74,7 @@ function submit() {
         JSON.stringify(request),
         function (response) {
             submitOrSave = true;
-            window.location.href = "http://localhost/content.html?type=article&id=" + response.body.id;
+            window.location.href = "http://47.94.134.55/content.html?type=article&id=" + response.body.id;
         }
     )
 }

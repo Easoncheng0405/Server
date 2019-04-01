@@ -33,7 +33,7 @@ function loadData() {
                     else $('#settings').remove();
                     $('#user-form').submit(function () {
                         ajaxPostJson(
-                            "http://localhost/api/user/modify/" + uid,
+                            "http://47.94.134.55/api/user/modify/" + uid,
                             parseJson($('#user-form')),
                             function (jsonResult) {
                                 if (jsonResult.status === 200) {

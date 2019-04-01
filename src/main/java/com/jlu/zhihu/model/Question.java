@@ -18,6 +18,8 @@ package com.jlu.zhihu.model;
 
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @SuppressWarnings("unused")
@@ -39,9 +41,11 @@ public class Question {
     public long st = System.currentTimeMillis();
 
     // answer count
+    @Transient
     public int answer;
 
     //focus count
+    @Transient
     public int focus;
 
     @Override
@@ -54,5 +58,9 @@ public class Question {
                 ", answer=" + answer +
                 ", focus=" + focus +
                 '}';
+    }
+
+    public String getTimeFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(st));
     }
 }

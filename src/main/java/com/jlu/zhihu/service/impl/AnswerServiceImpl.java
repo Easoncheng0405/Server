@@ -19,10 +19,7 @@ package com.jlu.zhihu.service.impl;
 import com.jlu.zhihu.model.*;
 import com.jlu.zhihu.model.metadata.ContentType;
 import com.jlu.zhihu.model.metadata.OperationType;
-import com.jlu.zhihu.repository.AnswerRepository;
-import com.jlu.zhihu.repository.CommentRepository;
-import com.jlu.zhihu.repository.MetaDataRepository;
-import com.jlu.zhihu.repository.UserRepository;
+import com.jlu.zhihu.repository.*;
 import com.jlu.zhihu.service.AnswerService;
 import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +35,19 @@ public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
     private final MetaDataRepository metaDataRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
     public AnswerServiceImpl(UserRepository userRepository,
                              AnswerRepository answerRepository,
                              CommentRepository commentRepository,
-                             MetaDataRepository metaDataRepository) {
+                             MetaDataRepository metaDataRepository,
+                             QuestionRepository questionRepository) {
         this.userRepository = userRepository;
         this.answerRepository = answerRepository;
         this.commentRepository = commentRepository;
         this.metaDataRepository = metaDataRepository;
+        this.questionRepository = questionRepository;
     }
 
 
@@ -104,6 +104,7 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer createAnswer(Answer answer) {
         String temp = answer.content;
         answer.content = Encoder.compressContent(answer.content);
+        answer.title = questionRepository.findById(answer.qid).title;
         answer = answerRepository.save(answer);
         answer.content = temp;
         return answer;

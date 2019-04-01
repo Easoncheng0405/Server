@@ -1,0 +1,141 @@
+<section class="content">
+    <div class="box box-widget widget-user">
+        <div class="widget-user-header bg-aqua-active">
+            <h3 class="widget-user-username" th:text="${data.user.name}"></h3>
+            <h5 class="widget-user-desc" th:text="${data.user.sign}">发现更大的世界</h5>
+        </div>
+        <div class="widget-user-image">
+            <img class="img-circle" th:src="${data.user.image}" id="user-image" alt="User Avatar">
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-sm-4 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header" th:text="${data.agree}"></h5>
+                        <span class="description-text">收获赞同</span>
+                    </div>
+                </div>
+                <div class="col-sm-4 border-right">
+                    <div class="description-block">
+                        <h5 class="description-header" th:text="${data.focus}"></h5>
+                        <span class="description-text">人关注他</span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="description-block">
+                        <h5 class="description-header" th:text="${data.thanks}"></h5>
+                        <span class="description-text">收获感谢</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_answer" data-toggle="tab">回答</a></li>
+            <li><a href="#tab_question" data-toggle="tab">提问</a></li>
+            <li><a href="#tab_article" data-toggle="tab">文章</a></li>
+            <li id="settings"><a href="#tab_settings" data-toggle="tab">编辑个人资料</a></li>
+            <li id="focus" class="pull-right"><a href="#"><i class="fa fa-star"> 已关注</i></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_answer">
+                <table id="answer" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>问题标题</th>
+                        <th>创作时间</th>
+                        <th>赞同</th>
+                        <th>收藏</th>
+                        <th>评论</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="answer : ${data.answers}">
+                        <td>
+                            <a class="link-black" th:text="${answer.title}" th:href="@{'http://localhost/content.html?type=answer&id='+${answer.id}}"></a>
+                        </td>
+                        <td th:text="${answer.timeFormat}"></td>
+                        <td th:text="${answer.agree}"></td>
+                        <td th:text="${answer.collect}"></td>
+                        <td th:text="${answer.comment}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab_question">
+                <table id="question" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>问题标题</th>
+                        <th>创作时间</th>
+                        <th>回答</th>
+                        <th>关注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="question : ${data.questions}">
+                        <td>
+                            <a class="link-black" th:text="${question.title}" th:href="@{'http://localhost/content.html?type=question&page=0&id='+${question.id}}"></a>
+                        </td>
+                        <td th:text="${question.timeFormat}"></td>
+                        <td th:text="${question.answer}"></td>
+                        <td th:text="${question.focus}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab_article">
+                <table id="article" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>文章标题</th>
+                        <th>创作时间</th>
+                        <th>赞同</th>
+                        <th>收藏</th>
+                        <th>评论</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="article : ${data.articles}">
+                        <td>
+                            <a class="link-black" th:text="${article.title}" th:href="@{'http://localhost/content.html?type=article&id='+${article.id}}"></a>
+                        </td>
+                        <td th:text="${article.timeFormat}"></td>
+                        <td th:text="${article.agree}"></td>
+                        <td th:text="${article.collect}"></td>
+                        <td th:text="${article.comment}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab_settings">
+                <form class="form-horizontal" id="user-form" onsubmit="return false">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">昵称</label>
+                        <div class="col-sm-10">
+                            <input required="required" name="name" type="text" maxlength="12" class="form-control" id="name" placeholder="输入昵称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sign" class="col-sm-2 control-label">个人介绍</label>
+                        <div class="col-sm-10">
+                            <input required="required" name="sign" maxlength="25" type="text" class="form-control" id="sign" placeholder="输入介绍">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar" class="col-sm-2 control-label">头像链接</label>
+                        <div class="col-sm-10">
+                            <input required="required" name="image" type="url" class="form-control" id="avatar" placeholder="输入地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-danger btn-block">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

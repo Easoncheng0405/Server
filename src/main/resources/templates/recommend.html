@@ -7,9 +7,9 @@
     <div class="box-body">
         <div class="post">
             <div class="user-block">
-                <img class="img-circle" th:src="${recommend.author.image}"
-                     alt="user image">
-                <span class="username"><a href="#" class="link-black" th:text="${recommend.author.name}"></a></span>
+                <img class="img-circle" th:src="${recommend.author.image}" alt="user image">
+                <span class="username"><a href="#" class="link-black" th:text="${recommend.author.name}"
+                                          th:href="@{'http://localhost/profile.html?id='+${recommend.author.id}}"></a></span>
                 <span class="description" th:text="${recommend.author.sign}"></span>
 
             </div>

@@ -18,6 +18,10 @@ package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.model.metadata.ContentType;
+import com.jlu.zhihu.model.metadata.OperationType;
+import com.jlu.zhihu.repository.AnswerRepository;
+import com.jlu.zhihu.repository.MetaDataRepository;
 import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.QuestionService;
@@ -32,12 +36,18 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
+    private final AnswerRepository answerRepository;
+    private final MetaDataRepository metaDataRepository;
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository repository,
-                               UserRepository userRepository) {
+                               UserRepository userRepository,
+                               AnswerRepository answerRepository,
+                               MetaDataRepository metaDataRepository) {
         this.questionRepository = repository;
         this.userRepository = userRepository;
+        this.answerRepository = answerRepository;
+        this.metaDataRepository = metaDataRepository;
     }
 
     @Override
@@ -48,12 +58,20 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAllByAuthor(int id) {
         User user = userRepository.findById(id);
-        return questionRepository.findByAuthor(user);
+        List<Question> list = questionRepository.findByAuthor(user);
+        for (Question question : list) {
+            setMetaData(question);
+        }
+        return list;
     }
 
     @Override
     public List<Question> findAll(Pageable pageable) {
-        return questionRepository.findAll(pageable).getContent();
+        List<Question> list = questionRepository.findAll(pageable).getContent();
+        for (Question question : list) {
+            setMetaData(question);
+        }
+        return list;
     }
 
     @Override
@@ -63,6 +81,15 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question findById(long id) {
-        return questionRepository.findById(id);
+        Question question = questionRepository.findById(id);
+        setMetaData(question);
+        return question;
+    }
+
+    private void setMetaData(Question question) {
+        question.answer = answerRepository.countByQid(question.id);
+        question.focus = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
+                ContentType.QUESTION, OperationType.FOCUS, question.id
+        );
     }
 }

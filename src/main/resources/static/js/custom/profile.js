@@ -17,31 +17,33 @@
 
 function loadData() {
     const uid = $.getUrlParam("id", currentUser.id + "");
+    const isCurrentUser = uid === currentUser.id+"";
     ajaxGetJson(
-        "/api/user/" + uid,
+        "/api/user/metadata/" + uid,
         function (response) {
-            $('#name').val(response.body.name);
-            $('#sign').val(response.body.sign);
-            $('#avatar').val(response.body.image);
-            $('#user-name').text(response.body.name);
-            $('#user-sign').text(response.body.sign);
-            $('#user-image').attr("src",response.body.image);
-        });
-
-    $("#answer").dataTable({'ordering': false,});
-    $("#question").dataTable({'ordering': false,});
-    $("#article").dataTable({'ordering': false,});
-
-    $('#user-form').submit(function () {
-        ajaxPostJson(
-            "http://localhost/api/user/modify/" + uid,
-            parseJson($('#user-form')),
-            function (jsonResult) {
-                if (jsonResult.status === 200) {
-                    window.location.reload();
-                } else {
-                    overhang("error", "修改个人设置失败");
+            ajaxPostJson(
+                "/api/render/profile",
+                JSON.stringify(response.body),
+                function (html) {
+                    $('#content-wrapper').append(html.body);
+                    $("#answer").dataTable({'ordering': false,});
+                    $("#question").dataTable({'ordering': false,});
+                    $("#article").dataTable({'ordering': false,});
+                    if (isCurrentUser) $('#focus').remove();
+                    else $('#settings').remove();
+                    $('#user-form').submit(function () {
+                        ajaxPostJson(
+                            "http://localhost/api/user/modify/" + uid,
+                            parseJson($('#user-form')),
+                            function (jsonResult) {
+                                if (jsonResult.status === 200) {
+                                    window.location.reload();
+                                } else {
+                                    overhang("error", "修改个人设置失败");
+                                }
+                            });
+                    });
                 }
-            });
-    });
+            )
+        });
 }

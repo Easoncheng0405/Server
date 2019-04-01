@@ -20,7 +20,9 @@ public enum ContentType {
 
     ARTICLE("article"),
     ANSWER("answer"),
-    IDEA("idea");
+    IDEA("idea"),
+    USER("user"),
+    QUESTION("question");
 
     private String string;
 
@@ -38,5 +40,11 @@ public enum ContentType {
                 return IDEA;
         }
         return null;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.string;
     }
 }

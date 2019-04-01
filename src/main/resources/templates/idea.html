@@ -12,11 +12,15 @@
                         <div class="box-header with-border">
                             <div class="user-block">
                                 <img class="img-circle" th:src="${idea.author.image}" alt="User Image">
-                                <span class="username"><a href="#" th:text="${idea.author.name}"></a></span>
+                                <span class="username">
+                                    <a href="#" th:text="${idea.author.name}"
+                                       th:href="@{'http://localhost/profile.html?id='+${idea.author.id}}"></a>
+                                </span>
                                 <span class="description" th:text="${idea.author.sign}"></span>
                             </div>
                             <div class="box-tools margin-r-5" style="padding-top: 10px;">
-                                <a href="javascript:void(0)" th:attr="data-idea-id=${idea.id},data-idea-agree=${idea.agree}"
+                                <a href="javascript:void(0)"
+                                   th:attr="data-idea-id=${idea.id},data-idea-agree=${idea.agree}"
                                    class="link-black" th:id="${idea.id}"
                                    onclick="postMetaData('/api/metadata/idea/agree/','data-idea-id','data-idea-agree',this)">
                                     <i class="fa fa-thumbs-up fa-lg"></i></a>
@@ -33,9 +37,12 @@
                         <div th:if="${idea.comments.size()} gt '0'" class="box-footer box-comments">
                             <div class="box-comment"
                                  th:each="comment : ${idea.comments}">
-                                <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image">
+                                <img class="img-circle img-sm" th:src="${comment.author.image}" alt="User Image"
+                                     th:href="@{'http://localhost/profile.html?id='+${comment.author.id}}">
                                 <div class="comment-text">
-                                    <span style="color:#444;font-weight:600" th:text="${comment.author.name}"></span>
+                                    <span style="color:#444;font-weight:600" >
+                                        <a th:href="@{'http://localhost/profile.html?id='+${comment.author.id}}" th:text="${comment.author.name}"></a>
+                                    </span>
                                     <span class="text-muted pull-right" style="margin-right: 10px"
                                           th:text="${comment.getCommentTime()}"></span>
                                     <p th:text="${comment.content}"></p>

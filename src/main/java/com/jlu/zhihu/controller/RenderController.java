@@ -17,6 +17,7 @@
 package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.*;
+import com.jlu.zhihu.model.Response;
 import com.vladsch.flexmark.Extension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
@@ -93,6 +94,15 @@ public class RenderController {
         result.body = processArgs("idea", "list", list);
         return result;
     }
+
+    @PostMapping("profile")
+    public Response<String> profile(@RequestBody UserMetaData metaData) {
+        Response<String> result = new Response<>();
+        result.msg = "render success";
+        result.body = processArgs("profile", "data", metaData);
+        return result;
+    }
+
 
     private String markdown(String md) {
         MutableDataSet options = new MutableDataSet();

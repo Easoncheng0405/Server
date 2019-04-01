@@ -6,13 +6,13 @@
     <div class="box-body">
         <div class="post">
             <div class="user-block">
-                <img class="img-circle" th:src="${question.author.image}"
-                     alt="user image">
+                <img class="img-circle" th:src="${question.author.image}" alt="user image">
                 <div class="btn-group pull-right" style="margin-right: 10px">
                     <button class="btn btn-default">关注问题</button>
                     <button class="btn btn-default" onclick="createAnswer(this)">撰写答案</button>
                 </div>
-                <span class="username"><a href="#" class="link-black" th:text="${question.author.name}"></a></span>
+                <span class="username"><a href="#" class="link-black" th:text="${question.author.name}"
+                                          th:href="@{'http://localhost/profile.html?id='+${question.author.id}}"></a></span>
                 <span th:text="${question.author.sign}" class="description"></span>
 
             </div>

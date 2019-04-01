@@ -16,8 +16,16 @@
 
 package com.jlu.zhihu.service.impl;
 
+import com.jlu.zhihu.model.Answer;
+import com.jlu.zhihu.model.Article;
 import com.jlu.zhihu.model.User;
-import com.jlu.zhihu.repository.UserRepository;
+import com.jlu.zhihu.model.UserMetaData;
+import com.jlu.zhihu.model.metadata.ContentType;
+import com.jlu.zhihu.model.metadata.OperationType;
+import com.jlu.zhihu.repository.*;
+import com.jlu.zhihu.service.AnswerService;
+import com.jlu.zhihu.service.ArticleService;
+import com.jlu.zhihu.service.QuestionService;
 import com.jlu.zhihu.service.UserService;
 import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +35,22 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final MetaDataRepository metaDataRepository;
+    private final AnswerService answerService;
+    private final QuestionService questionService;
+    private final ArticleService articleService;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository,
+                           MetaDataRepository metaDataRepository,
+                           AnswerService answerService,
+                           QuestionService questionService,
+                           ArticleService articleService) {
         this.userRepository = repository;
+        this.metaDataRepository = metaDataRepository;
+        this.answerService = answerService;
+        this.questionService = questionService;
+        this.articleService = articleService;
     }
 
     @Override
@@ -61,4 +81,33 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
+
+    @Override
+    public UserMetaData metaData(int id) {
+        User user = userRepository.findById(id);
+        UserMetaData metaData = new UserMetaData();
+        metaData.user = user;
+        metaData.agree = 0;
+        metaData.thanks = 0;
+        metaData.focus = metaDataRepository.
+                countAllByContentTypeAndOperationTypeAndIid(
+                        ContentType.USER, OperationType.FOCUS, id
+                );
+
+        metaData.answers = answerService.findAllByAuthor(id);
+        metaData.questions = questionService.findAllByAuthor(id);
+        metaData.articles = articleService.findAllByAuthor(id);
+
+        for (Answer answer : metaData.answers) {
+            metaData.agree += answer.agree;
+            metaData.thanks += answer.collect;
+        }
+
+        for (Article article : metaData.articles) {
+            metaData.agree += article.agree;
+            metaData.thanks += article.collect;
+        }
+        return metaData;
+    }
+
 }

@@ -192,7 +192,6 @@ function submitAnswer(content, qid, aid) {
     };
     if (aid !== -1)
         request.id = aid;
-    alert(JSON.stringify(request));
     ajaxPostJson(
         "http://localhost/api/answer/create",
         JSON.stringify(request),
@@ -292,4 +291,9 @@ function loadMetaData(url, id) {
             }
         }
     )
+}
+
+function logout() {
+    $.cookie("token","");
+    window.location.href = "index.html";
 }

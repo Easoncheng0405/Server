@@ -17,6 +17,7 @@
 package com.jlu.zhihu.service;
 
 import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.model.UserMetaData;
 
 public interface UserService {
 
@@ -29,4 +30,6 @@ public interface UserService {
     User findUserById(int id);
 
     User save(User user);
+
+    UserMetaData metaData(int id);
 }

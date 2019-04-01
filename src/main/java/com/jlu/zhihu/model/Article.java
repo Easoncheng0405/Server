@@ -17,6 +17,8 @@
 package com.jlu.zhihu.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -51,4 +53,8 @@ public class Article {
     // collect count
     @Transient
     public int collect;
+
+    public String getTimeFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(st));
+    }
 }

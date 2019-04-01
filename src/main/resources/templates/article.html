@@ -6,9 +6,11 @@
     <div class="box-body">
         <div class="post">
             <div class="user-block">
-                <img class="img-circle" th:src="${article.author.image}"
-                     alt="user image">
-                <span class="username"><a href="#" class="link-black" th:text="${article.author.name}"></a></span>
+                <img class="img-circle" th:src="${article.author.image}" alt="user image">
+                <span class="username">
+                    <a href="#" class="link-black" th:text="${article.author.name}"
+                       th:href="@{'http://localhost/profile.html?id='+${article.author.id}}"></a>
+                </span>
                 <span th:text="${article.author.sign}" class="description"></span>
 
             </div>
@@ -16,7 +18,8 @@
             <div th:utext="${article.content}" id="article-body" style="color: #4a4a4a; font-size: 18px"></div>
             <hr>
             <ul class="list-inline" style="margin-top: 10px">
-                <li><a href="javascript:void(0)" th:attr="data-article-id=${article.id},data-article-agree=${article.agree}"
+                <li><a href="javascript:void(0)"
+                       th:attr="data-article-id=${article.id},data-article-agree=${article.agree}"
                        class="link-black" th:id="${article.id}"
                        onclick="postMetaData('/api/metadata/article/agree/','data-article-id','data-article-agree',this)">
                     <i class="fa fa-thumbs-o-up" th:text="'  '+${article.agree}+' 赞同'"></i></a>

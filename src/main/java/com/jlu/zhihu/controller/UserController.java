@@ -18,6 +18,7 @@ package com.jlu.zhihu.controller;
 
 import com.jlu.zhihu.model.Response;
 import com.jlu.zhihu.model.User;
+import com.jlu.zhihu.model.UserMetaData;
 import com.jlu.zhihu.security.TokenManager;
 import com.jlu.zhihu.service.UserService;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -54,13 +58,6 @@ public class UserController {
             response.msg = "login success.";
             response.body = tokenManager.generateToken(result);
         }
-        return response;
-    }
-
-    @GetMapping("/{id}")
-    public Response<User> user(@PathVariable int id) {
-        Response<User> response = new Response<>();
-        response.body = userService.findUserById(id);
         return response;
     }
 
@@ -103,4 +100,10 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/metadata/{id}")
+    public Response<UserMetaData> userMetaData(@PathVariable int id){
+        Response<UserMetaData> response = new Response<>();
+        response.body = userService.metaData(id);
+        return response;
+    }
 }

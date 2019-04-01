@@ -14,27 +14,24 @@
  *    limitations under the License.
  */
 
-package com.jlu.zhihu.model.metadata;
+package com.jlu.zhihu.model;
 
-import com.jlu.zhihu.model.User;
 
-import javax.persistence.*;
+import java.util.List;
 
-@Entity
-public class MetaData {
+public class UserMetaData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long id;
-
-    @Enumerated(EnumType.ORDINAL)
-    public ContentType contentType;
-
-    @Enumerated(EnumType.ORDINAL)
-    public OperationType operationType;
-
-    public long iid;
-
-    @OneToOne
     public User user;
+
+    public int agree;
+
+    public int focus;
+
+    public int thanks;
+
+    public List<Answer> answers;
+
+    public List<Question> questions;
+
+    public List<Article> articles;
 }

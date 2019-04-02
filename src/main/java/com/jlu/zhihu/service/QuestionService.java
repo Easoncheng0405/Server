@@ -17,6 +17,7 @@
 package com.jlu.zhihu.service;
 
 import com.jlu.zhihu.model.Question;
+import com.jlu.zhihu.model.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public interface QuestionService {
     List<Question> findAll(Pageable pageable);
 
     long countAll();
+
+    int countByAuthor(User author);
 }

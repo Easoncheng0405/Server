@@ -93,6 +93,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public int countByAuthor(User author) {
+        return articleRepository.countByAuthor(author);
+    }
+
+    @Override
     public Article createComment(Comment comment, int id) {
         comment = commentRepository.save(comment);
         Article article = articleRepository.findById(id);

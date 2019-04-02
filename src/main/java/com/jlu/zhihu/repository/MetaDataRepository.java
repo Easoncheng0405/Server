@@ -23,6 +23,8 @@ import com.jlu.zhihu.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MetaDataRepository extends JpaRepository<MetaData, Long> {
 
@@ -37,5 +39,11 @@ public interface MetaDataRepository extends JpaRepository<MetaData, Long> {
             OperationType operationType,
             User user,
             long iid
+    );
+
+    List<MetaData> findByContentTypeAndOperationTypeAndUser(
+            ContentType contentType,
+            OperationType operationType,
+            User user
     );
 }

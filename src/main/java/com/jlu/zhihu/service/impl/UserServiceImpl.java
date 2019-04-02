@@ -16,11 +16,9 @@
 
 package com.jlu.zhihu.service.impl;
 
-import com.jlu.zhihu.model.Answer;
-import com.jlu.zhihu.model.Article;
-import com.jlu.zhihu.model.User;
-import com.jlu.zhihu.model.UserMetaData;
+import com.jlu.zhihu.model.*;
 import com.jlu.zhihu.model.metadata.ContentType;
+import com.jlu.zhihu.model.metadata.MetaData;
 import com.jlu.zhihu.model.metadata.OperationType;
 import com.jlu.zhihu.repository.*;
 import com.jlu.zhihu.service.AnswerService;
@@ -30,6 +28,9 @@ import com.jlu.zhihu.service.UserService;
 import com.jlu.zhihu.util.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -89,14 +90,33 @@ public class UserServiceImpl implements UserService {
         metaData.user = user;
         metaData.agree = 0;
         metaData.thanks = 0;
-        metaData.focus = metaDataRepository.
-                countAllByContentTypeAndOperationTypeAndIid(
-                        ContentType.USER, OperationType.FOCUS, id
-                );
+        metaData.products = answerService.countByAuthor(user)
+                + questionService.countByAuthor(user)
+                + articleService.countByAuthor(user);
 
         metaData.answers = answerService.findAllByAuthor(id);
         metaData.questions = questionService.findAllByAuthor(id);
         metaData.articles = articleService.findAllByAuthor(id);
+        metaData.collects = new ArrayList<>();
+
+        List<MetaData> list = metaDataRepository.
+                findByContentTypeAndOperationTypeAndUser(
+                        ContentType.ANSWER, OperationType.COLLECT, user
+                );
+        list.addAll(metaDataRepository.
+                findByContentTypeAndOperationTypeAndUser(
+                        ContentType.ARTICLE, OperationType.COLLECT, user
+                ));
+
+        for (MetaData m : list) {
+            if (m.contentType == ContentType.ANSWER) {
+                Collect collect = Collect.fromAnswer(answerService.findById(m.iid));
+                metaData.collects.add(collect);
+            } else {
+                Collect collect = Collect.fromArticle(articleService.findById((int) m.iid));
+                metaData.collects.add(collect);
+            }
+        }
 
         for (Answer answer : metaData.answers) {
             metaData.agree += answer.agree;

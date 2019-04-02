@@ -116,6 +116,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public int countByAuthor(User author) {
+        return answerRepository.countByAuthor(author);
+    }
+
+    @Override
     public long countAll() {
         return answerRepository.count();
     }

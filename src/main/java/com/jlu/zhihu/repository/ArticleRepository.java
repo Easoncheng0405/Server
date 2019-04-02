@@ -29,4 +29,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Article findById(int id);
 
     List<Article> findAllByAuthor(User author);
+
+    int countByAuthor(User author);
 }

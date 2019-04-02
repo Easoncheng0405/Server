@@ -30,7 +30,7 @@ function loadData() {
                     datatable($("#question"));
                     datatable($("#article"));
                     datatable($("#collect"));
-                    if (!isCurrentUser) $('#focus').remove();
+                    if (!isCurrentUser) $('#settings').remove();
                     $('#user-form').submit(function () {
                         ajaxPostJson(
                             "http://47.94.134.55/api/user/modify/" + uid,

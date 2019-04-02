@@ -20,9 +20,7 @@ package com.jlu.zhihu.model.metadata;
 public enum OperationType {
     AGREE("agree"),
     COLLECT("collect"),
-    COMMENT("comment"),
-    FOCUS("focus");
-
+    COMMENT("comment");
     private String string;
 
     OperationType(String s) {

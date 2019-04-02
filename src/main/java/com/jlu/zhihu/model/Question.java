@@ -44,10 +44,6 @@ public class Question {
     @Transient
     public int answer;
 
-    //focus count
-    @Transient
-    public int focus;
-
     @Override
     public String toString() {
         return "Question{" +
@@ -56,7 +52,6 @@ public class Question {
                 ", content='" + content + '\'' +
                 ", author=" + author +
                 ", answer=" + answer +
-                ", focus=" + focus +
                 '}';
     }
 

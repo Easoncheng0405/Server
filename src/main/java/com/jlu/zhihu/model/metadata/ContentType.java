@@ -21,9 +21,7 @@ public enum ContentType {
     ARTICLE("article"),
     ANSWER("answer"),
     IDEA("idea"),
-    USER("user"),
-    QUESTION("question");
-
+    USER("user");
     private String string;
 
     ContentType(String s) {

@@ -25,7 +25,7 @@ public class UserMetaData {
 
     public int agree;
 
-    public int focus;
+    public int products;
 
     public int thanks;
 
@@ -34,4 +34,6 @@ public class UserMetaData {
     public List<Question> questions;
 
     public List<Article> articles;
+
+    public List<Collect> collects;
 }

@@ -18,10 +18,7 @@ package com.jlu.zhihu.service.impl;
 
 import com.jlu.zhihu.model.Question;
 import com.jlu.zhihu.model.User;
-import com.jlu.zhihu.model.metadata.ContentType;
-import com.jlu.zhihu.model.metadata.OperationType;
 import com.jlu.zhihu.repository.AnswerRepository;
-import com.jlu.zhihu.repository.MetaDataRepository;
 import com.jlu.zhihu.repository.QuestionRepository;
 import com.jlu.zhihu.repository.UserRepository;
 import com.jlu.zhihu.service.QuestionService;
@@ -37,17 +34,14 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
-    private final MetaDataRepository metaDataRepository;
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository repository,
                                UserRepository userRepository,
-                               AnswerRepository answerRepository,
-                               MetaDataRepository metaDataRepository) {
+                               AnswerRepository answerRepository) {
         this.questionRepository = repository;
         this.userRepository = userRepository;
         this.answerRepository = answerRepository;
-        this.metaDataRepository = metaDataRepository;
     }
 
     @Override
@@ -80,6 +74,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public int countByAuthor(User author) {
+        return questionRepository.countByAuthor(author);
+    }
+
+    @Override
     public Question findById(long id) {
         Question question = questionRepository.findById(id);
         setMetaData(question);
@@ -88,8 +87,5 @@ public class QuestionServiceImpl implements QuestionService {
 
     private void setMetaData(Question question) {
         question.answer = answerRepository.countByQid(question.id);
-        question.focus = metaDataRepository.countAllByContentTypeAndOperationTypeAndIid(
-                ContentType.QUESTION, OperationType.FOCUS, question.id
-        );
     }
 }

@@ -16,6 +16,7 @@
 
 
 function loadData() {
+    $("#tab-profile").addClass('active');
     const uid = $.getUrlParam("id", currentUser.id + "");
     const isCurrentUser = uid === currentUser.id + "";
     ajaxGetJson(

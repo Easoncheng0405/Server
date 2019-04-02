@@ -20,7 +20,7 @@ const pager = $('#page');
 
 
 function loadData() {
-    $('#home-menu').addClass('active');
+    $('#home-menu').addClass('menu-open active');
     currentPage = parseInt($.getUrlParam("page", 0));
     currentTab = $.getUrlParam("tab", "recommend");
     switch (currentTab) {

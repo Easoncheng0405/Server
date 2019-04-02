@@ -21,17 +21,21 @@ const editor = new SimpleMDE({
     status: false,
     toolbar: ["bold", "italic", "heading", "|", "quote",
         "unordered-list", "ordered-list", "link", "image",
-        "table", "preview", "|", "side-by-side", "fullscreen"],
+        "table", "|", "preview",
+        {
+            name: "submit",
+            action: function (editor) {
+                submit();
+            },
+            className: "fa fa-check pull-right",
+            title: "发布",
+        }],
+
 });
 
 function loadData() {
     resize();
     $('#tab-create').addClass('active');
-    $('.editor-toolbar').append(
-        "<div class=\"btn-group pull-right\" style='margin-right: 10px'>\n" +
-        "   <button type=\"button\" class=\"btn btn-success\" onclick='submit()'>发布</button>\n" +
-        "   <button type=\"button\" class=\"btn btn-primary\" onclick='save()'>保存</button>\n" +
-        "</div>");
     $('#title').val("未命名 " + new Date().toLocaleString())
 }
 
@@ -77,11 +81,6 @@ function submit() {
             window.location.href = "http://47.94.134.55/content.html?type=article&id=" + response.body.id;
         }
     )
-}
-
-function save() {
-    submitOrSave = true;
-    alert("保存")
 }
 
 window.onbeforeunload = function () {

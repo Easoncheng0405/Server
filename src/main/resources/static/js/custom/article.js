@@ -21,7 +21,7 @@ const editor = new SimpleMDE({
     status: false,
     toolbar: ["bold", "italic", "heading", "|", "quote",
         "unordered-list", "ordered-list", "link", "image",
-        "table", "|", "preview",
+        "table", "|", "side-by-side", "fullscreen", "preview",
         {
             name: "submit",
             action: function (editor) {
